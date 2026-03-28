@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Patient Dashboard</title>
+		<link rel="stylesheet" href="../CSS/patient.css" />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap"
+			rel="stylesheet" />
+	</head>
+	<body>
+		<div class="main-container">
+			<div class="sidebar">
+				<div class="sidebar-logo">
+					<img
+						class="icons"
+						src="../Assets/Icons/blue-heart.svg"
+						alt="Heart Icon" />
+					<p>SmartCare AI</p>
+				</div>
+
+				<div class="ham-menu">
+					<div class="menu-item">
+						<a href="" id="dashboard-anchor" class="menu-item-anchor">
+							<img
+								class="icons"
+								src="../Assets/Icons/blue-dashboard.svg"
+								alt="Icon" />
+							<p>Dashboard</p>
+						</a>
+					</div>
+					<div class="menu-item">
+						<a href="" class="menu-item-anchor">
+							<img
+								class="icons"
+								src="../Assets/Icons/gray-calender.svg"
+								alt="Icon" />
+							<p>Book Appointment</p>
+						</a>
+					</div>
+					<div class="menu-item">
+						<a href="" class="menu-item-anchor">
+							<img
+								class="icons"
+								src="../Assets/Icons/gray-textfile.svg"
+								alt="Icon" />
+							<p>My Appointments</p>
+						</a>
+					</div>
+					<div class="menu-item">
+						<a href="" class="menu-item-anchor">
+							<img
+								class="icons"
+								src="../Assets/Icons/gray-chatbot.svg"
+								alt="Icon" />
+							<p>AI Chatbot</p>
+						</a>
+					</div>
+				</div>
+
+				<div class="logout-btn">
+					<button>
+						<img
+							class="icons"
+							src="../Assets/Icons/black-logout.svg"
+							alt="Logout Icon" />
+						<p>Logout</p>
+					</button>
+				</div>
+			</div>
+
+			<div class="dashboard">
+				<div class="greetings">
+					<h3>Welcome Back, Piyush!</h3>
+					<p>Here's your health overview</p>
+				</div>
+
+				<div class="stats">
+					<div class="stats-cards">
+						<div>
+							<p class="stats-title">Total Appointments</p>
+							<p class="stats-numbers">12</p>
+						</div>
+						<div
+							class="stats-icon"
+							style="background-color: rgb(219, 234, 254)">
+							<img
+								class="icons"
+								src="../Assets/Icons/blue-calender.svg"
+								alt="calender icon" />
+						</div>
+					</div>
+					<div class="stats-cards">
+						<div>
+							<p class="stats-title">Upcoming Visits</p>
+							<p class="stats-numbers">3</p>
+						</div>
+						<div
+							class="stats-icon"
+							style="background-color: rgb(219, 252, 231)">
+							<img
+								class="icons"
+								src="../Assets/Icons/green-clock.svg"
+								alt="clock icon" />
+						</div>
+					</div>
+					<div class="stats-cards">
+						<div>
+							<p class="stats-title">Favourite Doctors</p>
+							<p class="stats-numbers">5</p>
+						</div>
+						<div
+							class="stats-icon"
+							style="background-color: rgb(252, 231, 243)">
+							<img
+								class="icons"
+								src="../Assets/Icons/pink-heart.svg"
+								alt="heart icon" />
+						</div>
+					</div>
+					<div class="stats-cards">
+						<div>
+							<p class="stats-title">Health Score</p>
+							<p class="stats-numbers">92%</p>
+						</div>
+						<div
+							class="stats-icon"
+							style="background-color: rgb(243, 232, 255)">
+							<img
+								class="icons"
+								src="../Assets/Icons/purple-growth.svg"
+								alt="growth icon" />
+						</div>
+					</div>
+				</div>
+
+				<div class="upcoming-appointments">
+					<h3>Upcoming Appointments</h3>
+
+					<div class="app-list">
+						<div>
+							<div class="doc-name-logo">
+								<div class="app-list-logo">
+									<img
+										class="icons"
+										src="../Assets/Icons/blue-heart.svg"
+										alt="Heart Icon" />
+								</div>
+
+								<div class="doc-name">
+									<h4>Dr. Sarah Johnson</h4>
+									<p>Cardiologist</p>
+								</div>
+							</div>
+
+							<div class="app-day-time">
+								<p class="app-day">28 April, 2026</p>
+								<p class="app-time">10:00 AM</p>
+							</div>
+
+							<div class="app-status">
+								<p class="status">Confirmed</p>
+							</div>
+						</div>
+
+						<div>
+							<div class="doc-name-logo">
+								<div class="app-list-logo">
+									<img
+										class="icons"
+										src="../Assets/Icons/blue-heart.svg"
+										alt="Heart Icon" />
+								</div>
+
+								<div class="doc-name">
+									<h4>Dr. Michael Chen</h4>
+									<p>Neurologist</p>
+								</div>
+							</div>
+
+							<div class="app-day-time">
+								<p class="app-day">30 April, 2026</p>
+								<p class="app-time">02:30 PM</p>
+							</div>
+
+							<div class="app-status">
+								<p class="status">Confirmed</p>
+							</div>
+						</div>
+
+						<div>
+							<div class="doc-name-logo">
+								<div class="app-list-logo">
+									<img
+										class="icons"
+										src="../Assets/Icons/blue-heart.svg"
+										alt="Heart Icon" />
+								</div>
+
+								<div class="doc-name">
+									<h4>Dr. Emily Rodriguez</h4>
+									<p>Pediatrician</p>
+								</div>
+							</div>
+
+							<div class="app-day-time">
+								<p class="app-day">2 May, 2026</p>
+								<p class="app-time">11:00 AM</p>
+							</div>
+
+							<div class="app-status">
+								<p class="status">Pending</p>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="book-chat-cards">
+					<div class="bcc-card book-doctor">
+						<h4>Need to see a doctor?</h4>
+						<p>Book an appointment with our AI-powered system</p>
+						<button class="bcc-buttons book-now-btn">Book Now</button>
+					</div>
+
+					<div class="bcc-card start-chat">
+						<h4>Have questions?</h4>
+						<p>Chat with our AI assistant for instant help</p>
+						<button class="bcc-buttons start-chat-btn">Start Chat</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

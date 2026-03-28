@@ -4,16 +4,15 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Sign Up</title>
+	<title>Log In</title>
+	<link rel="stylesheet" href="../CSS/style.css">
 	<link rel="stylesheet" href="../CSS/logIn.css">
+	<script src="../JS/components.js" defer></script>
 </head>
 
 <body>
-	<div class="navigation-bar-logo">
-		<a class="HealthCare" href="../HTML/index.html">
-			<img class="icons" src="../RESOURCES/Images/logo.png" alt="logo-image" />
-			<h3>HealthCare</h3>
-		</a>
+	<app-header></app-header>
+	<div class="auth-header-text">
 		<h4>Welcome Back</h4>
 		<p>Log In to manage your appointments and health</p>
 	</div>
@@ -37,6 +36,10 @@
 		<button>Log In</button>
 		<p>Don't have an account? <a href="../HTML/signUp.html">Sign Up</a></p>
 	</form>
+
+	<a style="padding: 20px; position: absolute; top: 300px; left: 100px; text-decoration: none; background-color: rgb(36, 184, 6); border-radius: 15px; color: white; font-size: 1rem;" href="../HTML/patient.html">Patient Section</a>
+
+	<app-footer></app-footer>
 </body>
 
 </html>

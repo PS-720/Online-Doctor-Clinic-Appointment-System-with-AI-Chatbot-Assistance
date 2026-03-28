@@ -1,0 +1,357 @@
+*,
+::after,
+::before {
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+}
+
+body {
+	background-color: white;
+	font-family: "Nunito Sans", Arial, Helvetica, sans-serif;
+}
+
+html {
+	scroll-behavior: smooth;
+}
+
+.icons {
+	width: 20px;
+}
+
+.sidebar {
+	border: 1px solid rgb(229, 231, 235);
+	padding-bottom: 5px;
+
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	width: clamp(200px, 19vw, 350px);
+
+	display: flex;
+	flex-direction: column;
+	align-items: start;
+	justify-content: start;
+}
+
+.sidebar-logo {
+	width: 100%;
+	padding: 1.7rem 1rem;
+	border-bottom: 1px solid rgb(229, 231, 235);
+
+	display: flex;
+	gap: 10px;
+	align-items: center;
+	justify-content: center;
+}
+
+.sidebar-logo img {
+	width: 30px;
+}
+
+.sidebar-logo p {
+	color: rgb(21, 93, 252);
+	font-size: 1.5rem;
+	font-weight: 850;
+}
+
+.ham-menu {
+	width: 100%;
+	padding: 1rem;
+
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	justify-content: start;
+}
+
+#dashboard-anchor {
+	color: rgb(21, 93, 252);
+	background-color: rgb(239, 246, 255);
+}
+
+.menu-item-anchor {
+	padding: 0.8rem 1rem;
+	display: flex;
+	gap: 10px;
+	align-items: center;
+
+	text-decoration: none;
+	color: rgb(54, 65, 83);
+	font-size: 1rem;
+	font-weight: 650;
+	border-radius: 10px;
+}
+
+.menu-item-anchor:hover {
+	background-color: rgb(249, 250, 251);
+}
+
+.menu-item-anchor img {
+	width: 22px;
+}
+
+.logout-btn {
+	width: 100%;
+	height: 60px;
+	padding: 1rem;
+	margin-top: auto;
+	border: none;
+	border-top: 1px solid rgb(208, 209, 211);
+}
+
+.logout-btn button {
+	width: 100%;
+	padding: 0.5rem 1rem;
+	color: black;
+	background-color: transparent;
+	border: 1px solid rgb(192, 195, 197);
+	border-radius: 10px;
+
+	display: flex;
+	gap: 20px;
+	align-items: center;
+	font-size: 0.8rem;
+	font-weight: 500;
+	cursor: pointer;
+	transform: background-color 0.15s ease;
+}
+
+.logout-btn button:hover {
+	background-color: rgb(233, 235, 239);
+}
+
+.dashboard {
+	padding: 2rem;
+	margin-left: clamp(200px, 19vw, 350px);
+	background-color: rgb(252, 250, 250);
+
+	display: flex;
+	flex-direction: column;
+	gap: 2.2rem;
+	align-items: start;
+	justify-content: start;
+}
+
+.greetings h3 {
+	color: black;
+	font-size: 1.8rem;
+	font-weight: 800;
+	margin-bottom: 0.5rem;
+}
+
+.greetings p {
+	color: rgb(74, 85, 101);
+	font-weight: 500;
+}
+
+.stats {
+	width: 100%;
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	gap: 1.5rem;
+}
+
+.stats-cards {
+	padding: 1.5rem;
+	border: 1px solid rgb(229, 231, 235);
+	border-radius: 15px;
+	background-color: white;
+
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 10px;
+	transition: all 0.15s ease;
+}
+
+.stats-cards:hover {
+	transform: scale(1.05);
+	box-shadow: 1px 1px 5px rgb(93, 93, 93);
+}
+
+.stats-title {
+	font-size: 0.85rem;
+	color: rgb(74, 85, 101);
+	margin-bottom: 0.7rem;
+}
+
+.stats-numbers {
+	color: black;
+	font-size: 1.8rem;
+	font-weight: bold;
+}
+
+.stats-icon {
+	width: 50px;
+	height: 50px;
+	border-radius: 12px;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.stats-icon img {
+	width: 25px;
+}
+
+.upcoming-appointments {
+	width: 100%;
+	background-color: white;
+	padding: 2rem;
+	border: 1px solid rgb(229, 231, 235);
+	border-radius: 15px;
+}
+
+.upcoming-appointments h3 {
+	font-size: 1.3rem;
+	font-weight: 750;
+	margin-bottom: 3.2rem;
+}
+
+.app-list {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+}
+
+.app-list > div {
+	background-color: rgb(255, 250, 250);
+	padding: 1rem;
+	border-radius: 10px;
+
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	transition: all 0.15s ease;
+}
+
+.app-list > div:hover {
+	background-color: rgb(255, 245, 245);
+	transform: scale(1.01);
+}
+
+.doc-name-logo {
+	display: flex;
+	align-items: center;
+	gap: 1rem;
+}
+
+.app-list-logo {
+	width: 50px;
+	height: 50px;
+	border-radius: 25px;
+	background-color: rgb(219, 234, 254);
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.doc-name h4 {
+	font-size: 1.1rem;
+	font-weight: 650;
+	margin-bottom: 0.5rem;
+}
+
+.doc-name p {
+	color: rgb(89, 99, 115);
+	font-size: 0.9rem;
+}
+
+.app-day-time {
+	display: flex;
+	flex-direction: column;
+	align-items: end;
+}
+
+.app-day {
+	font-weight: 650;
+	margin-bottom: 0.3rem;
+}
+
+.app-time {
+	color: rgb(89, 99, 115);
+	font-size: 0.9rem;
+}
+
+.app-status {
+	padding: 0.3rem 0.5rem;
+	background-color: rgb(219, 252, 231);
+	border-radius: 12px;
+}
+
+.status {
+	font-size: 0.8rem;
+	font-weight: 650;
+	color: rgb(28, 130, 54);
+}
+
+.app-list > div:last-child .app-status {
+	background-color: rgb(254, 249, 194);
+}
+
+.app-list > div:last-child .app-status .status {
+	color: rgb(166, 95, 0);
+}
+
+.book-chat-cards {
+	width: 100%;
+	display: flex;
+	align-items: center;
+	gap: 20px;
+}
+
+.book-chat-cards div {
+	flex: 1;
+	border-radius: 15px;
+
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	gap: 2.1rem;
+}
+
+.bcc-card {
+	color: white;
+	padding: 1.7rem 1.5rem;
+}
+
+.bcc-card h4 {
+	font-size: 1.3rem;
+	font-weight: 800;
+}
+
+.bcc-card p {
+	color: rgb(237, 243, 250);
+}
+
+.book-doctor {
+	background: linear-gradient(to right, rgb(38, 121, 255), rgb(26, 102, 254));
+}
+
+.start-chat {
+  background: linear-gradient(to right, rgb(0, 192, 75), rgb(0, 176, 67));
+}
+
+.bcc-buttons {
+	padding: 0.7rem;
+	margin: 0 auto;
+	width: 98%;
+	border: none;
+	border-radius: 10px;
+	font-size: 0.95rem;
+	font-weight: 600;
+	cursor: pointer;
+	background-color: rgb(239, 246, 255);
+}
+
+.book-now-btn {
+	color: rgb(21, 95, 253);
+}
+
+.start-chat-btn {
+  color: rgb(0, 166, 62)
+}

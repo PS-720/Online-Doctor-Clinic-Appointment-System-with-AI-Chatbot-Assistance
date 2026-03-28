@@ -157,10 +157,14 @@ html {
 }
 
 .logInButton {
-	background-color: rgb(73, 210, 9);
-	color: black;
-	border: 1px solid rgb(20, 189, 37);
+	background-color: rgb(60, 180, 4);
+	color: white;
+	border: none;
 	transition: background-color 0.15s;
+}
+
+.logInButton img {
+	filter: brightness(0) invert(1);
 }
 
 .logInButton:hover {

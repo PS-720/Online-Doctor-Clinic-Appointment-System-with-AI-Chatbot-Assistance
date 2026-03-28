@@ -5,57 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <link rel="stylesheet" href="../CSS/style.css" />
+    <script src="../JS/components.js" defer></script>
   </head>
 
   <body>
-    <nav class="navbar">
-      <div class="navigation-bar-logo">
-        <a class="HealthCare" href="../HTML/index.html">
-          <img
-            class="icons"
-            src="../RESOURCES/Images/logo.png"
-            alt="logo-image"
-          />
-          <p>HealthCare</p>
-        </a>
-      </div>
-
-      <div class="navigation-bar">
-        <ul class="navlist">
-          <li>
-            <a class="navlist-items" href="#home">
-              <img class="icons" src="../Resources/Icons/heart.png" alt="" />
-              <p>Home</p>
-            </a>
-          </li>
-          <li>
-            <a class="navlist-items" href="#findDoctors">
-              <img class="icons" src="../Resources/Icons/search.png" alt="" />
-              <p>Find Doctors</p>
-            </a>
-          </li>
-          <li>
-            <a class="navlist-items" href="">
-              <img class="icons" src="../Resources/Icons/calender.png" alt="" />
-              <p>My Appointments</p>
-            </a>
-          </li>
-        </ul>
-      </div>
-
-      <div class="navbarButtons">
-        <button class="chat-button">
-          <img class="icons" src="../Resources/Icons/chat.png" alt="" />
-          Chat
-        </button>
-        <a href="../HTML/logIn.html">
-          <button class="logInButton">
-            <img class="icons" src="../Resources/Icons/profile.png" alt="" />
-            Log In
-          </button>
-        </a>
-      </div>
-    </nav>
+    <div id="header"></div>
 
     <div class="heroSection" id="home">
       <h2>Find & Book <span>Top Doctors</span> Near You</h2>
@@ -67,14 +21,18 @@
       <div class="search-doctor">
         <div class="input-location">
           <div class="search-bar">
-            <img class="icons" src="../Resources/Icons/search.png" alt="" />
+            <img class="icons" src="../Assets/Icons/black-search.png" alt="" />
             <input
               type="search"
               placeholder="Search doctors, clinics or hospitals..."
             />
           </div>
           <div class="location-bar">
-            <img src="../Resources/Icons/location.png" alt="" class="icons" />
+            <img
+              src="../Assets/Icons/black-location.png"
+              alt=""
+              class="icons"
+            />
             <input type="text" placeholder="Location" />
           </div>
         </div>
@@ -82,7 +40,7 @@
           <button>Search Now</button>
         </div>
         <div class="current-location">
-          <img class="icons" src="../Resources/Icons/location.png" alt="" />
+          <img class="icons" src="../Assets/Icons/black-location.png" alt="" />
           <a href=""> Use my current location </a>
         </div>
       </div>
@@ -93,37 +51,29 @@
       <p>Find the right specialist for your healthcare needs</p>
       <div class="specializationGrid">
         <div class="specializationCategory">
-          <img
-            class="icons"
-            src="../Resources/Images/cardiologist.png"
-            alt=""
-          />
+          <img class="icons" src="../Assets/Images/cardiologist.png" alt="" />
           <p>Cardiologist</p>
         </div>
         <div class="specializationCategory">
-          <img class="icons" src="../Resources/Images/dentist.png" alt="" />
+          <img class="icons" src="../Assets/Images/dentist.png" alt="" />
           <p>Dentist</p>
         </div>
         <div class="specializationCategory">
-          <img
-            class="icons"
-            src="../Resources/Images/dermatologist.png"
-            alt=""
-          />
+          <img class="icons" src="../Assets/Images/dermatologist.png" alt="" />
           <p>Dermatologist</p>
         </div>
         <div class="specializationCategory">
-          <img class="icons" src="../Resources/Images/neurologist.png" alt="" />
+          <img class="icons" src="../Assets/Images/neurologist.png" alt="" />
           <p>Neurologist</p>
         </div>
         <div class="specializationCategory">
-          <img class="icons" src="../Resources/Images/orthopedic.png" alt="" />
+          <img class="icons" src="../Assets/Images/orthopedic.png" alt="" />
           <p>Orthopedic</p>
         </div>
         <div class="specializationCategory">
           <img
             class="icons"
-            src="../Resources/Images/ophthalmologist.png"
+            src="../Assets/Images/ophthalmologist.png"
             alt=""
           />
           <p>Ophthalmologist</p>
@@ -136,22 +86,22 @@
       <p>Your trusted partner in health and wellness</p>
       <div class="choosingReasons">
         <div>
-          <img src="../Resources/Images/expert.png" alt="" />
+          <img src="../Assets/Images/expert.png" alt="" />
           <h4>Expert Doctors</h4>
           <p>Connect with experienced and certified healthcare professionals</p>
         </div>
         <div>
-          <img src="../Resources/Images/available.png" alt="" />
+          <img src="../Assets/Images/available.png" alt="" />
           <h4>24/7 Availability</h4>
           <p>Book appointments anytime, anywhere at your convenience</p>
         </div>
         <div>
-          <img src="../Resources/Images/secure.png" alt="" />
+          <img src="../Assets/Images/secure.png" alt="" />
           <h4>Secure & Private</h4>
           <p>Your health information is protected with advanced security</p>
         </div>
         <div>
-          <img src="../Resources/Images/quality.png" alt="" />
+          <img src="../Assets/Images/quality.png" alt="" />
           <h4>Quality Images</h4>
           <p>Top-rated doctors and clinics verified for excellence</p>
         </div>
@@ -159,7 +109,7 @@
     </div>
 
     <div class="urgentCare">
-      <img src="../Resources/Icons/calender.png" alt="" />
+      <img src="../Assets/Icons/black-calender.png" alt="" />
       <h3>Need Urgent Care?</h3>
       <p>
         Book an appointment with top doctors instantly. Get consultation within
@@ -174,7 +124,7 @@
     <footer>
       <div class="upper-header">
         <div>
-          <img src="../Resources/Images/logo.png" alt="" class="icons" />
+          <img src="../Assets/Images/logo.png" alt="" class="icons" />
           <h4>HealthCare</h4>
           <p>
             Your trusted platform for finding and booking the best healthcare
@@ -184,8 +134,8 @@
         <div>
           <h4>Quick Links</h4>
           <ul>
-            <li><a href="">Home</a></li>
-            <li><a href="">Find Doctors</a></li>
+            <li><a href="../HTML/index.html">Home</a></li>
+            <li><a href="../HTML/findDoctors.html">Find Doctors</a></li>
             <li><a href="">My Appointments</a></li>
             <li><a href="">Chat Assistant</a></li>
           </ul>
@@ -218,5 +168,7 @@
         </p>
       </div>
     </footer>
+
+    <script src="../JS/include.js"></script>
   </body>
 </html>

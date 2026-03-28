@@ -6,175 +6,150 @@
 }
 
 body {
-    background: linear-gradient(
-        135deg,
-        rgb(235, 255, 241),
-        rgb(241, 246, 254) 50%,
-        rgb(252, 245, 255) 95%
-    );
+	background: linear-gradient(
+		135deg,
+		rgb(235, 255, 241),
+		rgb(241, 246, 254) 50%,
+		rgb(252, 245, 255) 95%
+	);
 }
 
-.navigation-bar-logo {
-    margin-top: 30px;
+.auth-header-text {
+	margin-top: 100px;
 	border-radius: 20px;
-    text-align: center;
+	text-align: center;
 }
 
-.HealthCare {
-	text-decoration: none;
+.auth-header-text h4 {
+	padding-top: 25px;
+	font-size: 2.5rem;
 	color: black;
-	padding: 0 15px;
-
-	display: flex;
-	align-items: center;
-    justify-content: center;
-	gap: 0.8rem;
 }
 
-.HealthCare img {
-    height: 40px;
-	width: auto;
-	background-color: transparent;
-	border-radius: 10px;
-}
-
-.HealthCare h3 {
-	font-size: 1.8rem;
-	font-weight: 600;
-	letter-spacing: 1px;
-    color: black;
-}
-
-.navigation-bar-logo h4 {
-    padding-top: 25px;
-    font-size: 2.5rem;
-    color: black;
-}
-
-.navigation-bar-logo p {
-    color: rgb(85, 85, 85);
-    font-size: 1.2rem;
+.auth-header-text p {
+	color: rgb(85, 85, 85);
+	font-size: 1.2rem;
 }
 
 .signupForm {
-   width: 450px;
-   padding: 3rem 1.5rem;
-   margin-top: auto;
-   margin: 50px auto;
-   border: 1px solid rgb(217, 217, 217);
-   border-radius: 1rem;
-   background-color: white;
-   box-shadow: 3px 3px 10px rgb(187, 187, 187);
+	width: 450px;
+	padding: 3rem 1.5rem;
+	margin-top: auto;
+	margin: 50px auto;
+	border: 1px solid rgb(217, 217, 217);
+	border-radius: 1rem;
+	background-color: white;
+	box-shadow: 3px 3px 10px rgb(187, 187, 187);
 
-   display: flex;
-   flex-direction: column;
-   align-items: center;
-   justify-content: center;
-   gap: 1.5rem;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 1.5rem;
 }
 
 .signupForm div {
-    width: 90%;
-    display: flex;
-    flex-direction: column;
+	width: 90%;
+	display: flex;
+	flex-direction: column;
 }
 
 .signupForm div input[type="text"] {
-    height: 2rem;
-    padding: 0.5rem 1.5rem;
-    margin-top: 10px;
-    border: none;
-    border-radius: 10px;
-    background-color: rgb(243, 243, 245);
+	height: 2rem;
+	padding: 1.5rem 1.5rem;
+	margin-top: 10px;
+	border: none;
+	border-radius: 10px;
+	background-color: rgb(243, 243, 245);
 }
 
 .signupForm input[type="text"]:focus {
-    outline: none;
-    border: 1px solid rgb(98, 98, 98);
-    box-shadow: 0 0 0 3px rgb(199, 199, 199);
+	outline: none;
+	border: 1px solid rgb(98, 98, 98);
+	box-shadow: 0 0 0 3px rgb(199, 199, 199);
 }
 
 .rememberForgot {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
 }
 
 .rememberForgot {
-    font-size: 1rem;
-    display: flex;
-    flex-direction: row !important;
-    align-items: center;
-    justify-content: space-between;
+	font-size: 1rem;
+	display: flex;
+	flex-direction: row !important;
+	align-items: center;
+	justify-content: space-between;
 }
 
 .rememberForgot div {
-    width: 32%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
+	width: 32%;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
 }
 
 .rememberForgot div input {
-    appearance: none;
-    width: 20px;
-    height: 20px;
-    margin-top: -1px;
-    border: 1px solid rgb(197, 197, 197);
-    border-radius: 3px;
-    background-color: rgb(243, 243, 245);
-    cursor: pointer;
+	appearance: none;
+	width: 20px;
+	height: 20px;
+	margin-top: -1px;
+	border: 1px solid rgb(197, 197, 197);
+	border-radius: 3px;
+	background-color: rgb(243, 243, 245);
+	cursor: pointer;
 }
 
 .rememberForgot div input:checked {
-    background-color: black;
-    color: white;
+	background-color: black;
+	color: white;
 }
 
 .rememberForgot div input:checked::after {
-  content: "✔";
-  color: white;
-  font-size: 13px;
-  display: block;
-  text-align: center;
+	content: "✔";
+	color: white;
+	font-size: 13px;
+	display: block;
+	text-align: center;
 }
 
 .rememberForgot div a {
-    color: rgb(53, 167, 0);
+	color: rgb(53, 167, 0);
 }
 
 .rememberForgot div a:hover {
-    color: rgba(36, 105, 40, 0.947);
+	color: rgba(36, 105, 40, 0.947);
 }
 
 .signupForm a {
-    text-decoration: none;
-    color: rgb(0, 92, 0);
-    transition: letter-spacing 0.15s;
+	text-decoration: none;
+	color: rgb(0, 92, 0);
+	transition: letter-spacing 0.15s;
 }
 
 .signupForm a:hover {
-    color: rgb(22, 166, 22);
+	color: rgb(22, 166, 22);
 }
 
 .signupForm button {
-    width: 88%;
-    height: 50px;
-    padding: 0.7rem 1.2rem;
-    margin-top: 10px;
-    border: none;
-    border-radius: 5px;
-    background-color: rgb(51, 161, 0);
-    color: white;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.15s;
+	width: 88%;
+	height: 50px;
+	padding: 0.7rem 1.2rem;
+	margin-top: 10px;
+	border: none;
+	border-radius: 5px;
+	background-color: rgb(51, 161, 0);
+	color: white;
+	font-size: 1rem;
+	cursor: pointer;
+	transition: background-color 0.15s;
 }
 
 .signupForm button:hover {
-    background-color: rgba(1, 171, 12, 0.947);
+	background-color: rgba(1, 171, 12, 0.947);
 }
 
 .signupForm p a {
-    cursor: pointer;
+	cursor: pointer;
 }

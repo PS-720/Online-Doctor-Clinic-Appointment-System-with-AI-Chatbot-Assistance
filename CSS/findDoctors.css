@@ -1,0 +1,85 @@
+body {
+    background-color: rgb(253, 245, 242);
+}
+
+.container{
+    padding: 30px 80px;
+    margin-top: 80px;
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    /* height: 600px; */
+    border-radius: 10px;
+    gap: 16px;
+}
+
+/* Prevent grid items from overflowing their column width */
+.container > div {
+    min-width: 0;
+}
+
+.card{
+    background-color: rgb(255, 255, 255);
+    border-radius: 10px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-width: 0;
+    box-shadow: 3px 3px 15px rgb(219, 200, 200);
+}
+
+.card .card-content{
+    display: flex;
+    gap: 16px;
+    align-items: center;
+}
+
+.card .card-photo{
+    flex: 0 0 120px;
+}
+
+.card .card-photo img{
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+.card .card-text{
+    flex: 1;
+}
+
+.card .card-text h3{
+    margin: 0 0 8px;
+    font-size: 1.1rem;
+}
+
+.card .card-text p{
+    font-size: 0.9rem;
+    margin: 0;
+    line-height: 1.4;
+}
+
+.card .card-caption{
+    padding: 10px 20px;
+    font-size: 0.9rem;
+    color: black;
+    opacity: 0.85;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.bookDoctor {
+    display: block;
+    margin-left: auto;
+    font-size: 0.9rem;
+    font-weight: bold;
+    padding: 10px;
+    background-color: green;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
