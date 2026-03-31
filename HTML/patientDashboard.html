@@ -84,7 +84,7 @@
         </div>
 
         <div class="logout-btn">
-          <button>
+          <button id="logout-button">
             <img
               class="icons"
               src="../Assets/Icons/black-logout.svg"
@@ -530,7 +530,7 @@
 
         // Highlight the clicked menu button & Set Blue Icon
         let activeBtn = document.getElementById("btn-" + sectionName);
-        if (activeBtn) {
+          if (activeBtn) {
           activeBtn.classList.add("active-menu");
 
           let iconName = activeBtn.getAttribute("data-icon");
@@ -540,6 +540,30 @@
           }
         }
       }
+
+      // Logout functionality
+      document.getElementById("logout-button").addEventListener("click", function () {
+        if (confirm("Are you sure you want to logout?")) {
+          fetch("../PHP/logout.php", {
+            method: "POST",
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              if (data.success) {
+                // Clear user data from localStorage
+                localStorage.removeItem("smartcare_user");
+                // Redirect to login page
+                window.location.href = data.redirect;
+              } else {
+                alert("Logout failed. Please try again.");
+              }
+            })
+            .catch((error) => {
+              console.error("Logout error:", error);
+              alert("An error occurred during logout.");
+            });
+        }
+      });
     </script>
   </body>
 </html>
