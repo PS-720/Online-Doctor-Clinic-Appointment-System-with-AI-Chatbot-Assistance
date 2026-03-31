@@ -47,10 +47,19 @@
       <label class="label-element" for="confirmPassword">Confirm Password</label>
       <input class="input-element" id="confirmPassword" type="text" placeholder="Confirm your password" required>
     </div>
+    <div class="form-div">
+      <label class="label-element" for="access-type">Register As</label>
+      <select class="input-element select-role" name="role" id="access-type">
+        <option value="patient">Patient</option>
+        <option value="doctor">Doctor</option>
+        <option value="admin">Admin</option>
+      </select>
+    </div>
     <div class="form-div rememberForgot">
       <div style="width: 90%;">
         <input id="rememberMe" type="checkbox">
-        <label class="label-element" for="rememberMe">I agree to the <a href="">Terms Of Service</a> and <a href="">Privacy Policy</a></label>
+        <label class="label-element" for="rememberMe">I agree to the <a href="">Terms Of Service</a> and <a
+            href="">Privacy Policy</a></label>
       </div>
     </div>
     <button class="login-btn">Sign Up</button>

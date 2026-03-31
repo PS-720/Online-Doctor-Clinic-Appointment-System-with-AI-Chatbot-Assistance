@@ -175,20 +175,21 @@ button.menu-item-anchor {
 }
 
 .stats-cards:hover {
-	transform: scale(1.05);
-	box-shadow: 1px 1px 5px rgb(93, 93, 93);
+	transform: scale(1.02);
+	box-shadow: 1px 1px 5px rgb(202, 202, 202);
 }
 
 .stats-title {
-	font-size: 0.85rem;
+	font-size: 0.75rem;
+	font-weight: 600;
 	color: rgb(74, 85, 101);
-	margin-bottom: 0.7rem;
+	margin-bottom: 0.3rem;
 }
 
 .stats-numbers {
 	color: black;
-	font-size: 1.8rem;
-	font-weight: bold;
+	font-size: 1.5rem;
+	font-weight: 800;
 }
 
 .stats-icon {
@@ -238,7 +239,6 @@ button.menu-item-anchor {
 
 .app-list > div:hover {
 	background-color: rgb(255, 245, 245);
-	transform: scale(1.01);
 }
 
 .doc-name-logo {
@@ -285,24 +285,40 @@ button.menu-item-anchor {
 	font-size: 0.9rem;
 }
 
-.app-status {
+.app-status-confirmed {
 	padding: 0.3rem 0.5rem;
 	background-color: rgb(219, 252, 231);
 	border-radius: 12px;
 }
 
-.status {
+.status-confirmed {
 	font-size: 0.8rem;
 	font-weight: 650;
 	color: rgb(28, 130, 54);
 }
 
-.app-list > div:last-child .app-status {
+.app-status-pending {
+	padding: 0.3rem 0.5rem;
 	background-color: rgb(254, 249, 194);
+	border-radius: 12px;
 }
 
-.app-list > div:last-child .app-status .status {
+.status-pending {
+	font-size: 0.8rem;
+	font-weight: 650;
 	color: rgb(166, 95, 0);
+}
+
+.app-status-rejected {
+	padding: 0.3rem 0.5rem;
+	background-color: rgb(255, 226, 226);
+	border-radius: 12px;
+}
+
+.status-rejected {
+	font-size: 0.8rem;
+	font-weight: 650;
+	color: rgb(197, 0, 7);
 }
 
 .book-chat-cards {
@@ -341,7 +357,7 @@ button.menu-item-anchor {
 }
 
 .start-chat {
-  background: linear-gradient(to right, rgb(0, 192, 75), rgb(0, 176, 67));
+	background: linear-gradient(to right, rgb(0, 192, 75), rgb(0, 176, 67));
 }
 
 .bcc-buttons {
@@ -361,7 +377,130 @@ button.menu-item-anchor {
 }
 
 .start-chat-btn {
-  color: rgb(0, 166, 62)
+	color: rgb(0, 166, 62);
+}
+
+/* Book-Appointment */
+.appointments-heading {
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.app-details h3 {
+	font-size: 2rem;
+	font-weight: 800;
+	color: black;
+}
+
+.app-details p {
+	font-size: 1rem;
+	font-weight: 500;
+	color: rgb(74, 85, 106);
+}
+
+.book-appointment-btn {
+	padding: 0.6rem 1rem;
+	color: white;
+	background-color: rgb(4, 104, 227);
+	border: none;
+	border-radius: 8px;
+	font-weight: 500;
+	font-size: 0.85rem;
+
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	transition: all 0.15s ease;
+	cursor: pointer;
+}
+
+.book-appointment-btn:hover {
+	background-color: rgb(20, 71, 230);
+}
+
+.book-appointment-btn img {
+	width: 15px;
+}
+
+#section-my-appointments .dashboard .stats {
+	grid-template-columns: repeat(3, 1fr);
+}
+
+#section-my-appointments .dashboard .stats .stats-cards {
+	gap: 20px;
+	justify-content: start;
+}
+
+.my-appointment-table {
+	width: 100%;
+	padding: 2rem;
+	border: 1px solid rgb(229, 231, 235);
+	border-radius: 15px;
+	background-color: white;
+	margin-bottom: 2rem;
+}
+
+.my-appointment-table p {
+	font-size: 1.4rem;
+	font-weight: 800;
+}
+
+.app-table {
+	width: 100%;
+	margin-top: 2rem;
+	border-collapse: collapse;
+}
+
+.app-table th {
+	padding: 0.8rem 0.5rem;
+	font-size: 1rem;
+	font-weight: 700;
+	text-align: left;
+}
+
+.app-table td {
+	padding: 0.5rem ;
+	font-size: 0.9rem;
+	border-top: 1px solid rgb(213, 215, 219);
+}
+
+.app-table tr:hover {
+	background-color: rgb(245, 245, 247);
+}
+
+.app-table .app-status-confirmed, .app-table .app-status-pending, .app-table .app-status-rejected {
+	width: min-content;
+}
+
+.app-table .status-confirmed, .app-table .status-pending, .app-table .status-rejected {
+	font-size: 0.8rem;
+	font-weight: 700;
+}
+
+.app-table .app-day-time {
+	align-items: start;
+}
+
+.app-table .app-day, .app-table .app-time {
+	font-size: 0.9rem;
+	font-weight: 600;
+}
+
+.view-detail-btn {
+	padding: 0.5rem 0.8rem;
+	font-size: 0.85rem;
+	font-weight: 500;
+	background-color: white;
+	border: 1px solid rgb(229, 231, 235);
+	border-radius: 8px;
+	cursor: pointer;
+	transition: all 0.15s ease;
+}
+
+.view-detail-btn:hover {
+	background-color: rgb(233, 235, 239);
 }
 
 /* ===== Section Toggle (hidden / active) ===== */

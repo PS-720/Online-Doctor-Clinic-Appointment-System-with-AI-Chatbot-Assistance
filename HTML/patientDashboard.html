@@ -60,7 +60,7 @@
 		</div>
 
 		<!-- ===== SECTION: Dashboard ===== -->
-		<section id="section-dashboard" class="content-section active">
+		<section id="section-dashboard" class="content-section hidden">
 			<div class="dashboard">
 				<div class="greetings">
 					<h3>Welcome Back, Piyush!</h3>
@@ -127,8 +127,8 @@
 								<p class="app-time">10:00 AM</p>
 							</div>
 
-							<div class="app-status">
-								<p class="status">Confirmed</p>
+							<div class="app-status-confirmed">
+								<p class="status-confirmed">Confirmed</p>
 							</div>
 						</div>
 
@@ -149,8 +149,8 @@
 								<p class="app-time">02:30 PM</p>
 							</div>
 
-							<div class="app-status">
-								<p class="status">Confirmed</p>
+							<div class="app-status-confirmed">
+								<p class="status-confirmed">Confirmed</p>
 							</div>
 						</div>
 
@@ -171,8 +171,8 @@
 								<p class="app-time">11:00 AM</p>
 							</div>
 
-							<div class="app-status">
-								<p class="status">Pending</p>
+							<div class="app-status-pending">
+								<p class="status-pending">Pending</p>
 							</div>
 						</div>
 					</div>
@@ -195,37 +195,126 @@
 		</section>
 
 		<!-- ===== SECTION: Book Appointment ===== -->
-		<section id="section-book-appointment" class="content-section hidden">
+		<section id="section-book-appointment" class="content-section active">
 			<div class="dashboard">
 				<div class="greetings">
 					<h3>Book an Appointment</h3>
-					<p>Find a doctor and schedule your visit</p>
+					<p>Schedule your visit with our healthcare professionals</p>
 				</div>
-				<!-- Add your book appointment form/content here -->
-				<p style="color: rgb(107, 114, 128); font-style: italic">
-					Booking form coming soon...
-				</p>
+
 			</div>
 		</section>
 
 		<!-- ===== SECTION: My Appointments ===== -->
 		<section id="section-my-appointments" class="content-section hidden">
 			<div class="dashboard">
-				<div class="my-appointments">
+				<div class="appointments-heading">
 					<div class="app-details">
 						<h3>My Appointments</h3>
 						<p>View and manage all your appointments</p>
 					</div>
 
-					<button>
-						<img src="../Assets/Icons/white-calendar.svg" alt="Calendar Icon">
+					<button class="book-appointment-btn">
+						<img class="icons" src="../Assets/Icons/white-calendar.svg" alt="Calendar Icon">
 						Book New Appointment
 					</button>
 				</div>
-				<!-- Add your appointments list/content here -->
-				<p style="color: rgb(107, 114, 128); font-style: italic">
-					Appointments list coming soon...
-				</p>
+
+				<div class="stats">
+					<div class="stats-cards">
+						<div class="stats-icon" style="background-color: rgb(219, 252, 231)">
+							<img class="icons" src="../Assets/Icons/green-calendar.svg" alt="calendar icon" />
+						</div>
+						<div>
+							<p class="stats-title">Approved</p>
+							<p class="stats-numbers">2</p>
+						</div>
+					</div>
+					<div class="stats-cards">
+						<div class="stats-icon" style="background-color: rgb(254, 249, 194)">
+							<img class="icons" src="../Assets/Icons/brown-clock.svg" alt="clock icon" />
+						</div>
+						<div>
+							<p class="stats-title">Pending</p>
+							<p class="stats-numbers">2</p>
+						</div>
+					</div>
+					<div class="stats-cards">
+						<div class="stats-icon" style="background-color: rgb(255, 226, 226)">
+							<img class="icons" src="../Assets/Icons/red-cross.svg" alt="heart icon" />
+						</div>
+						<div>
+							<p class="stats-title">Rejected</p>
+							<p class="stats-numbers">1</p>
+						</div>
+					</div>
+				</div>
+
+				<div class="my-appointment-table">
+					<p>All Appointments</p>
+					<table class="app-table">
+						<tr>
+						<th>Doctor</th>
+						<th>Speciality</th>
+						<th>Date & Time</th>
+						<th>Symptoms</th>
+						<th>Status</th>
+						<th>Action</th>
+						</tr>
+						<tr>
+							<td>Piyush</td>
+							<td>Cardiologist</td>
+							<td>
+								<div class="app-day-time">
+									<p class="app-day">28 April, 2026</p>
+									<p class="app-time">10:00 AM</p>
+								</div>
+							</td>
+							<td>Recurring headaches</td>
+							<td>
+								<div class="app-status-confirmed">
+									<p class="status-confirmed">Approved</p>
+								</div>
+							</td>
+							<td><button class="view-detail-btn">View Details</button></td>
+						</tr>
+						<tr>
+							<td>Piyush</td>
+							<td>Neurologist</td>
+							<td>
+								<div class="app-day-time">
+									<p class="app-day">28 April, 2026</p>
+									<p class="app-time">10:00 AM</p>
+								</div>
+							</td>
+							<td>Recurring headaches</td>
+							<td>
+								<div class="app-status-rejected">
+									<p class="status-rejected">Rejected</p>
+								</div>
+							</td>
+							<td><button class="view-detail-btn">View Details</button></td>
+						</tr>
+						<tr>
+							<td>Piyush</td>
+							<td>Dermatologist</td>
+							<td>
+								<div class="app-day-time">
+									<p class="app-day">28 April, 2026</p>
+									<p class="app-time">10:00 AM</p>
+								</div>
+							</td>
+							<td>Recurring headaches</td>
+							<td>
+								<div class="app-status-pending">
+									<p class="status-pending">Pending</p>
+								</div>
+							</td>
+							<td><button class="view-detail-btn">View Details</button></td>
+						</tr>
+					</table>
+				</div>
+
 			</div>
 		</section>
 	</div>

@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" id="Flat" viewBox="0 0 256 256" preserveAspectRatio="xMidYMid meet" style="width: 200px; height: 200px; transform-origin: 50% 50%; transform: scaleX(1) scaleY(1) rotate(0deg);">
+  <g opacity="0.2" fill="#00A63E" style="fill:#00A63E;stroke:none" stroke="none" class="">
+    <path d="M40,88H216V48a8,8,0,0,0-8-8H48a8,8,0,0,0-8,8Z" fill="#00A63E" style="fill:#00A63E;stroke:none" stroke="none" class=""/>
+  </g>
+  <path d="M208,32H184V24a8,8,0,0,0-16,0v8H88V24a8,8,0,0,0-16,0v8H48A16.01833,16.01833,0,0,0,32,48V208a16.01833,16.01833,0,0,0,16,16H208a16.01833,16.01833,0,0,0,16-16V48A16.01833,16.01833,0,0,0,208,32ZM72,48v8a8,8,0,0,0,16,0V48h80v8a8,8,0,0,0,16,0V48h24l.00195,32H48V48ZM208,208H48V96H208.00293l.00684,112Z" fill="#00A63E" style="fill:#00A63E;stroke:none" stroke="none" class=""/>
+</svg>
