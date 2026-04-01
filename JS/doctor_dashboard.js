@@ -19,9 +19,13 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
 function loadDashboardData() {
+    // Re-check authentication to get latest user data
+    const userData = checkAuth('doctor');
+    if (!userData) return;
+
     fetch("../PHP/fetch_dashboard_data.php", {
         method: "POST",
-        body: JSON.stringify({ user_id: user.user_id, role: user.role })
+        body: JSON.stringify({ user_id: userData.id, role: userData.role })
     })
     .then(res => res.json())
     .then(res => {
@@ -30,9 +34,40 @@ function loadDashboardData() {
             updateDashboardStats(data.stats);
             updateUpcomingAppointments(data.upcoming);
             updateAvailabilityList(data.availability);
+            if (data.profile) {
+                updateDoctorProfile(data.profile);
+            }
         }
     })
     .catch(err => console.error("Data fetch error:", err));
+}
+
+function updateDoctorProfile(profile) {
+    // Top summary
+    const nameEle = document.getElementById('prof-full-name');
+    const specEle = document.getElementById('prof-specialization');
+    const expEle = document.getElementById('prof-experience');
+
+    if (nameEle) nameEle.textContent = 'Dr. ' + profile.full_name;
+    if (specEle) specEle.textContent = profile.specialization;
+    if (expEle) expEle.textContent = profile.experience_years + ' years of experience';
+
+    // Basic Info table
+    const name2Ele = document.getElementById('prof-full-name-2');
+    const emailEle = document.getElementById('prof-email');
+    const phoneEle = document.getElementById('prof-phone');
+    const spec2Ele = document.getElementById('prof-specialization-2');
+    const exp2Ele = document.getElementById('prof-experience-2');
+    const licEle = document.getElementById('prof-license');
+    const feeEle = document.getElementById('prof-fee');
+
+    if (name2Ele) name2Ele.textContent = 'Dr. ' + profile.full_name;
+    if (emailEle) emailEle.textContent = profile.email;
+    if (phoneEle) phoneEle.textContent = profile.phone || 'N/A';
+    if (spec2Ele) spec2Ele.textContent = profile.specialization;
+    if (exp2Ele) exp2Ele.textContent = profile.experience_years + ' years';
+    if (licEle) licEle.textContent = profile.qualification || 'N/A';
+    if (feeEle) feeEle.textContent = '₹' + profile.consultation_fee;
 }
 
 function updateDashboardStats(stats) {

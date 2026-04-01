@@ -19,21 +19,23 @@ if (!$user_id || !$role) {
 }
 
 $response = ["success" => true, "data" => []];
-
 if ($role === 'doctor') {
-    // 1. Get Doctor ID
-    $doctor_query = "SELECT doctor_id FROM doctors WHERE user_id = ?";
+    // 1. Get Full Doctor Profile
+    $doctor_query = "SELECT d.*, u.full_name, u.email, u.phone 
+                    FROM doctors d 
+                    JOIN users u ON d.user_id = u.user_id 
+                    WHERE d.user_id = ?";
     $stmt = mysqli_prepare($conn, $doctor_query);
     mysqli_stmt_bind_param($stmt, "i", $user_id);
     mysqli_stmt_execute($stmt);
     $doc_result = mysqli_stmt_get_result($stmt);
     $doctor = mysqli_fetch_assoc($doc_result);
-    $doctor_id = $doctor['doctor_id'];
 
-    if (!$doctor_id) {
+    if (!$doctor) {
         echo json_encode(["success" => false, "message" => "Doctor record not found"]);
         exit;
     }
+    $doctor_id = $doctor['doctor_id'];
 
     // 2. Fetch Dashboard Stats
     $stats = [];
@@ -80,7 +82,8 @@ if ($role === 'doctor') {
     $response['data'] = [
         "stats" => $stats,
         "availability" => $availability,
-        "upcoming" => $upcoming
+        "upcoming" => $upcoming,
+        "profile" => $doctor
     ];
 
 } elseif ($role === 'admin') {
@@ -96,7 +99,7 @@ if ($role === 'doctor') {
     }
 
     $stats['total_doctors'] = getCount($conn, "SELECT COUNT(*) as count FROM doctors");
-    $stats['total_users'] = getCount($conn, "SELECT COUNT(*) as count FROM users WHERE role = 'patient'");
+    $stats['total_users'] = getCount($conn, "SELECT COUNT(*) as count FROM users WHERE role != 'admin'");
     $stats['total_appointments'] = getCount($conn, "SELECT COUNT(*) as count FROM appointments");
     
     $confirmed_count = getCount($conn, "SELECT COUNT(*) as count FROM appointments WHERE status = 'confirmed'");
@@ -119,19 +122,23 @@ if ($role === 'doctor') {
     $recent_appts_query = "SELECT a.*, u_p.full_name as patient_name, u_d.full_name as doctor_name FROM appointments a 
                           JOIN patients p ON a.patient_id = p.patient_id JOIN users u_p ON p.user_id = u_p.user_id
                           JOIN doctors d ON a.doctor_id = d.doctor_id JOIN users u_d ON d.user_id = u_d.user_id
-                          ORDER BY a.created_at DESC LIMIT 5";
+                          ORDER BY a.appointment_date DESC, a.start_time DESC LIMIT 5";
     $recent_res = mysqli_query($conn, $recent_appts_query);
     $recent_appts = [];
-    while ($row = mysqli_fetch_assoc($recent_res)) {
-        $recent_appts[] = $row;
+    if ($recent_res) {
+        while ($row = mysqli_fetch_assoc($recent_res)) {
+            $recent_appts[] = $row;
+        }
     }
 
     // 4. All Doctors for Management
     $all_doctors_query = "SELECT d.*, u.full_name, u.email FROM doctors d JOIN users u ON d.user_id = u.user_id";
     $all_doctors_res = mysqli_query($conn, $all_doctors_query);
     $all_doctors = [];
-    while ($row = mysqli_fetch_assoc($all_doctors_res)) {
-        $all_doctors[] = $row;
+    if ($all_doctors_res) {
+        while ($row = mysqli_fetch_assoc($all_doctors_res)) {
+            $all_doctors[] = $row;
+        }
     }
 
     // 5. All Appointments for Management
@@ -141,9 +148,13 @@ if ($role === 'doctor') {
                        ORDER BY a.appointment_date DESC, a.start_time DESC";
     $all_appts_res = mysqli_query($conn, $all_appts_query);
     $all_appts = [];
-    while ($row = mysqli_fetch_assoc($all_appts_res)) {
-        $all_appts[] = $row;
+    if ($all_appts_res) {
+        while ($row = mysqli_fetch_assoc($all_appts_res)) {
+            $all_appts[] = $row;
+        }
     }
+
+    error_log("Admin dashboard accessed by user ID: " . $user_id);
 
     $response['data'] = [
         "stats" => $stats,

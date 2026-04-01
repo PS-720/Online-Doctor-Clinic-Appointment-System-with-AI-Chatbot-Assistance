@@ -59,11 +59,12 @@ function loadAdminDashboardData(userData) {
     
     fetch("../PHP/fetch_dashboard_data.php", {
         method: "POST",
-        body: JSON.stringify({ user_id: userData.user_id, role: userData.role })
+        body: JSON.stringify({ user_id: userData.id, role: userData.role })
     })
     .then(res => res.json())
     .then(res => {
         if (res.success) {
+            console.log("Admin Dashboard Data Loaded:", res.data);
             const data = res.data;
             updateAdminStats(data.stats);
             updateRecentAppointments(data.recent_appointments);
@@ -71,6 +72,8 @@ function loadAdminDashboardData(userData) {
             renderDoctorsTable(data.all_doctors);
             renderAppointmentsTable(data.all_appointments);
             populateDoctorSelect(data.all_doctors);
+        } else {
+            console.warn("Admin fetch error:", res.message);
         }
     })
     .catch(err => console.error("Admin data fetch error:", err));
