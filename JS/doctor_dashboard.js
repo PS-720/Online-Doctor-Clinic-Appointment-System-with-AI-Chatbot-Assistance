@@ -155,14 +155,24 @@ function updateAvailabilityList(availability) {
 }
 
 function handleAddSlot() {
+    // Get current user auth data
+    const userData = checkAuth('doctor');
+    if (!userData) return;
+
     const day = document.querySelector('.add-slot-card select').value;
-    const start = document.querySelectorAll('.add-slot-card input')[0].value;
-    const end = document.querySelectorAll('.add-slot-card input')[1].value;
+    const inputs = document.querySelectorAll('.add-slot-card input');
+    const start = inputs[0].value;
+    const end = inputs[1].value;
+
+    if (!day || !start || !end) {
+        alert("Please fill in all fields.");
+        return;
+    }
 
     fetch("../PHP/save_availability.php", {
         method: "POST",
         body: JSON.stringify({
-            user_id: user.user_id, // Backend uses user_id to find doctor record
+            user_id: userData.id, 
             day_of_week: day,
             start_time: start,
             end_time: end
@@ -176,6 +186,10 @@ function handleAddSlot() {
         } else {
             alert(res.message);
         }
+    })
+    .catch(err => {
+        console.error("Save availability error:", err);
+        alert("Failed to save availability.");
     });
 }
 

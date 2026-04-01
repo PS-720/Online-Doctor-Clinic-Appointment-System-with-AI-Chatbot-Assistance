@@ -164,17 +164,16 @@ if ($role === 'doctor') {
         "all_appointments" => $all_appts
     ];
 } elseif ($role === 'patient') {
-    // 1. Get Patient ID
     $patient_query = "SELECT patient_id FROM patients WHERE user_id = ?";
     $stmt = mysqli_prepare($conn, $patient_query);
     mysqli_stmt_bind_param($stmt, "i", $user_id);
     mysqli_stmt_execute($stmt);
     $pat_result = mysqli_stmt_get_result($stmt);
     $patient = mysqli_fetch_assoc($pat_result);
-    $patient_id = $patient['patient_id'];
+    $patient_id = $patient['patient_id'] ?? null;
 
     if (!$patient_id) {
-        echo json_encode(["success" => false, "message" => "Patient record not found"]);
+        echo json_encode(["success" => false, "message" => "Patient record not found. Please log in again."]);
         exit;
     }
 
@@ -182,25 +181,22 @@ if ($role === 'doctor') {
     $stats = [];
     $today = date('Y-m-d');
     
-    // Total appointments count
-    $total_res = mysqli_query($conn, "SELECT COUNT(*) as count FROM appointments WHERE patient_id = $patient_id");
-    $stats['total_appointments'] = mysqli_fetch_assoc($total_res)['count'];
+    // Total visits (confirmed + completed)
+    $total_res = mysqli_query($conn, "SELECT COUNT(*) as count FROM appointments WHERE patient_id = $patient_id AND status IN ('confirmed', 'completed')");
+    $stats['total_appointments'] = mysqli_fetch_assoc($total_res)['count'] ?? 0;
 
     // Upcoming visits count
     $upcoming_count_res = mysqli_query($conn, "SELECT COUNT(*) as count FROM appointments WHERE patient_id = $patient_id AND appointment_date >= '$today' AND status = 'confirmed'");
-    $stats['upcoming_visits'] = mysqli_fetch_assoc($upcoming_count_res)['count'];
+    $stats['upcoming_visits'] = mysqli_fetch_assoc($upcoming_count_res)['count'] ?? 0;
 
-    // Approved count (for table stats)
+    // Table Stats
     $approved_res = mysqli_query($conn, "SELECT COUNT(*) as count FROM appointments WHERE patient_id = $patient_id AND status = 'confirmed'");
-    $stats['approved'] = mysqli_fetch_assoc($approved_res)['count'];
+    $stats['approved'] = mysqli_fetch_assoc($approved_res)['count'] ?? 0;
 
-    // Pending count
-    $pending_res = mysqli_query($conn, "SELECT COUNT(*) as count FROM appointments WHERE patient_id = $patient_id AND status = 'pending'");
-    $stats['pending'] = mysqli_fetch_assoc($pending_res)['count'];
+    $stats['pending'] = 0; // Not used in currently supported enum statuses
 
-    // Rejected count
     $rejected_res = mysqli_query($conn, "SELECT COUNT(*) as count FROM appointments WHERE patient_id = $patient_id AND status = 'cancelled'");
-    $stats['rejected'] = mysqli_fetch_assoc($rejected_res)['count'];
+    $stats['rejected'] = mysqli_fetch_assoc($rejected_res)['count'] ?? 0;
 
     // 3. Fetch Full Appointment History
     $history_query = "SELECT a.*, u_d.full_name as doctor_name, d.specialization FROM appointments a 

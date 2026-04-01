@@ -10,14 +10,28 @@ if (!$data) {
     exit;
 }
 
-$doctor_id = $data['doctor_id'] ?? null;
+$user_id = $data['user_id'] ?? null;
 $day_of_week = $data['day_of_week'] ?? null;
 $start_time = $data['start_time'] ?? null;
 $end_time = $data['end_time'] ?? null;
 $slot_duration = $data['slot_duration'] ?? 15;
 
-if (!$doctor_id || !$day_of_week || !$start_time || !$end_time) {
+if (!$user_id || !$day_of_week || !$start_time || !$end_time) {
     echo json_encode(["success" => false, "message" => "Missing required fields"]);
+    exit;
+}
+
+// Find doctor_id from user_id
+$doc_query = "SELECT doctor_id FROM doctors WHERE user_id = ?";
+$stmt = mysqli_prepare($conn, $doc_query);
+mysqli_stmt_bind_param($stmt, "i", $user_id);
+mysqli_stmt_execute($stmt);
+$res = mysqli_stmt_get_result($stmt);
+$doctor = mysqli_fetch_assoc($res);
+$doctor_id = $doctor['doctor_id'] ?? null;
+
+if (!$doctor_id) {
+    echo json_encode(["success" => false, "message" => "Doctor account not found"]);
     exit;
 }
 
