@@ -44,15 +44,74 @@ window.addEventListener('DOMContentLoaded', () => {
         closeBtn.onclick = () => modal.style.display = 'none';
     }
 
-    // Form submission for adding a doctor
-    const addDoctorForm = document.getElementById('add-doctor-form');
-    if (addDoctorForm) {
-        addDoctorForm.onsubmit = handleAddDoctor;
+    // Modal Control for Password Change
+    const passwordModal = document.getElementById('password-change-modal');
+    const openPasswordBtn = document.getElementById('open-password-modal');
+    const closePasswordBtn = document.getElementById('close-password-modal');
+
+    if (openPasswordBtn && passwordModal) {
+        openPasswordBtn.onclick = () => passwordModal.style.display = 'block';
     }
+    if (closePasswordBtn && passwordModal) {
+        closePasswordBtn.onclick = () => passwordModal.style.display = 'none';
+    }
+
+    // Password matching validation
+    const newPass = document.getElementById('new-password');
+    const confirmPass = document.getElementById('confirm-password');
+    const passError = document.getElementById('password-error');
+
+    if (newPass && confirmPass) {
+        const validate = () => {
+            if (confirmPass.value && newPass.value !== confirmPass.value) {
+                passError.style.display = 'block';
+            } else {
+                passError.style.display = 'none';
+            }
+        };
+        newPass.oninput = validate;
+        confirmPass.oninput = validate;
+    }
+
+    // Form submissions
+    const addDoctorForm = document.getElementById('add-doctor-form');
+    if (addDoctorForm) addDoctorForm.onsubmit = handleAddDoctor;
+
+    const changePassForm = document.getElementById('change-password-form');
+    if (changePassForm) changePassForm.onsubmit = (e) => handleChangePassword(e, userData);
 
     // Initial data fetch
     loadAdminDashboardData(userData);
 });
+
+function handleChangePassword(e, userData) {
+    e.preventDefault();
+    const newPass = document.getElementById('new-password').value;
+    const confirmPass = document.getElementById('confirm-password').value;
+
+    if (newPass !== confirmPass) {
+        alert("Passwords do not match!");
+        return;
+    }
+
+    const formData = new FormData(e.target);
+    const data = Object.fromEntries(formData.entries());
+    data.user_id = userData.id;
+
+    fetch("../PHP/change_password.php", {
+        method: "POST",
+        body: JSON.stringify(data)
+    })
+    .then(res => res.json())
+    .then(res => {
+        alert(res.message);
+        if (res.success) {
+            document.getElementById('password-change-modal').style.display = 'none';
+            e.target.reset();
+        }
+    })
+    .catch(err => console.error("Password change error:", err));
+}
 
 function loadAdminDashboardData(userData) {
     if (!userData) return;
