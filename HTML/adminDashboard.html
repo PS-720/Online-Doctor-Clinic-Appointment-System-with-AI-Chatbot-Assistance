@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | SmartCare</title>
+    <link rel="stylesheet" href="../CSS/admin.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="main-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-logo">
+                <img src="../Assets/Icons/blue-heart.svg" alt="SmartCare Logo">
+                <p>SmartCare</p>
+            </div>
+            
+            <nav class="sidebar-menu">
+                <a href="#" class="menu-item" id="menu-dashboard" onclick="showSection('dashboard')">
+                    <img src="../Assets/Icons/blue-dashboard.svg" alt="Dashboard">
+                    <span>Dashboard</span>
+                </a>
+                <a href="#" class="menu-item active" id="menu-doctors" onclick="showSection('doctors')">
+                    <img src="../Assets/Icons/gray-stethoscope.svg" alt="Doctors">
+                    <span>Manage Doctors</span>
+                </a>
+                <a href="#" class="menu-item" id="menu-appointments" onclick="showSection('appointments')">
+                    <img src="../Assets/Icons/gray-calendar.svg" alt="Appointments">
+                    <span>Appointments</span>
+                </a>
+                <a href="#" class="menu-item" id="menu-users" onclick="showSection('users')">
+                    <img src="../Assets/Icons/blue-users.svg" alt="Users">
+                    <span>Users</span>
+                </a>
+                <a href="#" class="menu-item" id="menu-slots" onclick="showSection('slots')">
+                    <img src="../Assets/Icons/brown-clock.svg" alt="Slot Control" style="filter: grayscale(1); opacity: 0.6;">
+                    <span>Slot Control</span>
+                </a>
+            </nav>
+
+            <div class="logout-container">
+                <button class="logout-btn" id="logout-button">
+                    <img src="../Assets/Icons/black-logout.svg" alt="Logout" style="width: 18px; filter: invert(30%) sepia(80%) saturate(500%) hue-rotate(340deg);">
+                    <span>Logout</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="content-area">
+            
+            <!-- ===== SECTION: Dashboard ===== -->
+            <div id="section-dashboard" class="content-section active">
+                <header class="header-section">
+                    <h1>Admin Dashboard</h1>
+                    <p>Manage your healthcare platform</p>
+                </header>
+
+                <!-- Analytics Row -->
+                <div class="admin-stats-grid">
+                    <!-- Total Doctors -->
+                    <div class="metric-card">
+                        <div class="metric-icon-box blue">
+                            <img src="../Assets/Icons/blue-stethoscope-circle.svg" alt="Doctors" style="width: 24px;">
+                        </div>
+                        <div>
+                            <p class="metric-label">Total Doctors</p>
+                            <h3 class="metric-value">0</h3>
+                        </div>
+                        <p class="metric-trend">--</p>
+                    </div>
+
+                    <!-- Total Users -->
+                    <div class="metric-card">
+                        <div class="metric-icon-box green">
+                            <img src="../Assets/Icons/green-users-circle.svg" alt="Users" style="width: 24px;">
+                        </div>
+                        <div>
+                            <p class="metric-label">Total Users</p>
+                            <h3 class="metric-value">0</h3>
+                        </div>
+                        <p class="metric-trend">--</p>
+                    </div>
+
+                    <!-- Total Appointments -->
+                    <div class="metric-card">
+                        <div class="metric-icon-box purple">
+                            <img src="../Assets/Icons/purple-calendar-circle.svg" alt="Appointments" style="width: 24px;">
+                        </div>
+                        <div>
+                            <p class="metric-label">Total Appointments</p>
+                            <h3 class="metric-value">0</h3>
+                        </div>
+                        <p class="metric-trend">--</p>
+                    </div>
+
+                    <!-- Approval Rate -->
+                    <div class="metric-card">
+                        <div class="metric-icon-box magenta">
+                            <img src="../Assets/Icons/magenta-chart.svg" alt="Rate" style="width: 24px;">
+                        </div>
+                        <div>
+                            <p class="metric-label">Approval Rate</p>
+                            <h3 class="metric-value">0%</h3>
+                        </div>
+                        <p class="metric-trend">--</p>
+                    </div>
+                </div>
+
+                <!-- Management Grid -->
+                <div class="admin-main-grid">
+                    <!-- Recent Appointments -->
+                    <section class="admin-card">
+                        <header class="admin-card-header">
+                            <h2>Recent Appointments</h2>
+                        </header>
+                        <div class="activity-list" id="activity-list-container">
+                            <!-- Populated via JS -->
+                            <p style="text-align:center; padding: 2rem; color: #64748b;">Loading appointments...</p>
+                        </div>
+                    </section>
+
+                    <!-- Pending Schedule Approvals -->
+                    <section class="admin-card">
+                        <header class="admin-card-header">
+                            <h2>Schedule Approvals</h2>
+                        </header>
+                        <div class="approval-list" id="approval-list-container">
+                            <!-- Populated via JS -->
+                            <p style="text-align:center; padding: 2rem; color: #64748b;">Loading approvals...</p>
+                        </div>
+                    </section>
+
+                    <!-- Top Performing Doctors -->
+                    <section class="admin-card">
+                        <header class="admin-card-header">
+                            <h2>Top Performing Doctors</h2>
+                        </header>
+                        <div class="ranking-list">
+                            <p style="text-align:center; padding: 2rem; color: #64748b;">No data available.</p>
+                        </div>
+                    </section>
+                </div>
+            </div>
+
+            <!-- ===== SECTION: Manage Doctors ===== -->
+            <div id="section-doctors" class="content-section active">
+                <header class="header-section">
+                    <h1>Manage Doctors</h1>
+                </header>
+
+                <div class="admin-toolbar">
+                    <div class="search-wrapper">
+                        <img src="../Assets/Icons/gray-search.svg" alt="Search">
+                        <input type="text" placeholder="Search doctors...">
+                    </div>
+                    <button class="btn-add-doctor">
+                        <img src="../Assets/Icons/white-plus.svg" alt="Add" style="width: 14px;">
+                        Add Doctor
+                    </button>
+                </div>
+
+                <div class="admin-stats-grid">
+                    <div class="metric-card">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                            <div>
+                                <p class="metric-label">Total Doctors</p>
+                                <h3 class="metric-value">0</h3>
+                            </div>
+                            <img src="../Assets/Icons/gray-stethoscope-gear.svg" alt="Icon" style="width: 24px; opacity: 0.5;">
+                        </div>
+                    </div>
+                    <div class="metric-card active-stat">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                            <div>
+                                <p class="metric-label">Active Doctors</p>
+                                <h3 class="metric-value" style="color: var(--success-green);">0</h3>
+                            </div>
+                            <img src="../Assets/Icons/gray-stethoscope-gear.svg" alt="Icon" style="width: 24px; filter: invert(48%) sepia(79%) saturate(2476%) hue-rotate(86deg) brightness(118%) contrast(119%);">
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                            <div>
+                                <p class="metric-label">Inactive Doctors</p>
+                                <h3 class="metric-value">0</h3>
+                            </div>
+                            <img src="../Assets/Icons/gray-stethoscope-gear.svg" alt="Icon" style="width: 24px; opacity: 0.5;">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="manage-table-container">
+                    <div class="admin-card-header">
+                        <h2 id="doctors-count-label" style="font-size: 1.1rem;">All Doctors</h2>
+                    </div>
+                    <table class="manage-table">
+                        <thead>
+                            <tr>
+                                <th>Doctor</th>
+                                <th>Specialization</th>
+                                <th>Experience</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="doctors-table-body">
+                            <!-- Dynamic Doctors -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- ===== SECTION: Appointments ===== -->
+            <div id="section-appointments" class="content-section">
+                <header class="header-section">
+                    <h1>Appointment Management</h1>
+                </header>
+
+                <div class="admin-stats-grid">
+                    <div class="metric-card">
+                        <p class="metric-label">Total</p>
+                        <h3 class="metric-value appt-stat" id="stat-total-appts">0</h3>
+                    </div>
+                    <div class="metric-card confirmed-stat">
+                        <p class="metric-label">Confirmed</p>
+                        <h3 class="metric-value appt-stat" id="stat-confirmed-appts">0</h3>
+                    </div>
+                    <div class="metric-card completed-stat">
+                        <p class="metric-label">Completed</p>
+                        <h3 class="metric-value appt-stat" id="stat-completed-appts">0</h3>
+                    </div>
+                    <div class="metric-card cancelled-stat">
+                        <p class="metric-label">Cancelled</p>
+                        <h3 class="metric-value appt-stat" id="stat-cancelled-appts">0</h3>
+                    </div>
+                </div>
+
+                <div class="manage-table-container">
+                    <div class="admin-card-header">
+                        <h2 id="appts-count-label" style="font-size: 1.1rem;">All Appointments</h2>
+                    </div>
+                    <table class="manage-table">
+                        <thead>
+                            <tr>
+                                <th>Patient</th>
+                                <th>Doctor</th>
+                                <th>Date & Time</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="appointments-table-body">
+                            <!-- Dynamic Appointments -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- ===== SECTION: Slot Control ===== -->
+            <div id="section-slots" class="content-section">
+                <header class="header-section">
+                    <h1>Slot Control</h1>
+                    <p>Manage individual time slots for any doctor</p>
+                </header>
+
+                <div class="admin-toolbar" style="margin-bottom: 2rem;">
+                    <div class="dr-selection-box" style="display: flex; gap: 20px; align-items: center;">
+                        <div class="form-group" style="margin-bottom:0;">
+                            <label style="display:block; font-size:0.8rem; margin-bottom:4px; font-weight:700;">Select Doctor</label>
+                            <select id="slot-dr-select" class="custom-select" style="padding: 10px; border-radius: 8px; border: 1px solid #e2e8f0; width: 250px;">
+                                <!-- Populated by JS -->
+                            </select>
+                        </div>
+                        <div class="form-group" style="margin-bottom:0;">
+                            <label style="display:block; font-size:0.8rem; margin-bottom:4px; font-weight:700;">Date</label>
+                            <input type="date" id="slot-date-picker" style="padding: 10px; border-radius: 8px; border: 1px solid #e2e8f0;">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slots-container-admin" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px;">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+
+            <div id="section-users" class="content-section">
+                <h1>Manage Users</h1>
+                <p>User management and role assignment is coming soon.</p>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Add Doctor Modal -->
+    <div id="add-doctor-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="modal-header">
+                <h2>Add New Doctor</h2>
+                <p>Register a new medical professional</p>
+            </div>
+            <form id="add-doctor-form" class="modal-form">
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" name="full_name" placeholder="Dr. John Doe" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Email Address</label>
+                        <input type="email" name="email" placeholder="john.doe@smartcare.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Phone Number</label>
+                        <input type="tel" name="phone" placeholder="1234567890" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" name="password" placeholder="••••••••" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Specialization</label>
+                        <input type="text" name="specialization" placeholder="Cardiologist" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Experience (Years)</label>
+                        <input type="number" name="experience" placeholder="10" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Consultation Fee ($)</label>
+                        <input type="number" name="fee" placeholder="150" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Medical License No.</label>
+                    <input type="text" name="license" placeholder="LIC-123456" required>
+                </div>
+                <button type="submit" class="btn-submit-modal">Register Doctor</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../JS/auth.js"></script>
+    <script src="../JS/admin_dashboard.js"></script>
+</body>
+</html>

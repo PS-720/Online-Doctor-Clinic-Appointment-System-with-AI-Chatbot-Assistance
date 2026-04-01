@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Dashboard | SmartCare</title>
+    <link rel="stylesheet" href="../CSS/doctor.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="main-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-logo">
+                <img src="../Assets/Icons/blue-heart.svg" alt="SmartCare Logo">
+                <p>SmartCare</p>
+            </div>
+            
+            <nav class="sidebar-menu">
+                <a href="#" class="menu-item active" id="menu-dashboard" onclick="showSection('dashboard')">
+                    <img src="../Assets/Icons/blue-dashboard.svg" alt="Dashboard" class="menu-icon">
+                    <span>Dashboard</span>
+                </a>
+                <a href="#" class="menu-item" id="menu-appointments" onclick="showSection('appointments')">
+                    <img src="../Assets/Icons/gray-calendar.svg" alt="Appointments" class="menu-icon">
+                    <span>My Appointments</span>
+                </a>
+                <a href="#" class="menu-item" id="menu-availability" onclick="showSection('availability')">
+                    <img src="../Assets/Icons/brown-clock.svg" alt="Availability" class="menu-icon" style="filter: grayscale(1); opacity: 0.6;">
+                    <span>Availability</span>
+                </a>
+                <a href="#" class="menu-item" id="menu-patients" onclick="showSection('patients')">
+                    <img src="../Assets/Icons/gray-textfile.svg" alt="Patients" class="menu-icon">
+                    <span>Patients</span>
+                </a>
+                <a href="#" class="menu-item" id="menu-profile" onclick="showSection('profile')">
+                    <img src="../Assets/Icons/black-profile.png" alt="Profile" class="menu-icon" style="width: 20px; filter: grayscale(1); opacity: 0.6;">
+                    <span>Profile</span>
+                </a>
+            </nav>
+
+            <div class="logout-container">
+                <button class="logout-btn" id="logout-button">
+                    <img src="../Assets/Icons/black-logout.svg" alt="Logout" style="width: 18px; filter: invert(30%) sepia(80%) saturate(500%) hue-rotate(340deg);">
+                    <span>Logout</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="content-area">
+            
+            <!-- ===== SECTION: Dashboard ===== -->
+            <div id="section-dashboard" class="content-section active">
+                <header class="header-section">
+                    <h1>Doctor Dashboard</h1>
+                    <p>Welcome back!</p>
+                    <p style="font-size: 0.9rem; margin-top: 4px;">Here's your practice overview for today</p>
+                </header>
+
+                <!-- Stats Grid -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-info">
+                            <h3>Today's Appointments</h3>
+                            <div class="stat-value">0</div>
+                            <div class="stat-label">Scheduled</div>
+                        </div>
+                        <div class="stat-icon blue">
+                            <img src="../Assets/Icons/blue-calendar.svg" alt="Calendar" style="width: 24px;">
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-info">
+                            <h3>Completed Today</h3>
+                            <div class="stat-value">0</div>
+                            <div class="stat-label">Consultations</div>
+                        </div>
+                        <div class="stat-icon green">
+                            <img src="../Assets/Icons/green-check.svg" alt="Check" style="width: 24px;">
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-info">
+                            <h3>Total Patients</h3>
+                            <div class="stat-value">0</div>
+                            <div class="stat-label">All time</div>
+                        </div>
+                        <div class="stat-icon blue">
+                            <img src="../Assets/Icons/blue-users.svg" alt="Users" style="width: 24px;">
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-info">
+                            <div class="status-pill">
+                                <span style="width: 8px; height: 8px; background: #22c55e; border-radius: 50%;"></span>
+                                Available
+                            </div>
+                            <h3>Status</h3>
+                            <div class="stat-label">Online</div>
+                        </div>
+                        <div class="stat-icon green">
+                            <img src="../Assets/Icons/green-pulse.svg" alt="Pulse icon" style="width: 24px;">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Two Column Dashboard Grid -->
+                <div class="dashboard-grid">
+                    <!-- Today's Appointments -->
+                    <section class="card-container">
+                        <div class="card-header">
+                            <h2>Today's Appointments</h2>
+                        </div>
+                        <div class="app-list">
+                            <p style="text-align:center; padding: 2rem; color: #64748b;">No appointments for today.</p>
+                        </div>
+                    </section>
+
+                    <!-- Manage Availability -->
+                    <section class="card-container">
+                        <div class="card-header">
+                            <h2>Manage Availability</h2>
+                        </div>
+                        <div class="availability-list">
+                            <p style="font-size: 0.85rem; font-weight: 700; margin-bottom: 8px;">Working Days</p>
+                            
+                            <div class="day-row">
+                                <span>Monday</span>
+                                <label class="switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            <div class="day-row">
+                                <span>Tuesday</span>
+                                <label class="switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            <div class="day-row">
+                                <span>Wednesday</span>
+                                <label class="switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            <div class="day-row active-day">
+                                <span style="font-weight: 700;">Thursday</span>
+                                <label class="switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            <div class="day-row">
+                                <span>Friday</span>
+                                <label class="switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            <div class="day-row">
+                                <span>Saturday</span>
+                                <label class="switch">
+                                    <input type="checkbox">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            <div class="day-row">
+                                <span>Sunday</span>
+                                <label class="switch">
+                                    <input type="checkbox">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+
+                            <div class="working-hours">
+                                <p style="font-size: 0.85rem; font-weight: 700;">Working Hours</p>
+                                <div class="hours-grid">
+                                    <div class="time-input-group">
+                                        <label>Start Time</label>
+                                        <input type="text" value="09:00 AM">
+                                    </div>
+                                    <div class="time-input-group">
+                                        <label>End Time</label>
+                                        <input type="text" value="05:00 PM">
+                                    </div>
+                                </div>
+                                <button class="save-btn">Save Availability</button>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+                <!-- Recent Appointments Table -->
+                <section class="table-container">
+                    <div class="card-header">
+                        <h2>Recent Appointments</h2>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Patient</th>
+                                <th>Date</th>
+                                <th>Time</th>
+                                <th>Symptoms</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Dynamic data will load here -->
+                        </tbody>
+                    </table>
+                </section>
+            </div>
+
+            <!-- ===== SECTION: My Appointments ===== -->
+            <div id="section-appointments" class="content-section">
+                <header class="header-section">
+                    <h1>My Appointments</h1>
+                    <p>Manage your patient appointments</p>
+                </header>
+
+                <!-- Mini Stats Row -->
+                <div class="mini-stats">
+                    <div class="mini-stat-card">
+                        <div class="mini-stat-icon blue">
+                            <img src="../Assets/Icons/blue-calendar.svg" alt="Calendar" style="width: 18px;">
+                        </div>
+                        <div class="mini-stat-info">
+                            <p>Today's Appointments</p>
+                            <h4>0</h4>
+                        </div>
+                    </div>
+                    <div class="mini-stat-card">
+                        <div class="mini-stat-icon green">
+                            <img src="../Assets/Icons/green-check.svg" alt="Completed" style="width: 18px;">
+                        </div>
+                        <div class="mini-stat-info">
+                            <p>Completed</p>
+                            <h4>0</h4>
+                        </div>
+                    </div>
+                    <div class="mini-stat-card">
+                        <div class="mini-stat-icon red">
+                            <img src="../Assets/Icons/red-cross-circle.svg" alt="Cancelled" style="width: 18px;">
+                        </div>
+                        <div class="mini-stat-info">
+                            <p>Cancelled</p>
+                            <h4>0</h4>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-header" style="margin-bottom: 1.5rem;">
+                    <h2 style="font-size: 1.2rem; font-weight: 800;">Upcoming Appointments</h2>
+                </div>
+
+                <!-- Appointment Cards List -->
+                <div class="upcoming-appointment-list">
+                    <p style="text-align:center; padding: 2rem; color: #64748b;">No scheduled appointments.</p>
+                </div>
+            </div>
+
+            <!-- ===== SECTION: Manage Availability ===== -->
+            <div id="section-availability" class="content-section">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 2rem;">
+                    <header class="header-section" style="margin-bottom: 0;">
+                        <h1>Manage Availability</h1>
+                        <p>Set your working hours and availability</p>
+                    </header>
+                    <button class="btn-save-changes">
+                        <img src="../Assets/Icons/white-save.svg" alt="Save" style="width: 18px;">
+                        Save Changes
+                    </button>
+                </div>
+
+                <div class="availability-grid">
+                    <!-- Weekly Schedule -->
+                    <div class="weekly-schedule-card">
+                        <h2 style="font-size: 1.1rem; font-weight: 800; margin-bottom: 1rem;">Weekly Schedule</h2>
+                        <div class="schedule-list">
+                            <!-- Dynamic Availability Slots -->
+                        </div>
+                    </div>
+
+                    <!-- Action Panels -->
+                    <div class="action-panels">
+                        <!-- Add Slot -->
+                        <div class="add-slot-card">
+                            <h3 style="font-size: 1rem; font-weight: 800; margin-bottom: 1.5rem;">Add Time Slot</h3>
+                            <div class="form-group">
+                                <label>Day of Week</label>
+                                <select>
+                                    <option>Monday</option>
+                                    <option>Tuesday</option>
+                                    <option>Wednesday</option>
+                                    <option>Thursday</option>
+                                    <option>Friday</option>
+                                    <option>Saturday</option>
+                                    <option>Sunday</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Start Time</label>
+                                <input type="text" value="09:00 AM">
+                            </div>
+                            <div class="form-group">
+                                <label>End Time</label>
+                                <input type="text" value="05:00 PM">
+                            </div>
+                            <button class="btn-add-slot">
+                                <span style="font-size: 1.2rem;">+</span>
+                                Add Slot
+                            </button>
+                        </div>
+
+                        <!-- Quick Tips -->
+                        <div class="tips-card">
+                            <h3>Quick Tips</h3>
+                            <ul>
+                                <li>Uncheck slots to temporarily disable them</li>
+                                <li>Patients can only book during active slots</li>
+                                <li>Changes take effect immediately</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== SECTION: My Profile ===== -->
+            <div id="section-profile" class="content-section">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 2rem;">
+                    <header class="header-section" style="margin-bottom: 0;">
+                        <h1>My Profile</h1>
+                        <p>Manage your professional information</p>
+                    </header>
+                    <button class="btn-edit-profile">Edit Profile</button>
+                </div>
+
+                <div class="profile-content">
+                    <!-- Profile Hero -->
+                    <div class="profile-hero-card">
+                        <div class="profile-avatar-lg">
+                            <img src="../Assets/Icons/blue-user-circle.svg" alt="Profile Avatar">
+                        </div>
+                        <div class="profile-summary">
+                            <h2>Dr. Sarah Johnson</h2>
+                            <p class="specialty">Cardiologist</p>
+                            <p class="exp">15 years of experience</p>
+                        </div>
+                    </div>
+
+                    <!-- Basic Information -->
+                    <div class="info-card">
+                        <h3>Basic Information</h3>
+                        <div class="info-grid">
+                            <div class="info-field">
+                                <span class="field-label">Full Name</span>
+                                <div class="field-content">
+                                    <img src="../Assets/Icons/gray-profile.png" alt="Name" class="field-icon" style="width: 16px; opacity: 0.6;">
+                                    <span class="field-value">Dr. Sarah Johnson</span>
+                                </div>
+                            </div>
+                            <div class="info-field">
+                                <span class="field-label">Email</span>
+                                <div class="field-content">
+                                    <img src="../Assets/Icons/gray-mail.svg" alt="Email" class="field-icon">
+                                    <span class="field-value">sarah.johnson@healthbridge.com</span>
+                                </div>
+                            </div>
+                            <div class="info-field">
+                                <span class="field-label">Phone</span>
+                                <div class="field-content">
+                                    <img src="../Assets/Icons/gray-phone.svg" alt="Phone" class="field-icon">
+                                    <span class="field-value">+1 (555) 123-4567</span>
+                                </div>
+                            </div>
+                            <div class="info-field">
+                                <span class="field-label">Specialty</span>
+                                <div class="field-content">
+                                    <img src="../Assets/Icons/gray-stethoscope.svg" alt="Specialty" class="field-icon">
+                                    <span class="field-value">Cardiologist</span>
+                                </div>
+                            </div>
+                            <div class="info-field">
+                                <span class="field-label">Years of Experience</span>
+                                <div class="field-content">
+                                    <img src="../Assets/Icons/gray-award.svg" alt="Experience" class="field-icon">
+                                    <span class="field-value">15 years</span>
+                                </div>
+                            </div>
+                            <div class="info-field">
+                                <span class="field-label">Medical License</span>
+                                <div class="field-content">
+                                    <span class="field-value">CA-123456</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Professional Information -->
+                    <div class="info-card">
+                        <h3>Professional Information</h3>
+                        <div class="prof-info-block">
+                            <h4>Education</h4>
+                            <p>MD, Harvard Medical School</p>
+                        </div>
+                        <div class="prof-info-block">
+                            <h4>Bio</h4>
+                            <p>Board-certified cardiologist with over 15 years of experience in treating cardiovascular diseases. Specialized in interventional cardiology and preventive care.</p>
+                        </div>
+                        
+                        <div class="info-grid">
+                            <div class="info-field">
+                                <span class="field-label">Hospital/Clinic</span>
+                                <div class="field-content">
+                                    <img src="../Assets/Icons/gray-map-pin.svg" alt="Location" class="field-icon">
+                                    <span class="field-value">HealthBridge Medical Center</span>
+                                </div>
+                            </div>
+                            <div class="info-field">
+                                <span class="field-label">Consultation Fee</span>
+                                <div class="field-content">
+                                    <span class="field-value">$150</span>
+                                </div>
+                            </div>
+                            <div class="info-field">
+                                <span class="field-label">Working Hours</span>
+                                <div class="field-content">
+                                    <img src="../Assets/Icons/brown-clock.svg" alt="Hours" class="field-icon" style="filter: grayscale(1); opacity: 0.6;">
+                                    <span class="field-value">Monday - Friday: 9:00 AM - 5:00 PM</span>
+                                </div>
+                            </div>
+                            <div class="info-field">
+                                <span class="field-label">Languages</span>
+                                <div class="field-content">
+                                    <span class="field-value">English, Spanish</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="prof-info-block" style="margin-top: 1.5rem;">
+                            <h4>Address</h4>
+                            <p>123 Medical Plaza, San Francisco, CA 94102</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+
+        <!-- Floating Action Button -->
+        <button class="fab" title="AI Chatbot Assistant">
+            <img src="../Assets/Icons/white-message.svg" alt="Chat icon">
+        </button>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../JS/auth.js"></script>
+    <script src="../JS/doctor_dashboard.js"></script>
+</body>
+</html>
+</body>
+</html>
