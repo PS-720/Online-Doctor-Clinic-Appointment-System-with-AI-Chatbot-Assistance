@@ -1,317 +1,284 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SmartCare | Patient Dashboard</title>
-    <link rel="stylesheet" href="../CSS/patient.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap"
-      rel="stylesheet"
-    />
-  </head>
 
-  <body>
-    <div class="main-container">
-      <div class="sidebar">
-        <div class="sidebar-logo">
-          <img
-            class="icons"
-            src="../Assets/Icons/blue-heart.svg"
-            alt="Heart Icon"
-          />
-          <p>SmartCare</p>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SmartCare | Patient Dashboard</title>
+  <link rel="stylesheet" href="../CSS/patient.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap"
+    rel="stylesheet" />
+</head>
+
+<body>
+  <div class="main-container">
+    <div class="sidebar">
+      <div class="sidebar-logo">
+        <img class="icons" src="../Assets/Icons/blue-heart.svg" alt="Heart Icon" />
+        <p>SmartCare</p>
+      </div>
+
+      <div class="ham-menu">
+        <div class="menu-item">
+          <button onclick="showSection('dashboard')" id="btn-dashboard" class="menu-item-anchor active-menu"
+            data-icon="dashboard">
+            <img class="icons" src="../Assets/Icons/blue-dashboard.svg" alt="Icon" />
+            <p>Dashboard</p>
+          </button>
         </div>
-
-        <div class="ham-menu">
-          <div class="menu-item">
-            <button
-              onclick="showSection('dashboard')"
-              id="btn-dashboard"
-              class="menu-item-anchor active-menu"
-              data-icon="dashboard"
-            >
-              <img
-                class="icons"
-                src="../Assets/Icons/blue-dashboard.svg"
-                alt="Icon"
-              />
-              <p>Dashboard</p>
-            </button>
-          </div>
-          <div class="menu-item">
-            <button
-              onclick="showSection('book-appointment')"
-              id="btn-book-appointment"
-              class="menu-item-anchor"
-              data-icon="calendar"
-            >
-              <img
-                class="icons"
-                src="../Assets/Icons/gray-calendar.svg"
-                alt="Icon"
-              />
-              <p>Book Appointment</p>
-            </button>
-          </div>
-          <div class="menu-item">
-            <button
-              onclick="showSection('my-appointments')"
-              id="btn-my-appointments"
-              class="menu-item-anchor"
-              data-icon="textfile"
-            >
-              <img
-                class="icons"
-                src="../Assets/Icons/gray-textfile.svg"
-                alt="Icon"
-              />
-              <p>My Appointments</p>
-            </button>
-          </div>
-          <div class="menu-item">
-            <button
-              onclick="showSection('chatbot')"
-              id="btn-chatbot"
-              class="menu-item-anchor"
-              data-icon="chatbot"
-            >
-              <img
-                class="icons"
-                src="../Assets/Icons/gray-chatbot.svg"
-                alt="Icon"
-              />
-              <p>AI Chatbot</p>
-            </button>
-          </div>
+        <div class="menu-item">
+          <button onclick="showSection('book-appointment')" id="btn-book-appointment" class="menu-item-anchor"
+            data-icon="calendar">
+            <img class="icons" src="../Assets/Icons/gray-calendar.svg" alt="Icon" />
+            <p>Book Appointment</p>
+          </button>
         </div>
-
-        <div class="logout-btn">
-          <button id="logout-button">
-            <img
-              class="icons"
-              src="../Assets/Icons/black-logout.svg"
-              alt="Logout Icon"
-            />
-            <p>Logout</p>
+        <div class="menu-item">
+          <button onclick="showSection('my-appointments')" id="btn-my-appointments" class="menu-item-anchor"
+            data-icon="textfile">
+            <img class="icons" src="../Assets/Icons/gray-textfile.svg" alt="Icon" />
+            <p>My Appointments</p>
+          </button>
+        </div>
+        <div class="menu-item">
+          <button onclick="showSection('chatbot')" id="btn-chatbot" class="menu-item-anchor" data-icon="chatbot">
+            <img class="icons" src="../Assets/Icons/gray-chatbot.svg" alt="Icon" />
+            <p>AI Chatbot</p>
           </button>
         </div>
       </div>
 
-      <!-- ===== SECTION: Dashboard ===== -->
-      <section id="section-dashboard" class="content-section active">
-        <div class="dashboard">
-          <div class="greetings">
-            <h3 id="patient-welcome">Welcome Back</h3>
-            <p>Track your health and upcoming appointments</p>
-          </div>
-
-          <div class="stats">
-            <div class="stats-cards">
-              <div>
-                <p class="stats-title">Total Appointments</p>
-                <p class="stats-numbers">0</p>
-              </div>
-              <div class="stats-icon" style="background-color: rgb(219, 234, 254)">
-                <img class="icons" src="../Assets/Icons/blue-calendar.svg" alt="calendar" />
-              </div>
-            </div>
-            <div class="stats-cards">
-              <div>
-                <p class="stats-title">Upcoming Visits</p>
-                <p class="stats-numbers">0</p>
-              </div>
-              <div class="stats-icon" style="background-color: rgb(219, 252, 231)">
-                <img class="icons" src="../Assets/Icons/green-clock.svg" alt="clock" />
-              </div>
-            </div>
-            <div class="stats-cards">
-              <div>
-                <p class="stats-title">Favourite Doctors</p>
-                <p class="stats-numbers">0</p>
-              </div>
-              <div class="stats-icon" style="background-color: rgb(252, 231, 243)">
-                <img class="icons" src="../Assets/Icons/pink-heart.svg" alt="heart" />
-              </div>
-            </div>
-            <div class="stats-cards">
-              <div>
-                <p class="stats-title">Health Score</p>
-                <p class="stats-numbers">--</p>
-              </div>
-              <div class="stats-icon" style="background-color: rgb(243, 232, 255)">
-                <img class="icons" src="../Assets/Icons/purple-growth.svg" alt="growth" />
-              </div>
-            </div>
-          </div>
-
-          <div class="upcoming-appointments">
-            <h3>Upcoming Appointments</h3>
-            <div class="app-list">
-              <p style="text-align:center; padding: 2rem; color: #64748b;">Loading appointments...</p>
-            </div>
-          </div>
-
-          <div class="book-chat-cards">
-            <div class="bcc-card book-doctor">
-              <h4>Need to see a doctor?</h4>
-              <p>Book an appointment with our AI-powered booking system in seconds.</p>
-              <button class="bcc-buttons book-now-btn" onclick="showSection('book-appointment')">Book Now</button>
-            </div>
-
-            <div class="bcc-card start-chat">
-              <h4>Have questions?</h4>
-              <p>Chat with our AI assistant for instant medical advice and symptom analysis.</p>
-              <button class="bcc-buttons start-chat-btn" onclick="showSection('chatbot')">Start Chat</button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- ===== SECTION: Book Appointment ===== -->
-      <section id="section-book-appointment" class="content-section hidden">
-        <div class="dashboard">
-          <div class="greetings">
-            <h3>Book an Appointment</h3>
-            <p>Select your physician and preferred time slot</p>
-          </div>
-
-          <form action="" class="book-appointment-form">
-            <div class="form-div">
-              <label class="label-element" for="desc-symptoms">Describe your symptoms</label>
-              <textarea
-                class="input-element"
-                id="desc-symptoms"
-                placeholder="Tell us what you are experiencing (e.g. headache, fever, chest pain...)"
-                rows="4"
-              ></textarea>
-            </div>
-            <div class="form-div">
-              <label for="select-doctor" class="label-element">Select Doctor</label>
-              <select name="Doctor" id="select-doctor" class="input-element">
-                <option value="" selected disabled hidden>Loading Doctors...</option>
-              </select>
-            </div>
-            <div class="form-div">
-              <label class="label-element" for="app-date">Appointment Date</label>
-              <input type="date" id="app-date" class="input-element" />
-            </div>
-            <div class="form-div">
-              <label class="label-element" for="app-time">Preferred Time</label>
-              <select name="Time" id="app-time" class="input-element">
-                <option value="" selected disabled hidden>Select Doctor & Date first</option>
-              </select>
-            </div>
-            <div class="form-div">
-              <label class="label-element" for="add-notes">Additional Notes (Optional)</label>
-              <textarea
-                class="input-element"
-                id="add-notes"
-                placeholder="Any additional information you'd like to share..."
-                rows="3"
-              ></textarea>
-            </div>
-            <button class="book-app-btn">Confirm Appointment Booking</button>
-          </form>
-
-          <div class="booking-tips">
-            <div class="tips-icon-text">
-              <img src="../Assets/Icons/bulb.png" alt="Bulb Image" />
-              <p>Booking Tips</p>
-            </div>
-            <ul class="tips-list">
-              <li>Book at least 24 hours in advance for better availability</li>
-              <li>Our AI can help recommend the right specialist based on symptoms</li>
-              <li>You'll receive a confirmation email once your appointment is approved</li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      <!-- ===== SECTION: My Appointments ===== -->
-      <section id="section-my-appointments" class="content-section hidden">
-        <div class="dashboard">
-          <div class="appointments-heading">
-            <div class="app-details">
-              <h3>My Appointments</h3>
-              <p>View and manage your consultation history</p>
-            </div>
-
-            <button class="book-appointment-btn" onclick="showSection('book-appointment')">
-              <img
-                class="icons"
-                src="../Assets/Icons/white-calendar.svg"
-                alt="Calendar Icon"
-              />
-              Book New Appointment
-            </button>
-          </div>
-
-          <div class="stats">
-            <div class="stats-cards">
-              <div class="app-status-confirmed">
-                <p class="status-confirmed" id="table-stat-approved">0</p>
-              </div>
-              <div>
-                <p class="stats-title">Confirmed</p>
-              </div>
-            </div>
-            <div class="stats-cards">
-              <div class="app-status-pending">
-                <p class="status-pending" id="table-stat-pending">0</p>
-              </div>
-              <div>
-                <p class="stats-title">Pending</p>
-              </div>
-            </div>
-            <div class="stats-cards">
-              <div class="app-status-rejected">
-                <p class="status-rejected" id="table-stat-rejected">0</p>
-              </div>
-              <div>
-                <p class="stats-title">Cancelled</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="my-appointment-table">
-            <p>All Appointments</p>
-            <table class="app-table">
-              <thead>
-                <tr>
-                  <th>Doctor</th>
-                  <th>Specialization</th>
-                  <th>Date & Time</th>
-                  <th>Status</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody id="appointment-history-body">
-                <!-- Logic will populate this -->
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </section>
-
-      <!-- ===== SECTION: Chatbot ===== -->
-      <section id="section-chatbot" class="content-section hidden">
-        <div class="dashboard">
-          <div class="greetings">
-            <h3>AI Chatbot</h3>
-            <p>Instant help and health guidance</p>
-          </div>
-          <div class="upcoming-appointments" style="min-height: 500px; display:flex; align-items:center; justify-content:center; color: #64748b;">
-            <p>AI Chatbot interface coming soon...</p>
-          </div>
-        </div>
-      </section>
+      <div class="logout-btn">
+        <button id="logout-button">
+          <img class="icons" src="../Assets/Icons/black-logout.svg" alt="Logout Icon" />
+          <p>Logout</p>
+        </button>
+      </div>
     </div>
+
+    <!-- ===== SECTION: Dashboard ===== -->
+    <section id="section-dashboard" class="content-section active">
+      <div class="dashboard">
+        <div class="greetings">
+          <h3 id="patient-welcome">Welcome Back</h3>
+          <p>Track your health and upcoming appointments</p>
+        </div>
+
+        <div class="stats">
+          <div class="stats-cards">
+            <div>
+              <p class="stats-title">Total Appointments</p>
+              <p class="stats-numbers">0</p>
+            </div>
+            <div class="stats-icon" style="background-color: rgb(219, 234, 254)">
+              <img class="icons" src="../Assets/Icons/blue-calendar.svg" alt="calendar" />
+            </div>
+          </div>
+          <div class="stats-cards">
+            <div>
+              <p class="stats-title">Upcoming Visits</p>
+              <p class="stats-numbers">0</p>
+            </div>
+            <div class="stats-icon" style="background-color: rgb(219, 252, 231)">
+              <img class="icons" src="../Assets/Icons/green-clock.svg" alt="clock" />
+            </div>
+          </div>
+          <div class="stats-cards">
+            <div>
+              <p class="stats-title">Favourite Doctors</p>
+              <p class="stats-numbers">0</p>
+            </div>
+            <div class="stats-icon" style="background-color: rgb(252, 231, 243)">
+              <img class="icons" src="../Assets/Icons/pink-heart.svg" alt="heart" />
+            </div>
+          </div>
+          <div class="stats-cards">
+            <div>
+              <p class="stats-title">Health Score</p>
+              <p class="stats-numbers">--</p>
+            </div>
+            <div class="stats-icon" style="background-color: rgb(243, 232, 255)">
+              <img class="icons" src="../Assets/Icons/purple-growth.svg" alt="growth" />
+            </div>
+          </div>
+        </div>
+
+        <div class="upcoming-appointments">
+          <h3>Upcoming Appointments</h3>
+          <div class="app-list">
+            <p style="text-align:center; padding: 2rem; color: #64748b;">Loading appointments...</p>
+          </div>
+        </div>
+
+        <div class="book-chat-cards">
+          <div class="bcc-card book-doctor">
+            <h4>Need to see a doctor?</h4>
+            <p>Book an appointment with our AI-powered booking system in seconds.</p>
+            <button class="bcc-buttons book-now-btn" onclick="showSection('book-appointment')">Book Now</button>
+          </div>
+
+          <div class="bcc-card start-chat">
+            <h4>Have questions?</h4>
+            <p>Chat with our AI assistant for instant medical advice and symptom analysis.</p>
+            <button class="bcc-buttons start-chat-btn" onclick="showSection('chatbot')">Start Chat</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION: Book Appointment ===== -->
+    <section id="section-book-appointment" class="content-section hidden">
+      <div class="dashboard">
+        <div class="greetings">
+          <h3>Book an Appointment</h3>
+          <p>Select your physician and preferred time slot</p>
+        </div>
+
+        <form action="" class="book-appointment-form">
+          <div class="form-div">
+            <label class="label-element" for="desc-symptoms">Describe your symptoms</label>
+            <textarea class="input-element" id="desc-symptoms"
+              placeholder="Tell us what you are experiencing (e.g. headache, fever, chest pain...)" rows="4"></textarea>
+          </div>
+          <div class="form-div">
+            <label for="select-doctor" class="label-element">Select Doctor</label>
+            <select name="Doctor" id="select-doctor" class="input-element">
+              <option value="" selected disabled hidden>Loading Doctors...</option>
+            </select>
+          </div>
+          <div class="form-div">
+            <label class="label-element" for="app-date">Appointment Date</label>
+            <input type="date" id="app-date" class="input-element" />
+          </div>
+          <div class="form-div">
+            <label class="label-element" for="app-time">Preferred Time</label>
+            <select name="Time" id="app-time" class="input-element">
+              <option value="" selected disabled hidden>Select Doctor & Date first</option>
+            </select>
+          </div>
+          <div class="form-div">
+            <label class="label-element" for="add-notes">Additional Notes (Optional)</label>
+            <textarea class="input-element" id="add-notes"
+              placeholder="Any additional information you'd like to share..." rows="3"></textarea>
+          </div>
+          <button class="book-app-btn">Confirm Appointment Booking</button>
+        </form>
+
+        <div class="booking-tips">
+          <div class="tips-icon-text">
+            <img src="../Assets/Icons/bulb.png" alt="Bulb Image" />
+            <p>Booking Tips</p>
+          </div>
+          <ul class="tips-list">
+            <li>Book at least 24 hours in advance for better availability</li>
+            <li>Our AI can help recommend the right specialist based on symptoms</li>
+            <li>You'll receive a confirmation email once your appointment is approved</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION: My Appointments ===== -->
+    <section id="section-my-appointments" class="content-section hidden">
+      <div class="dashboard">
+        <div class="appointments-heading">
+          <div class="app-details">
+            <h3>My Appointments</h3>
+            <p>View and manage your consultation history</p>
+          </div>
+
+          <button class="book-appointment-btn" onclick="showSection('book-appointment')">
+            <img class="icons" src="../Assets/Icons/white-calendar.svg" alt="Calendar Icon" />
+            Book New Appointment
+          </button>
+        </div>
+
+        <div class="stats">
+          <div class="stats-cards">
+            <div class="app-status-confirmed">
+              <p class="status-confirmed" id="table-stat-approved">0</p>
+            </div>
+            <div>
+              <p class="stats-title">Confirmed</p>
+            </div>
+          </div>
+          <div class="stats-cards">
+            <div class="app-status-pending">
+              <p class="status-pending" id="table-stat-pending">0</p>
+            </div>
+            <div>
+              <p class="stats-title">Pending</p>
+            </div>
+          </div>
+          <div class="stats-cards">
+            <div class="app-status-rejected">
+              <p class="status-rejected" id="table-stat-rejected">0</p>
+            </div>
+            <div>
+              <p class="stats-title">Cancelled</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="my-appointment-table">
+          <p>All Appointments</p>
+          <table class="app-table">
+            <thead>
+              <tr>
+                <th>Doctor</th>
+                <th>Specialization</th>
+                <th>Date & Time</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="appointment-history-body">
+              <!-- Logic will populate this -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION: AI Chatbot ===== -->
+    <section id="section-chatbot" class="content-section hidden">
+      <div class="chatbot-dashboard">
+        <div class="greeting">
+          <h3>AI Health Assistant</h3>
+          <p>Get instant help with your health questions</p>
+        </div>
+
+        <div class="chat-container">
+          <div class="default-message">
+            <div class="img-container">
+              <img class="icons" src="../Assets/Icons/robot.svg" alt="Robot Icon">
+            </div>
+            <div class="welcome-message">
+              <p class="default-text">Hello! I'm your HealthBridge AI assistant. How can I help you today?</p>
+              <p class="curr-time">10:04</p>
+            </div>
+          </div>
+
+          <div class="type-message">
+            <div class="message-input">
+              <input type="text" class="text-input" placeholder="Type your message...">
+              <button class="send-btn">
+                <img class="icons" src="../Assets/Icons/paper-plane.svg" alt="Send Button Image">
+              </button>
+            </div>
+            <p class="ai-disclaimer">AI responses are for guidance only. Always consult with a healthcare professional
+              for medical advice.</p>
+          </div>
+        </div>
+      </div>
+    </section>
 
     <!-- Scripts -->
     <script src="../JS/auth.js"></script>
     <script src="../JS/patient_dashboard.js"></script>
-  </body>
+</body>
+
 </html>

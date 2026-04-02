@@ -475,7 +475,7 @@ button.menu-item-anchor {
 
 .tips-list {
 	margin-left: 0;
-  padding-left: 1.5rem;
+	padding-left: 1.5rem;
 	color: rgb(1, 102, 48);
 	font-size: 0.9rem;
 	font-weight: 450;
@@ -562,7 +562,7 @@ button.menu-item-anchor {
 }
 
 .app-table td {
-	padding: 0.5rem ;
+	padding: 0.5rem;
 	font-size: 0.9rem;
 	border-top: 1px solid rgb(213, 215, 219);
 }
@@ -571,11 +571,15 @@ button.menu-item-anchor {
 	background-color: rgb(245, 245, 247);
 }
 
-.app-table .app-status-confirmed, .app-table .app-status-pending, .app-table .app-status-rejected {
+.app-table .app-status-confirmed,
+.app-table .app-status-pending,
+.app-table .app-status-rejected {
 	width: min-content;
 }
 
-.app-table .status-confirmed, .app-table .status-pending, .app-table .status-rejected {
+.app-table .status-confirmed,
+.app-table .status-pending,
+.app-table .status-rejected {
 	font-size: 0.8rem;
 	font-weight: 700;
 }
@@ -584,7 +588,8 @@ button.menu-item-anchor {
 	align-items: start;
 }
 
-.app-table .app-day, .app-table .app-time {
+.app-table .app-day,
+.app-table .app-time {
 	font-size: 0.9rem;
 	font-weight: 600;
 }
@@ -602,6 +607,140 @@ button.menu-item-anchor {
 
 .view-detail-btn:hover {
 	background-color: rgb(233, 235, 239);
+}
+
+/* Chatbot Section */
+
+.chatbot-dashboard {
+	padding: 2rem;
+	margin-left: clamp(200px, 19vw, 350px);
+	background-color: rgb(252, 250, 250);
+}
+
+.greeting {
+	width: 85%;
+	margin: 0 auto 2rem;
+}
+
+.greeting h3 {
+	color: black;
+	font-size: 2rem;
+	font-weight: 850;
+	margin-bottom: 0.5rem;
+}
+
+.greeting p {
+	color: rgb(74, 85, 101);
+	font-size: 1rem;
+	font-weight: 500;
+}
+
+.chat-container {
+	width: 85%;
+	height: 500px;
+	margin: auto;
+	padding: 1.5rem;
+	background-color: white;
+	border: 1px solid rgb(229, 231, 235);
+	border-radius: 20px;
+
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.default-message {
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: start;
+	gap: 10px;
+}
+
+.img-container {
+	width: 40px;
+	height: 40px;
+	border-radius: 25px;
+	background-color: rgb(219, 252, 231);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.welcome-message {
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
+}
+
+.default-text {
+	width: 95%;
+	background-color: #f3f4f6;
+	padding: 1rem;
+	border-radius: 15px;
+	font-size: 0.9rem;
+}
+
+.curr-time {
+	font-size: 0.75rem;
+	color: rgb(106, 114, 130);
+	padding: 0 8px;
+}
+
+.type-message {
+	width: 100%;
+	padding: 1rem 1rem 0;
+	border-top: 1px solid rgb(209, 213, 220);
+	display: flex;
+	flex-direction: column;
+	align-items: start;
+	gap: 10px;
+}
+
+.message-input {
+	width: 100%;
+	display: flex;
+	gap: 15px;
+	align-items: center;
+}
+
+.text-input {
+	width: 93%;
+	background-color: rgb(243, 244, 246);
+	padding: 0.5rem 1rem;
+	border: none;
+	border-radius: 8px;
+	border: 1px solid rgb(209, 213, 220);
+}
+
+.send-btn {
+	width: 38px;
+	height: 35px;
+	background-color: rgb(0, 102, 255);
+	border: none;
+	padding: 0.2rem;
+	border-radius: 8px;
+	cursor: pointer;
+	transition: all 0.15s ease;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.send-btn:hover {
+	background-color: rgb(0, 81, 255);
+}
+
+.send-btn img {
+	width: 15px;
+}
+
+.ai-disclaimer {
+	width: 100%;
+	font-size: 0.75rem;
+	color: rgb(106, 114, 130);
+	text-align: center;
 }
 
 /* ===== Section Toggle (hidden / active) ===== */
