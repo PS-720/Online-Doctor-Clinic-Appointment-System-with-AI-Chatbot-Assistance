@@ -1,545 +1,468 @@
 *,
 ::after,
 ::before {
-	padding: 0;
-	margin: 0;
-	box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
 }
 
 body {
-	font-family: Arial, sans-serif;
-	background-color: white;
-	font-family: "Nunito Sans", Arial, Helvetica, sans-serif;
+  font-family: Arial, sans-serif;
+  background-color: white;
+  font-family: "Nunito Sans", Arial, Helvetica, sans-serif;
 }
 
 html {
-	scroll-behavior: smooth;
+  scroll-behavior: smooth;
 }
 
 /* HEADER OF THE PAGE */
 
 .icons {
-	width: 20px;
+  width: 20px;
 }
 
 .navbar {
-	height: 70px;
-	padding: 0 3.5rem;
-	background-color: white;
-	box-shadow: 0 3px 5px rgb(200, 200, 200);
+  height: 70px;
+  padding: 0 3.5rem;
+  background-color: white;
+  box-shadow: 0 3px 5px rgb(200, 200, 200);
 
-	display: flex;
-	flex-wrap: wrap;
-	align-items: center;
-	justify-content: space-between;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
 
-	position: fixed;
-	top: 0;
-	left: 0;
-	right: 0;
-	z-index: 1000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
 }
 
 .navigation-bar-logo {
-	height: 100%;
-	border-radius: 20px;
-	padding: 5px 0;
-	transition: background-color 0.15s;
+  height: 100%;
+  border-radius: 20px;
+  padding: 5px 0;
+  transition: background-color 0.15s;
 }
 
 .navigation-bar-logo:hover {
-	background-color: rgb(229, 255, 229);
+  background-color: rgb(229, 255, 229);
 }
 
 .SmartCare {
-	height: 100%;
-	text-decoration: none;
-	color: black;
-	padding: 0 15px;
-	background-color: rgba(249, 255, 253, 0.642);
+  height: 100%;
+  text-decoration: none;
+  color: black;
+  padding: 0 15px;
+  background-color: rgba(249, 255, 253, 0.642);
 
-	display: flex;
-	flex-wrap: wrap;
-	align-items: center;
-	gap: 0.2rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.2rem;
 }
 
 .SmartCare img {
-	height: 70%;
-	width: auto;
-	background-color: transparent;
-	border-radius: 10px;
+  height: 70%;
+  width: auto;
+  background-color: transparent;
+  border-radius: 10px;
 }
 
 .SmartCare p {
-	font-size: 1.8rem;
-	font-weight: 800;
-	letter-spacing: 1px;
+  font-size: 1.8rem;
+  font-weight: 700;
+  letter-spacing: 1px;
 }
 
 .navigation-bar {
-	height: 100%;
+  height: 100%;
 }
 
 .navlist {
-	height: 100%;
-	list-style-type: none;
-	display: flex;
-	flex-wrap: wrap;
-	align-items: center;
-	justify-content: space-between;
+  height: 100%;
+  list-style-type: none;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .navlist li {
-	display: flex;
-	flex-wrap: wrap;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .navlist-items {
-	padding: 1.5rem 2.5rem;
-	text-decoration: none;
-	font-size: 1rem;
-	color: black;
-	border-radius: 20px;
-	font-weight: 600;
-	transition: background-color 0.15s;
+  padding: 1.5rem 2.5rem;
+  text-decoration: none;
+  font-size: 1rem;
+  color: black;
+  border-radius: 20px;
+  font-weight: 600;
+  transition: background-color 0.15s;
 
-	display: flex;
-	align-items: center;
-	gap: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .navlist-items:hover {
-	background-color: rgb(240, 255, 240);
+  background-color: rgb(240, 255, 240);
 }
 
 .navlist-items img {
-	width: 1.2rem;
+  width: 1.2rem;
 }
 
 .navbarButtons {
-	height: 100%;
-	display: flex;
-	flex-wrap: wrap;
-	align-items: center;
-	gap: 1.5rem;
+  height: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.5rem;
 }
 
 .navbarButtons a {
-	text-decoration: none;
+  text-decoration: none;
 }
 
 .navbarButtons button {
-	padding: 10px 20px;
-	border-radius: 10px;
-	font-size: 0.92rem;
-	font-weight: 500;
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-size: 0.92rem;
+  font-weight: 500;
 
-	display: flex;
-	align-items: center;
-	gap: 0.5rem;
-	cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
 }
 
 .navbarButtons button img {
-	width: 18px;
+  width: 18px;
 }
 
 .chat-button {
-	background-color: white;
-	color: black;
-	border: 1px solid rgb(185, 185, 185);
-	transition: background-color 0.15s;
+  background-color: white;
+  color: black;
+  border: 1px solid rgb(185, 185, 185);
+  transition: background-color 0.15s;
 }
 
 .chat-button:hover {
-	background-color: rgba(237, 237, 237, 0.76);
+  background-color: rgba(237, 237, 237, 0.76);
 }
 
 .logInButton {
-	background-color: rgb(60, 180, 4);
-	color: white;
-	border: none;
-	transition: background-color 0.15s;
+  background-color: #155dfc;
+  color: white;
+  border: none;
+  transition: background-color 0.15s;
 }
 
 .logInButton img {
-	filter: brightness(0) invert(1);
+  filter: brightness(0) invert(1);
 }
 
 .logInButton:hover {
-	background-color: rgba(0, 189, 13, 0.947);
+  background-color: rgba(74, 132, 225, 0.947);
 }
 
 .signupbutton {
-	background-color: white;
-	color: black;
-	border: 1px solid black;
+  background-color: white;
+  color: black;
+  border: 1px solid black;
 }
 
 .heroSection {
-	background: linear-gradient(
-		135deg,
-		rgb(235, 255, 241),
-		rgb(225, 238, 250) 60%,
-		rgb(245, 245, 255) 85%
-	);
-	padding: 80px 0;
+  width: 100%;
+  background: linear-gradient(
+    135deg,
+    rgb(235, 255, 241),
+    rgb(225, 238, 250) 60%,
+    rgb(245, 245, 255) 85%
+  );
+  margin-top: 4rem;
+  padding: 7rem;
+  display: flex;
+  gap: 50px;
+}
+
+.hero-text-content {
+  width: 49%;
 }
 
 .heroSection h2 {
-	font-size: 4rem;
-	padding: 30px 80px 0;
-	font-weight: 800;
-}
-
-.heroSection span {
-	color: rgb(66, 191, 8);
+  font-size: 4rem;
+  font-weight: 700;
 }
 
 .heroSection p {
-	font-size: 1.4rem;
-	font-weight: 550;
-	padding: 20px 80px;
-	color: rgb(101, 101, 101);
+  font-size: 1.2rem;
+  font-weight: 550;
+  padding: 20px 0;
+  color: rgb(101, 101, 101);
 }
 
-.search-doctor {
-	padding: 50px 30px 30px;
-	margin: 50px 30px 0;
-	background-color: white;
-	border-radius: 10px;
-	box-shadow: 2px 3px 10px rgb(112, 112, 112);
-	display: flex;
-	flex-direction: column;
-	gap: 1.5rem;
+.hero-section-image {
+  width: 45%;
 }
 
-.input-location {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
+.hero-section-image img {
+  border-radius: 20px;
+  box-shadow: 0 0 5px 3px rgb(215, 215, 215);
+  width: 100%;
 }
 
-.search-bar {
-	width: 75%;
-	height: 50px;
-	padding: 10px;
-	border-radius: 8px;
-	background-color: rgb(230, 230, 230);
-	display: inline-block;
+.heroSection p {
+  margin-bottom: 0.5rem;
 }
 
-.search-bar input {
-	border: none;
-	background-color: transparent;
-	width: 95%;
-	padding: 5px 5px;
-	font-size: 1rem;
+.heroSection a {
+  text-decoration: none;
 }
 
-.search-bar input:focus {
-	outline: none;
-}
-
-.search-bar img {
-	width: 35px;
-	vertical-align: text-top;
-	padding: 0 9px;
-	cursor: pointer;
-}
-
-.location-bar {
-	display: inline-block;
-	width: 23%;
-	background-color: rgb(230, 230, 230);
-	border-radius: 8px;
-}
-
-.location-bar input {
-	height: 50px;
-	width: 80%;
-	padding: 10px 20px 10px 0;
-	border: none;
-	border-radius: 8px;
-	background-color: transparent;
-	text-align: left;
-	font-size: 1rem;
-}
-
-.location-bar input:focus {
-	outline: none;
-}
-
-.location-bar img {
-	width: 50px;
-	vertical-align: text-bottom;
-	padding: 0 10px 0 20px;
-	cursor: pointer;
-}
-
-.search-now {
-	width: 100%;
-	height: 50px;
-}
-
-.search-now button {
-	width: 100%;
-	height: 100%;
-	background-color: rgb(5, 190, 27);
-	color: white;
-	border: none;
-	border-radius: 8px;
-	font-size: 1rem;
-	font-weight: bold;
-	cursor: pointer;
-	transition: background-color 0.15s;
-}
-
-.search-now button:hover {
-	background-color: rgb(2, 169, 13);
-}
-
-.current-location {
-	width: 100%;
-	text-align: center;
-}
-
-.current-location img {
-	cursor: pointer;
-	vertical-align: text-bottom;
-}
-
-.current-location a {
-	text-decoration: none;
-	color: green;
+.hero-btns button {
+  padding: 0.8rem 1.2rem;
+  border: none;
+  border-radius: 8px;
+  margin-right: 10px;
+  font-weight: 600;
+  cursor: pointer;
 }
 
 .browseBySpecialization {
-	padding: 90px 50px 60px;
+  padding: 90px 50px 60px;
 }
 
 .browseBySpecialization h2 {
-	font-size: 3rem;
-	font-weight: 800;
-	text-align: center;
-	color: black;
+  font-size: 3rem;
+  font-weight: 800;
+  text-align: center;
+  color: black;
 }
 
 .browseBySpecialization > p {
-	text-align: center;
-	font-size: 1.2rem;
-	font-weight: 500;
-	letter-spacing: 1px;
-	color: rgb(105, 104, 104);
-	padding: 20px 0;
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: 500;
+  letter-spacing: 1px;
+  color: rgb(105, 104, 104);
+  padding: 20px 0;
 }
 
 .specializationGrid {
-	padding: 3rem 5rem;
-	display: grid;
-	grid-template-columns: 1fr 1fr 1fr;
-	gap: 30px;
+  padding: 3rem 5rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 30px;
 }
 
 .specializationCategory {
-	border: 1px solid rgb(183, 183, 183);
-	height: 180px;
-	border-radius: 15px;
-	padding: 30px;
-	display: flex;
-	flex-direction: column;
-	gap: 20px;
-	align-items: center;
-	justify-content: center;
-	color: black;
-	transition:
-		transform 0.3s,
-		box-shadow 0.15s,
-		color 0.15s;
+  border: 1px solid rgb(183, 183, 183);
+  height: 180px;
+  border-radius: 15px;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+  color: black;
+  transition:
+    transform 0.3s,
+    box-shadow 0.15s,
+    color 0.15s;
 }
 
 .specializationCategory:hover {
-	transform: scale(1.01);
-	color: rgb(7, 142, 45);
-	box-shadow: 0 5px 10px rgb(134, 134, 134);
-	cursor: pointer;
+  transform: scale(1.01);
+  color: rgb(7, 142, 45);
+  box-shadow: 0 5px 10px rgb(134, 134, 134);
+  cursor: pointer;
 }
 
 .specializationCategory img {
-	width: 60px;
-	border-radius: 50%;
+  width: 60px;
+  border-radius: 50%;
 }
 
 .specializationCategory p {
-	font-size: 1.1rem;
+  font-size: 1.1rem;
 }
 
 .chooseSmartCare {
-	padding: 50px;
-	background: linear-gradient(135deg, rgb(0, 166, 62), rgb(19, 94, 250) 85%);
-	text-align: center;
-	color: white;
-	margin-bottom: 50px;
+  padding: 50px;
+  background: linear-gradient(135deg, rgb(12, 117, 208), rgb(19, 94, 250) 85%);
+  text-align: center;
+  color: white;
+  margin-bottom: 50px;
 }
 
 .chooseSmartCare h2 {
-	padding: 10px;
-	font-size: 2.5rem;
-	text-shadow: 0 0 10px rgba(232, 232, 161, 0.748);
+  padding: 10px;
+  font-size: 2.5rem;
 }
 
 .chooseSmartCare > p {
-	letter-spacing: 1.5px;
-	padding: 10px;
-	text-shadow: 0 0 10px rgba(255, 255, 0, 0.476);
+  letter-spacing: 1.5px;
+  padding: 10px;
+  text-shadow: 0 0 10px rgba(255, 255, 0, 0.476);
 }
 
 .choosingReasons {
-	display: grid;
-	grid-template-columns: 1fr 1fr;
-	gap: 20px;
-	padding: 40px 100px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  padding: 40px 100px;
 }
 
 .choosingReasons div {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	gap: 15px;
-	padding: 20px 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  padding: 20px 30px;
 }
 
 .choosingReasons div img {
-	border-radius: 50%;
-	width: 65px;
-	padding: 10px 0;
+  border-radius: 50%;
+  width: 65px;
+  padding: 10px 0;
 }
 
 .choosingReasons div h4 {
-	font-size: 1.2rem;
+  font-size: 1.2rem;
 }
 
 .choosingReasons div p {
-	font-size: 0.9rem;
+  font-size: 0.9rem;
 }
 
 .urgentCare {
-	margin: 100px 50px;
-	padding: 80px;
-	border-radius: 15px;
-	background-color: rgb(238, 253, 243);
+  margin: 100px 50px;
+  padding: 80px;
+  border-radius: 15px;
+  background: linear-gradient(
+    135deg,
+    rgb(235, 255, 241),
+    rgb(225, 238, 250) 60%,
+    rgb(245, 245, 255) 85%
+  );
 
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	gap: 35px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 35px;
 }
 
 .urgentCare img {
-	width: 80px;
+  width: 80px;
 }
 
 .urgentCare h3 {
-	font-size: 2.2rem;
+  font-size: 2.2rem;
 }
 
 .urgentCare p {
-	letter-spacing: 1.4px;
-	color: rgb(92, 92, 92);
+  letter-spacing: 1.4px;
+  color: rgb(92, 92, 92);
 }
 
 .urgentCare div button {
-	padding: 15px 30px;
-	border: 1px solid rgb(211, 211, 211);
-	border-radius: 10px;
-	margin: 0 10px;
-	background-color: white;
-	font-weight: bold;
-	transition: background-color 0.15s;
+  padding: 15px 30px;
+  border: 1px solid rgb(211, 211, 211);
+  border-radius: 10px;
+  margin: 0 10px;
+  background-color: white;
+  font-weight: bold;
+  transition: background-color 0.15s;
 }
 
 .urgentCare div button:hover {
-	cursor: pointer;
-	background-color: rgba(236, 236, 236, 0.517);
+  cursor: pointer;
+  background-color: rgba(236, 236, 236, 0.517);
 }
 
 .urgentCare div button:first-child {
-	background-color: rgb(0, 181, 9);
-	color: white;
-	border: none;
+  background-color: #155dfc;
+  color: white;
+  border: none;
 }
 
 .urgentCare div button:first-child:hover {
-	background-color: rgb(51, 160, 0);
+  background-color: rgba(74, 132, 225, 0.947);
 }
 
 footer {
-	background-color: rgb(16, 24, 40);
-	color: white;
+  background-color: rgb(16, 24, 40);
+  color: white;
 }
 
 .upper-header {
-	padding: 50px;
-	display: grid;
-	grid-template-columns: 1.5fr 1fr 1fr 1.5fr;
-	column-gap: 20px;
+  padding: 50px;
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr 1.5fr;
+  column-gap: 20px;
 }
 
 .upper-header div {
-	text-align: center;
+  text-align: center;
 }
 
 .upper-header div img {
-	width: 30px;
-	border-radius: 10px;
-	vertical-align: middle;
+  width: 30px;
+  border-radius: 10px;
+  vertical-align: middle;
 }
 
 .upper-header div h4 {
-	padding-bottom: 20px;
-	font-size: 1.1rem;
-	font-weight: 600;
-	display: inline-block;
+  padding-bottom: 20px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  display: inline-block;
 }
 
 .upper-header div ul li {
-	list-style-type: none;
-	padding: 5px 0 5px 70px;
-	text-align: left;
+  list-style-type: none;
+  padding: 5px 0 5px 70px;
+  text-align: left;
 }
 
 .upper-header div ul li a {
-	color: rgb(160, 160, 160);
-	font-size: 0.9rem;
-	text-decoration: none;
+  color: rgb(160, 160, 160);
+  font-size: 0.9rem;
+  text-decoration: none;
 }
 
 .upper-header div ul li a:hover {
-	color: white;
-	cursor: pointer;
+  color: white;
+  cursor: pointer;
 }
 
 .upper-header div p {
-	color: gray;
-	font-size: 0.9rem;
-	padding: 5px 0;
+  color: gray;
+  font-size: 0.9rem;
+  padding: 5px 0;
 }
 
 footer hr {
-	width: 90%;
-	margin: 0 auto;
-	border: 1px solid rgb(124, 124, 124);
+  width: 90%;
+  margin: 0 auto;
+  border: 1px solid rgb(124, 124, 124);
 }
 
 footer > div:last-child {
-	padding: 50px;
+  padding: 50px;
 }
 
 footer > div:last-child p {
-	color: rgb(193, 193, 193);
-	font-size: 0.9rem;
-	text-align: center;
+  color: rgb(193, 193, 193);
+  font-size: 0.9rem;
+  text-align: center;
 }
