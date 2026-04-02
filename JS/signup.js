@@ -21,22 +21,22 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        const data = {
-            role: role,
-            full_name: fullName,
-            email: email,
-            phone: phone,
-            password: password
-        };
+        const formData = new FormData();
+        formData.append('role', document.getElementById('signup-role').value);
+        formData.append('fullName', document.getElementById('fullName').value);
+        formData.append('email', document.getElementById('email').value);
+        formData.append('phone', document.getElementById('number').value);
+        formData.append('password', password);
+        formData.append('confirmPassword', confirmPassword);
 
         // Add doctor-specific fields if needed
-        if (role === 'doctor') {
-            data.specialization = document.getElementById('specialization').value;
-            data.qualification = document.getElementById('qualification').value;
-            data.experience = document.getElementById('experience').value;
-            data.fee = document.getElementById('consultationFee').value;
+        if (formData.get('role') === 'doctor') {
+            formData.append('specialization', document.getElementById('specialization').value);
+            formData.append('qualification', document.getElementById('qualification').value);
+            formData.append('experience', document.getElementById('experience').value);
+            formData.append('consultationFee', document.getElementById('consultationFee').value);
             
-            if (!data.specialization || !data.qualification) {
+            if (!formData.get('specialization') || !formData.get('qualification')) {
                 alert("Please fill in specialized doctor fields.");
                 return;
             }
@@ -44,12 +44,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
         fetch('../PHP/signup.php', {
             method: 'POST',
-            body: JSON.stringify(data)
+            body: formData
         })
         .then(res => res.json())
         .then(res => {
             if (res.success) {
-                alert("Account created successfully! You can now log in.");
+                alert(res.message || "Account created successfully! You can now log in.");
                 window.location.href = 'logIn.html';
             } else {
                 alert(res.message || "Signup failed.");

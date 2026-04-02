@@ -99,6 +99,8 @@ if ($role === 'doctor') {
     }
 
     $stats['total_doctors'] = getCount($conn, "SELECT COUNT(*) as count FROM doctors");
+    $stats['active_doctors'] = getCount($conn, "SELECT COUNT(*) as count FROM doctors WHERE is_approved = 1");
+    $stats['pending_doctors'] = getCount($conn, "SELECT COUNT(*) as count FROM doctors WHERE is_approved = 0");
     $stats['total_users'] = getCount($conn, "SELECT COUNT(*) as count FROM users WHERE role != 'admin'");
     $stats['total_appointments'] = getCount($conn, "SELECT COUNT(*) as count FROM appointments");
     

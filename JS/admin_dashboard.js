@@ -154,8 +154,8 @@ function updateAdminStats(stats) {
     const docMetrics = document.querySelectorAll('#section-doctors .metric-value');
     if (docMetrics.length >= 3) {
         docMetrics[0].textContent = stats.total_doctors || 0;
-        docMetrics[1].textContent = stats.total_doctors || 0; 
-        docMetrics[2].textContent = 0;
+        docMetrics[1].textContent = stats.active_doctors || 0; 
+        docMetrics[2].textContent = stats.pending_doctors || 0;
     }
 }
 
@@ -183,15 +183,44 @@ function renderDoctorsTable(doctors) {
             </td>
             <td>${doc.specialization}</td>
             <td>${doc.experience_years} years</td>
-            <td><span class="badge-pill available" style="background: #ecfdf5; color: #059669; padding: 4px 8px; border-radius: 99px; font-size: 0.75rem;">Active</span></td>
+            <td>
+                ${doc.is_approved == 1 
+                    ? '<span class="badge-pill available" style="background: #ecfdf5; color: #059669; padding: 4px 8px; border-radius: 99px; font-size: 0.75rem;">Active</span>' 
+                    : '<span class="badge-pill pending" style="background: #fffbeb; color: #d97706; padding: 4px 8px; border-radius: 99px; font-size: 0.75rem;">Pending</span>'
+                }
+            </td>
             <td>
                 <div class="action-icon-btns" style="display: flex; gap: 8px;">
+                    ${doc.is_approved == 0 ? `
+                        <button class="btn-icon-action approve-doctor" title="Approve Doctor" onclick="approveDoctor(${doc.doctor_id})" style="background:#dcfce7; border:none; border-radius:4px; padding:4px; cursor:pointer;"><img src="../Assets/Icons/green-check.svg" alt="Approve" style="width: 16px;"></button>
+                    ` : ''}
                     <button class="btn-icon-action" title="Edit Doctor" style="background:none; border:none; cursor:pointer;"><img src="../Assets/Icons/gray-edit.svg" alt="Edit" style="width: 16px;"></button>
                     <button class="btn-icon-action" title="View Schedule" onclick="viewDoctorSchedule(${doc.doctor_id})" style="background:none; border:none; cursor:pointer;"><img src="../Assets/Icons/gray-calendar.svg" alt="Schedule" style="width: 16px;"></button>
                 </div>
             </td>
         </tr>
     `).join('');
+}
+
+function approveDoctor(id) {
+    if (!confirm("Are you sure you want to approve this doctor?")) return;
+
+    fetch("../PHP/approve_doctor.php", {
+        method: "POST",
+        body: JSON.stringify({ doctor_id: id })
+    })
+    .then(res => res.json())
+    .then(res => {
+        if (res.success) {
+            alert(res.message);
+            // Refresh data
+            const userData = JSON.parse(localStorage.getItem("smartcare_user"));
+            if (userData) loadAdminDashboardData(userData);
+        } else {
+            alert(res.message);
+        }
+    })
+    .catch(err => console.error("Approval error:", err));
 }
 
 function renderAppointmentsTable(appts) {
