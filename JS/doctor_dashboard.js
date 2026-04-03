@@ -1,94 +1,94 @@
-/**
- * Doctor Dashboard Functionality for SmartCare
- */
-
 // Initialization
-window.addEventListener('DOMContentLoaded', () => {
-    // Check if user is logged in as doctor
-    const userData = checkAuth('doctor');
-    if (!userData) return;
+window.addEventListener("DOMContentLoaded", () => {
+  // Check if user is logged in as doctor
+  const userData = checkAuth("doctor");
+  if (!userData) return;
 
-    // Initial data fetch
-    loadDashboardData();
+  // Initial data fetch
+  loadDashboardData();
 
-    // Add Slot Handler
-    const addSlotBtn = document.querySelector('.btn-add-slot');
-    if (addSlotBtn) {
-        addSlotBtn.addEventListener('click', handleAddSlot);
-    }
+  // Add Slot Handler
+  const addSlotBtn = document.querySelector(".btn-add-slot");
+  if (addSlotBtn) {
+    addSlotBtn.addEventListener("click", handleAddSlot);
+  }
 });
 
 function loadDashboardData() {
-    // Re-check authentication to get latest user data
-    const userData = checkAuth('doctor');
-    if (!userData) return;
+  // Re-check authentication to get latest user data
+  const userData = checkAuth("doctor");
+  if (!userData) return;
 
-    fetch("../PHP/fetch_dashboard_data.php", {
-        method: "POST",
-        body: JSON.stringify({ user_id: userData.id, role: userData.role })
-    })
-    .then(res => res.json())
-    .then(res => {
-        if (res.success) {
-            const data = res.data;
-            updateDashboardStats(data.stats);
-            updateUpcomingAppointments(data.upcoming);
-            updateAvailabilityList(data.availability);
-            if (data.profile) {
-                updateDoctorProfile(data.profile);
-            }
+  fetch("../PHP/fetch_dashboard_data.php", {
+    method: "POST",
+    body: JSON.stringify({ user_id: userData.id, role: userData.role }),
+  })
+    .then((res) => res.json())
+    .then((res) => {
+      if (res.success) {
+        const data = res.data;
+        updateDashboardStats(data.stats);
+        updateUpcomingAppointments(data.upcoming);
+        updateAvailabilityList(data.availability);
+        if (data.profile) {
+          updateDoctorProfile(data.profile);
         }
+      }
     })
-    .catch(err => console.error("Data fetch error:", err));
+    .catch((err) => console.error("Data fetch error:", err));
 }
 
 function updateDoctorProfile(profile) {
-    // Top summary
-    const nameEle = document.getElementById('prof-full-name');
-    const specEle = document.getElementById('prof-specialization');
-    const expEle = document.getElementById('prof-experience');
+  // Top summary
+  const nameEle = document.getElementById("prof-full-name");
+  const specEle = document.getElementById("prof-specialization");
+  const expEle = document.getElementById("prof-experience");
 
-    if (nameEle) nameEle.textContent = 'Dr. ' + profile.full_name;
-    if (specEle) specEle.textContent = profile.specialization;
-    if (expEle) expEle.textContent = profile.experience_years + ' years of experience';
+  if (nameEle) nameEle.textContent = "Dr. " + profile.full_name;
+  if (specEle) specEle.textContent = profile.specialization;
+  if (expEle)
+    expEle.textContent = profile.experience_years + " years of experience";
 
-    // Basic Info table
-    const name2Ele = document.getElementById('prof-full-name-2');
-    const emailEle = document.getElementById('prof-email');
-    const phoneEle = document.getElementById('prof-phone');
-    const spec2Ele = document.getElementById('prof-specialization-2');
-    const exp2Ele = document.getElementById('prof-experience-2');
-    const licEle = document.getElementById('prof-license');
-    const feeEle = document.getElementById('prof-fee');
+  // Basic Info table
+  const name2Ele = document.getElementById("prof-full-name-2");
+  const emailEle = document.getElementById("prof-email");
+  const phoneEle = document.getElementById("prof-phone");
+  const spec2Ele = document.getElementById("prof-specialization-2");
+  const exp2Ele = document.getElementById("prof-experience-2");
+  const licEle = document.getElementById("prof-license");
+  const feeEle = document.getElementById("prof-fee");
 
-    if (name2Ele) name2Ele.textContent = 'Dr. ' + profile.full_name;
-    if (emailEle) emailEle.textContent = profile.email;
-    if (phoneEle) phoneEle.textContent = profile.phone || 'N/A';
-    if (spec2Ele) spec2Ele.textContent = profile.specialization;
-    if (exp2Ele) exp2Ele.textContent = profile.experience_years + ' years';
-    if (licEle) licEle.textContent = profile.qualification || 'N/A';
-    if (feeEle) feeEle.textContent = '₹' + profile.consultation_fee;
+  if (name2Ele) name2Ele.textContent = "Dr. " + profile.full_name;
+  if (emailEle) emailEle.textContent = profile.email;
+  if (phoneEle) phoneEle.textContent = profile.phone || "N/A";
+  if (spec2Ele) spec2Ele.textContent = profile.specialization;
+  if (exp2Ele) exp2Ele.textContent = profile.experience_years + " years";
+  if (licEle) licEle.textContent = profile.qualification || "N/A";
+  if (feeEle) feeEle.textContent = "₹" + profile.consultation_fee;
 }
 
 function updateDashboardStats(stats) {
-    // Update counts in dashboard section
-    const statCards = document.querySelectorAll('.mini-stats h4');
-    if (statCards.length >= 3) {
-        statCards[0].textContent = stats.today_appointments || 0;
-        statCards[1].textContent = stats.completed || 0;
-        statCards[2].textContent = stats.cancelled || 0;
-    }
+  // Update counts in dashboard section
+  const statCards = document.querySelectorAll(".mini-stats h4");
+  if (statCards.length >= 3) {
+    statCards[0].textContent = stats.today_appointments || 0;
+    statCards[1].textContent = stats.completed || 0;
+    statCards[2].textContent = stats.cancelled || 0;
+  }
 }
 
 function updateUpcomingAppointments(upcoming) {
-    const list = document.querySelector('.upcoming-appointment-list');
-    if (!list) return;
-    if (!upcoming.length) {
-        list.innerHTML = '<p style="text-align:center; padding: 2rem; color: #64748b;">No upcoming appointments.</p>';
-        return;
-    }
+  const list = document.querySelector(".upcoming-appointment-list");
+  if (!list) return;
+  if (!upcoming.length) {
+    list.innerHTML =
+      '<p style="text-align:center; padding: 2rem; color: #64748b;">No upcoming appointments.</p>';
+    return;
+  }
 
-    list.innerHTML = upcoming.map(appt => `
+  list.innerHTML = upcoming
+    .map(
+      (appt) => `
         <div class="appointment-detail-card" style="background:#fff; border-radius:12px; padding:15px; margin-bottom:15px; border:1px solid #e2e8f0;">
             <div class="appointment-main-info" style="display:flex; justify-content:space-between; align-items:center;">
                 <div class="appointment-patient" style="display:flex; gap:12px; align-items:center;">
@@ -97,7 +97,7 @@ function updateUpcomingAppointments(upcoming) {
                     </div>
                     <div class="patient-text">
                         <h4 style="margin:0; font-size:1rem;">${appt.patient_name}</h4>
-                        <span style="font-size:0.8rem; color:#64748b;">${appt.notes || 'Status: ' + appt.status}</span>
+                        <span style="font-size:0.8rem; color:#64748b;">${appt.notes || "Status: " + appt.status}</span>
                         <div class="appointment-time-info" style="display:flex; gap:10px; margin-top:5px;">
                             <div class="time-row" style="display:flex; align-items:center; gap:5px; font-size:0.75rem; color:#94a3b8;">
                                 <img src="../Assets/Icons/gray-calendar.svg" alt="Date" style="width: 14px;">
@@ -125,15 +125,19 @@ function updateUpcomingAppointments(upcoming) {
                 </div>
             </div>
         </div>
-    `).join('');
+    `,
+    )
+    .join("");
 }
 
 function updateAvailabilityList(availability) {
-    const list = document.querySelector('.schedule-list');
-    if (!list) return;
-    list.innerHTML = availability.map(row => `
-        <div class="schedule-row ${row.is_approved ? 'active' : 'pending'}" style="display:flex; justify-content:space-between; align-items:center; padding:15px; background:#f8fafc; border-radius:12px; margin-bottom:10px;">
-            <input type="checkbox" ${row.is_approved ? 'checked' : ''} disabled style="width: 20px; height: 20px;">
+  const list = document.querySelector(".schedule-list");
+  if (!list) return;
+  list.innerHTML = availability
+    .map(
+      (row) => `
+        <div class="schedule-row ${row.is_approved ? "active" : "pending"}" style="display:flex; justify-content:space-between; align-items:center; padding:15px; background:#f8fafc; border-radius:12px; margin-bottom:10px;">
+            <input type="checkbox" ${row.is_approved ? "checked" : ""} disabled style="width: 20px; height: 20px;">
             <div style="flex:1; margin-left:15px;">
                 <span class="row-label" style="display:block; font-size:0.7rem; color:#94a3b8; font-weight:700;">Day</span>
                 <span class="row-value" style="font-weight:700;">${row.day_of_week}</span>
@@ -151,95 +155,101 @@ function updateAvailabilityList(availability) {
                 <img src="../Assets/Icons/red-trash.svg" alt="Delete" style="width: 18px;">
             </button>
         </div>
-    `).join('');
+    `,
+    )
+    .join("");
 }
 
 function handleAddSlot() {
-    // Get current user auth data
-    const userData = checkAuth('doctor');
-    if (!userData) return;
+  // Get current user auth data
+  const userData = checkAuth("doctor");
+  if (!userData) return;
 
-    const day = document.querySelector('.add-slot-card select').value;
-    const inputs = document.querySelectorAll('.add-slot-card input');
-    const start = inputs[0].value;
-    const end = inputs[1].value;
+  const day = document.querySelector(".add-slot-card select").value;
+  const inputs = document.querySelectorAll(".add-slot-card input");
+  const start = inputs[0].value;
+  const end = inputs[1].value;
 
-    if (!day || !start || !end) {
-        alert("Please fill in all fields.");
-        return;
-    }
+  if (!day || !start || !end) {
+    alert("Please fill in all fields.");
+    return;
+  }
 
-    fetch("../PHP/save_availability.php", {
-        method: "POST",
-        body: JSON.stringify({
-            user_id: userData.id, 
-            day_of_week: day,
-            start_time: start,
-            end_time: end
-        })
+  fetch("../PHP/save_availability.php", {
+    method: "POST",
+    body: JSON.stringify({
+      user_id: userData.id,
+      day_of_week: day,
+      start_time: start,
+      end_time: end,
+    }),
+  })
+    .then((res) => res.json())
+    .then((res) => {
+      if (res.success) {
+        alert(res.message);
+        loadDashboardData();
+      } else {
+        alert(res.message);
+      }
     })
-    .then(res => res.json())
-    .then(res => {
-        if (res.success) {
-            alert(res.message);
-            loadDashboardData();
-        } else {
-            alert(res.message);
-        }
-    })
-    .catch(err => {
-        console.error("Save availability error:", err);
-        alert("Failed to save availability.");
+    .catch((err) => {
+      console.error("Save availability error:", err);
+      alert("Failed to save availability.");
     });
 }
 
 function updateStatus(id, newStatus) {
-    if(!confirm(`Are you sure you want to mark this appointment as ${newStatus}?`)) return;
+  if (
+    !confirm(`Are you sure you want to mark this appointment as ${newStatus}?`)
+  )
+    return;
 
-    fetch("../PHP/appointment_actions.php", {
-        method: "POST",
-        body: JSON.stringify({ appointment_id: id, status: newStatus })
-    })
-    .then(res => res.json())
-    .then(res => {
-        if (res.success) {
-            loadDashboardData();
-        } else {
-            alert("Update failed: " + res.message);
-        }
+  fetch("../PHP/appointment_actions.php", {
+    method: "POST",
+    body: JSON.stringify({ appointment_id: id, status: newStatus }),
+  })
+    .then((res) => res.json())
+    .then((res) => {
+      if (res.success) {
+        loadDashboardData();
+      } else {
+        alert("Update failed: " + res.message);
+      }
     });
 }
 
 function deleteAvailability(id) {
-    if(!confirm("Are you sure you want to delete this availability slot?")) return;
+  if (!confirm("Are you sure you want to delete this availability slot?"))
+    return;
 
-    fetch("../PHP/manage_availability.php", {
-        method: "POST",
-        body: JSON.stringify({ availability_id: id, status: 'deleted' })
-    })
-    .then(res => res.json())
-    .then(res => {
-        if (res.success) {
-            loadDashboardData();
-        } else {
-            alert("Delete failed: " + res.message);
-        }
+  fetch("../PHP/manage_availability.php", {
+    method: "POST",
+    body: JSON.stringify({ availability_id: id, status: "deleted" }),
+  })
+    .then((res) => res.json())
+    .then((res) => {
+      if (res.success) {
+        loadDashboardData();
+      } else {
+        alert("Delete failed: " + res.message);
+      }
     });
 }
 
 function showSection(sectionName) {
-    document.querySelectorAll('.content-section').forEach(section => {
-        section.classList.remove('active');
-    });
-    const targetSection = document.getElementById('section-' + sectionName);
-    if(targetSection) targetSection.classList.add('active');
+  document.querySelectorAll(".content-section").forEach((section) => {
+    section.classList.remove("active");
+  });
+  const targetSection = document.getElementById("section-" + sectionName);
+  if (targetSection) targetSection.classList.add("active");
 
-    document.querySelectorAll('.menu-item').forEach(item => {
-        item.classList.remove('active');
-    });
+  document.querySelectorAll(".menu-item").forEach((item) => {
+    item.classList.remove("active");
+  });
 
-    const activeItem = document.getElementById('menu-' + sectionName);
-    if (activeItem) {
-        activeItem.classList.add('active');
-    }
+  const activeItem = document.getElementById("menu-" + sectionName);
+  if (activeItem) {
+    activeItem.classList.add("active");
+  }
 }

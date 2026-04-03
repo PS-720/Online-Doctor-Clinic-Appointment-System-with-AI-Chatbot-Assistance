@@ -1,28 +1,21 @@
--- =========================================================
--- SmartCare - Online Doctor Clinic Appointment System
--- Complete Database Schema
--- =========================================================
-
 -- Create database
 CREATE DATABASE IF NOT EXISTS smartcare_db;
 USE smartcare_db;
 
--- =========================================================
--- 1. USERS TABLE (Shared for Patient, Doctor, Admin login)
+--1. USERS TABLE (Shared for Patient, Doctor, Admin login)
 -- =========================================================
 CREATE TABLE users (
     user_id       INT AUTO_INCREMENT PRIMARY KEY,
     full_name     VARCHAR(100) NOT NULL,
     email         VARCHAR(150) NOT NULL UNIQUE,
     phone         VARCHAR(15) NOT NULL,
-    password      VARCHAR(255) NOT NULL,  -- Store hashed password (PHP password_hash)
+    password      VARCHAR(255) NOT NULL,  
     role          ENUM('patient', 'doctor', 'admin') NOT NULL DEFAULT 'patient',
     is_active     TINYINT(1) NOT NULL DEFAULT 1,
     created_at    TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at    TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB;
 
--- =========================================================
 -- 2. PATIENTS TABLE (Extra details for patients)
 -- =========================================================
 CREATE TABLE patients (
@@ -35,7 +28,6 @@ CREATE TABLE patients (
     FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
--- =========================================================
 -- 3. DOCTORS TABLE (Extra details for doctors)
 -- =========================================================
 CREATE TABLE doctors (
@@ -49,11 +41,11 @@ CREATE TABLE doctors (
     bio               TEXT DEFAULT NULL,
     profile_image     VARCHAR(255) DEFAULT NULL,
     location          VARCHAR(200) DEFAULT NULL,
-    is_approved       TINYINT(1) NOT NULL DEFAULT 0,  -- Admin must approve doctor
+    is_approved       TINYINT(1) NOT NULL DEFAULT 0,  
     FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
--- =========================================================
+
 -- 4. DOCTOR AVAILABILITY (Doctor sets working schedule)
 --    Step 1 of workflow: Doctor defines working days & hours
 -- =========================================================
@@ -72,7 +64,6 @@ CREATE TABLE doctor_availability (
     UNIQUE KEY unique_doctor_day (doctor_id, day_of_week)
 ) ENGINE=InnoDB;
 
--- =========================================================
 -- 5. DOCTOR LEAVES (Doctor marks leave days)
 -- =========================================================
 CREATE TABLE doctor_leaves (
@@ -86,7 +77,7 @@ CREATE TABLE doctor_leaves (
     UNIQUE KEY unique_doctor_leave (doctor_id, leave_date)
 ) ENGINE=InnoDB;
 
--- =========================================================
+
 -- 6. TIME SLOTS (System-generated based on approved availability)
 --    Step 3 of workflow: Generated slots like 10:00, 10:15, 10:30...
 -- =========================================================
@@ -105,7 +96,7 @@ CREATE TABLE time_slots (
     UNIQUE KEY unique_slot (doctor_id, slot_date, start_time)
 ) ENGINE=InnoDB;
 
--- =========================================================
+
 -- 7. APPOINTMENTS (Patient books with a doctor)
 --    Steps 4-6 of workflow: Book → Validate → Confirm
 -- =========================================================
@@ -128,7 +119,7 @@ CREATE TABLE appointments (
     FOREIGN KEY (slot_id) REFERENCES time_slots(slot_id) ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
--- =========================================================
+
 -- 8. APPOINTMENT HISTORY (Tracks all status changes)
 --    For admin monitoring & audit trail
 -- =========================================================
@@ -144,7 +135,7 @@ CREATE TABLE appointment_history (
     FOREIGN KEY (changed_by) REFERENCES users(user_id) ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
--- =========================================================
+
 -- 9. NOTIFICATIONS (SMS/Email confirmations)
 -- =========================================================
 CREATE TABLE notifications (
@@ -158,7 +149,7 @@ CREATE TABLE notifications (
     FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
--- =========================================================
+
 -- 10. FAVOURITE DOCTORS (Patient's favourite doctors list)
 -- =========================================================
 CREATE TABLE favourite_doctors (
@@ -171,15 +162,11 @@ CREATE TABLE favourite_doctors (
     UNIQUE KEY unique_favourite (patient_id, doctor_id)
 ) ENGINE=InnoDB;
 
--- =========================================================
--- INSERT DEFAULT ADMIN ACCOUNT
--- Password: admin123 (hashed with PHP password_hash)
--- You should change this after first login!
+
 -- =========================================================
 INSERT INTO users (full_name, email, phone, password, role) VALUES
 ('Admin', 'admin@smartcare.com', '0000000000', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'admin');
 
--- =========================================================
 -- INDEXES FOR PERFORMANCE
 -- =========================================================
 CREATE INDEX idx_users_email ON users(email);
