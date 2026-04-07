@@ -225,3 +225,35 @@ body {
   color: rgb(156, 156, 156);
   font-style: italic;
 }
+
+/* Back to Home Link */
+.back-home {
+  position: fixed;
+  top: 2rem;
+  left: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  color: #1e293b;
+  font-weight: 700;
+  font-size: 0.95rem;
+  padding: 10px 18px;
+  background-color: white;
+  border-radius: 12px;
+  border: 1px solid rgb(217, 217, 217);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease;
+  z-index: 1000;
+}
+
+.back-home:hover {
+  transform: translateX(-5px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  color: #155dfc;
+}
+
+.back-home img {
+  width: 18px;
+  height: 18px;
+}
