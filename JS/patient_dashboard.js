@@ -1,4 +1,3 @@
-// Initialization
 window.addEventListener("DOMContentLoaded", () => {
   // Check if user is logged in as patient
   const userData = checkAuth("patient");

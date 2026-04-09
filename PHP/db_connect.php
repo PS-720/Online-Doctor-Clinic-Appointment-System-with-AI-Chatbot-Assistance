@@ -1,11 +1,10 @@
 <?php
-// ==================================
+
 // Database Connection - SmartCare
-// ==================================
 
 $host = "localhost";
-$username = "root";       // Default XAMPP username
-$password = "";           // Default XAMPP password (empty)
+$username = "root";       
+$password = "";          
 $database = "smartcare_db";
 
 // Create connection

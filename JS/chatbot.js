@@ -32,6 +32,14 @@ const Chatbot = {
       };
     }
 
+    // Handle any elements with .chat-button class (including dynamic ones)
+    document.addEventListener("click", (e) => {
+      const chatBtn = e.target.closest(".chat-button");
+      if (chatBtn && popup) {
+        popup.classList.add("visible");
+      }
+    });
+
     if (closeBtn && popup) {
       closeBtn.onclick = () => {
         popup.classList.remove("visible");

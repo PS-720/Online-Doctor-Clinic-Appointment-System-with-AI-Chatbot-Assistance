@@ -1,7 +1,6 @@
 <?php
-// ==================================
+
 // Logout Handler - SmartCare
-// ==================================
 
 session_start();
 session_unset();

@@ -1,8 +1,6 @@
 <?php
-// ==================================
-// Login Handler - SmartCare
+
 // Auto-detects user role from database
-// ==================================
 
 session_start();
 header('Content-Type: application/json');
