@@ -29,7 +29,10 @@ $python_url = "http://localhost:5050/api/chat";
 $ch = curl_init($python_url);
 $payload = json_encode([
     'message' => $user_message,
-    'session_id' => $session_id
+    'session_id' => $session_id,
+    'user_id' => $user_id,
+    // If PHP session already has chatbot profile, pass it to Python so it can skip asking
+    'user_profile' => isset($_SESSION['chatbot_profile']) ? json_decode($_SESSION['chatbot_profile'], true) : null
 ]);
 
 curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
@@ -53,6 +56,14 @@ if ($python_response_raw === false || $http_status !== 200) {
 }
 
 $python_response = json_decode($python_response_raw, true);
+
+// If Python indicates profile was collected, persist it in PHP session so subsequent chats skip asking
+if (is_array($python_response) && isset($python_response['profile_collected']) && $python_response['profile_collected'] === true) {
+    if (isset($python_response['profile']) && is_array($python_response['profile'])) {
+        $_SESSION['chatbot_profile'] = json_encode($python_response['profile']);
+        $_SESSION['chatbot_profile_collected'] = true;
+    }
+}
 
 // 2. Ensure table exists
 $check_table = mysqli_query($conn, "SELECT 1 FROM chatbot_logs LIMIT 1");
@@ -82,18 +93,25 @@ if ($user_message !== 'reset') {
 
     // Determine what the bot responded with
     $b_res = "";
+    $b_intent = null;
     if (isset($python_response['response']) && $python_response['response']) {
         $b_res = $python_response['response'];
+        if (stripos($b_res, 'Detected symptoms:') !== false) {
+            $b_intent = 'symptom_check';
+        }
     } elseif (isset($python_response['follow_up']) && $python_response['follow_up']) {
         $b_res = $python_response['follow_up']['question'];
+        $b_intent = 'follow_up';
     } elseif (isset($python_response['result']) && $python_response['result']) {
         $b_res = "Diagnosis: " . $python_response['result']['disease'] . " (" . $python_response['result']['confidence'] . "% confidence). " . $python_response['result']['description'];
+        $b_intent = 'diagnosis';
     }
 
     // Log bot response
     if ($b_res) {
         $b_res_esc = mysqli_real_escape_string($conn, $b_res);
-        $sql_bot = "INSERT INTO chatbot_logs (user_id, session_id, sender, message) VALUES ($u_id_val, '$s_id', 'bot', '$b_res_esc')";
+        $b_intent_sql = ($b_intent !== null) ? "'" . mysqli_real_escape_string($conn, $b_intent) . "'" : "NULL";
+        $sql_bot = "INSERT INTO chatbot_logs (user_id, session_id, sender, message, detected_intent) VALUES ($u_id_val, '$s_id', 'bot', '$b_res_esc', $b_intent_sql)";
         mysqli_query($conn, $sql_bot);
     }
 }
