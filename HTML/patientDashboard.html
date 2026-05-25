@@ -44,9 +44,9 @@
           </button>
         </div>
         <div class="menu-item">
-          <button onclick="showSection('chatbot')" id="btn-chatbot" class="menu-item-anchor" data-icon="chatbot">
+          <button onclick="document.getElementById('chatbot-popup').classList.toggle('visible')" id="btn-chatbot" class="menu-item-anchor" data-icon="chatbot">
             <img class="icons" src="../Assets/Icons/gray-chatbot.svg" alt="Icon" />
-            <p>AI Chatbot</p>
+            <p>AI Assistance</p>
           </button>
         </div>
       </div>
@@ -123,7 +123,7 @@
           <div class="bcc-card start-chat">
             <h4>Have questions?</h4>
             <p>Chat with our AI assistant for instant medical advice and symptom analysis.</p>
-            <button class="bcc-buttons start-chat-btn" onclick="showSection('chatbot')">Start Chat</button>
+            <button class="bcc-buttons start-chat-btn" onclick="document.getElementById('chatbot-popup').classList.toggle('visible')">Start Chat</button>
           </div>
         </div>
       </div>
@@ -243,39 +243,7 @@
       </div>
     </section>
 
-    <!-- ===== SECTION: AI Chatbot ===== -->
-    <section id="section-chatbot" class="content-section hidden">
-      <div class="chatbot-dashboard">
-        <div class="greeting">
-          <h3>AI Health Assistant</h3>
-          <p>Get instant help with your health questions</p>
-        </div>
-
-        <div class="chat-container">
-          <div class="chat-messages" id="chat-messages">
-            <div class="message bot">
-              Hello! I'm your SmartCare AI assistant. How can I help you today?
-            </div>
-          </div>
-
-          <div class="typing-indicator" style="display:none;">
-            <div class="typing-dot"></div>
-            <div class="typing-dot"></div>
-            <div class="typing-dot"></div>
-          </div>
-
-          <div class="chat-input-area">
-            <input type="text" class="chat-input" placeholder="Describe your symptoms (e.g. chest pain, toothache)...">
-            <button class="send-message-btn">
-              <img class="icons" src="../Assets/Icons/paper-plane.svg" alt="Send">
-            </button>
-          </div>
-          <p class="ai-disclaimer" style="padding: 10px; font-size: 0.8rem; color: #64748b; text-align: center;">
-            AI responses are for guidance only. Always consult with a healthcare professional for medical advice.
-          </p>
-        </div>
-      </div>
-    </section>
+    <!-- AI Chatbot is now handled universally by chatbot.js -->
 
     <!-- Scripts -->
     <link rel="stylesheet" href="../CSS/chatbot.css">

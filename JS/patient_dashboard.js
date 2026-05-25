@@ -14,14 +14,7 @@ window.addEventListener("DOMContentLoaded", () => {
   // Booking Flow Setup
   setupBookingFlow(userData);
 
-  // Logout handling
-  const logoutBtn = document.getElementById("logout-button");
-  if (logoutBtn) {
-    logoutBtn.onclick = () => {
-      localStorage.removeItem("smartcare_user");
-      window.location.href = "login.html";
-    };
-  }
+
 });
 
 function loadPatientDashboard(userData) {
