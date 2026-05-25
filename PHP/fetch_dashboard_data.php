@@ -145,7 +145,7 @@ if ($role === 'doctor') {
     }
 
     // 4. All Doctors for Management
-    $all_doctors_query = "SELECT d.*, u.full_name, u.email FROM doctors d JOIN users u ON d.user_id = u.user_id";
+    $all_doctors_query = "SELECT d.*, u.full_name, u.email, u.phone FROM doctors d JOIN users u ON d.user_id = u.user_id";
     $all_doctors_res = mysqli_query($conn, $all_doctors_query);
     $all_doctors = [];
     if ($all_doctors_res) {

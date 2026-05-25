@@ -607,7 +607,8 @@ body {
   border-color: #dc2626;
 }
 
-.btn-icon-action:hover img {
+.btn-icon-action.blue:hover img,
+.btn-icon-action.red:hover img {
   filter: brightness(0) invert(1);
 }
 

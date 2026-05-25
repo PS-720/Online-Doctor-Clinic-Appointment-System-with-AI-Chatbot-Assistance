@@ -5,6 +5,8 @@
 // Global state for Slot Control
 let currentDoctorId = null; 
 let currentDate = new Date().toISOString().split('T')[0];
+let allDoctors = [];
+let calendarDisplayDate = new Date(currentDate);
 
 // Initialization
 window.addEventListener('DOMContentLoaded', () => {
@@ -12,15 +14,31 @@ window.addEventListener('DOMContentLoaded', () => {
     const userData = checkAuth('admin');
     if (!userData) return;
 
-    // Set default date for slot picker
-    const datePicker = document.getElementById('slot-date-picker');
-    if (datePicker) {
-        datePicker.value = currentDate;
-        datePicker.addEventListener('change', (e) => {
-            currentDate = e.target.value;
-            if(currentDoctorId) loadSlots();
-        });
+    // Initialize mini calendar
+    renderAdminCalendar();
+
+    // Calendar Navigation Listeners
+    const prevBtn = document.getElementById('cal-prev-month');
+    const nextBtn = document.getElementById('cal-next-month');
+    if (prevBtn && nextBtn) {
+        prevBtn.onclick = () => {
+            calendarDisplayDate.setMonth(calendarDisplayDate.getMonth() - 1);
+            renderAdminCalendar();
+        };
+        nextBtn.onclick = () => {
+            calendarDisplayDate.setMonth(calendarDisplayDate.getMonth() + 1);
+            renderAdminCalendar();
+        };
     }
+
+    // Bulk Actions Click Handlers
+    const btnBlockAll = document.getElementById('btn-block-all');
+    const btnUnblockAll = document.getElementById('btn-unblock-all');
+    const btnEmergencyOnly = document.getElementById('btn-emergency-only');
+
+    if (btnBlockAll) btnBlockAll.onclick = () => handleBulkAction('block_all');
+    if (btnUnblockAll) btnUnblockAll.onclick = () => handleBulkAction('unblock_all');
+    if (btnEmergencyOnly) btnEmergencyOnly.onclick = () => handleBulkAction('emergency_only');
 
     // Handle doctor selection for slot management
     const drSelect = document.getElementById('slot-dr-select');
@@ -80,6 +98,16 @@ window.addEventListener('DOMContentLoaded', () => {
     const changePassForm = document.getElementById('change-password-form');
     if (changePassForm) changePassForm.onsubmit = (e) => handleChangePassword(e, userData);
 
+    // Modal Control for Editing Doctors
+    const editModal = document.getElementById('edit-doctor-modal');
+    const closeEditBtn = document.getElementById('close-edit-modal');
+    if (closeEditBtn && editModal) {
+        closeEditBtn.onclick = () => editModal.style.display = 'none';
+    }
+
+    const editDoctorForm = document.getElementById('edit-doctor-form');
+    if (editDoctorForm) editDoctorForm.onsubmit = handleEditDoctor;
+
     // Initial data fetch
     loadAdminDashboardData(userData);
 });
@@ -114,6 +142,9 @@ function handleChangePassword(e, userData) {
 }
 
 function loadAdminDashboardData(userData) {
+    if (!userData) {
+        userData = JSON.parse(localStorage.getItem("smartcare_user"));
+    }
     if (!userData) return;
     
     fetch("../PHP/fetch_dashboard_data.php", {
@@ -125,6 +156,7 @@ function loadAdminDashboardData(userData) {
         if (res.success) {
             console.log("Admin Dashboard Data Loaded:", res.data);
             const data = res.data;
+            allDoctors = data.all_doctors;
             updateAdminStats(data.stats);
             updateRecentAppointments(data.recent_appointments);
             updatePendingApprovals(data.pending_approvals);
@@ -194,8 +226,8 @@ function renderDoctorsTable(doctors) {
                     ${doc.is_approved == 0 ? `
                         <button class="btn-icon-action approve-doctor" title="Approve Doctor" onclick="approveDoctor(${doc.doctor_id})" style="background:#dcfce7; border:none; border-radius:4px; padding:4px; cursor:pointer;"><img src="../Assets/Icons/green-check.svg" alt="Approve" style="width: 16px;"></button>
                     ` : ''}
-                    <button class="btn-icon-action" title="Edit Doctor" style="background:none; border:none; cursor:pointer;"><img src="../Assets/Icons/gray-edit.svg" alt="Edit" style="width: 16px;"></button>
-                    <button class="btn-icon-action" title="View Schedule" onclick="viewDoctorSchedule(${doc.doctor_id})" style="background:none; border:none; cursor:pointer;"><img src="../Assets/Icons/gray-calendar.svg" alt="Schedule" style="width: 16px;"></button>
+                    <button class="btn-icon-action" title="Edit Doctor" onclick="openEditDoctorModal(${doc.doctor_id})"><img src="../Assets/Icons/gray-edit.svg" alt="Edit" style="width: 16px;"></button>
+                    <button class="btn-icon-action delete" title="Delete Doctor" onclick="deleteDoctor(${doc.user_id})"><img src="../Assets/Icons/red-trash.svg" alt="Delete" style="width: 16px;"></button>
                 </div>
             </td>
         </tr>
@@ -263,7 +295,7 @@ function renderAppointmentsTable(appts) {
             </td>
             <td><span class="badge-pill ${appt.status}">${appt.status}</span></td>
             <td>
-                <button class="btn-icon-action" title="Edit" style="background:none; border:none; cursor:pointer;"><img src="../Assets/Icons/gray-edit.svg" alt="Edit" style="width: 16px;"></button>
+                <button class="btn-icon-action" title="Edit"><img src="../Assets/Icons/gray-edit.svg" alt="Edit" style="width: 16px;"></button>
             </td>
         </tr>
     `).join('');
@@ -303,25 +335,36 @@ function renderSlots(slots) {
         const isBooked = slot.status === 'booked';
         const isBlocked = slot.status === 'blocked';
         
+        // Format time to e.g., "11:00 AM"
+        const timeParts = slot.start_time.split(':');
+        let hours = parseInt(timeParts[0], 10);
+        const minutes = timeParts[1];
+        const ampm = hours >= 12 ? 'PM' : 'AM';
+        hours = hours % 12;
+        hours = hours ? hours : 12; // the hour '0' should be '12'
+        const formattedTime = `${hours}:${minutes} ${ampm}`;
+        
         return `
-            <div class="slot-card-admin ${slot.status}" style="background:#fff; border-radius:12px; padding:15px; box-shadow:0 1px 3px rgba(0,0,0,0.1); border: 1px solid #e2e8f0;">
-                <div class="slot-header-admin" style="display:flex; justify-content:space-between; align-items:center;">
-                    <div class="slot-time-admin"><img src="../Assets/Icons/brown-clock.svg" alt="Clock" style="width: 16px; filter: grayscale(1);"> ${slot.start_time.slice(0, 5)}</div>
-                    <span class="slot-status-badge ${slot.status}" style="font-size:0.7rem; text-transform:uppercase; font-weight:700;">${slot.status}</span>
+            <div class="slot-card-admin ${slot.status}">
+                <div class="slot-header-admin">
+                    <div class="slot-time-admin"><img src="../Assets/Icons/brown-clock.svg" alt="Clock" style="width: 16px; filter: grayscale(1);"> ${formattedTime}</div>
+                    <span class="slot-status-badge ${slot.status}">${slot.status}</span>
                 </div>
-                ${isBooked ? `<p class="slot-patient-info" style="font-size:0.75rem; margin-top:8px;">Patient: <strong>${slot.patient_name || 'N/A'}</strong></p>` : ''}
+                ${isBooked ? `<p class="slot-patient-info">Patient: <strong>${slot.patient_name || 'N/A'}</strong></p>` : ''}
                 
-                <div class="slot-actions-admin" style="margin-top:12px; display:flex; gap:5px;">
+                <div class="slot-actions-admin">
                     ${slot.status === 'available' ? `
-                        <button class="btn-slot-action" onclick="handleSlotAction(${slot.slot_id}, 'block')" style="background:#f1f5f9; border:none; padding:5px 10px; border-radius:5px; cursor:pointer; font-size:0.75rem;">Block</button>
+                        <button class="btn-slot-action block" onclick="handleSlotAction(${slot.slot_id}, 'block')">
+                            <img src="../Assets/Icons/black-lock.svg" alt="Lock" style="width: 12px; opacity: 0.7;"> Block Slot
+                        </button>
                     ` : ''}
 
                     ${isBooked ? `
-                        <button class="btn-slot-action" onclick="handleSlotAction(${slot.slot_id}, 'cancel')" style="background:#fee2e2; color:#b91c1c; border:none; padding:5px 10px; border-radius:5px; cursor:pointer; font-size:0.75rem;">Cancel</button>
+                        <button class="btn-slot-action cancel" onclick="handleSlotAction(${slot.slot_id}, 'cancel')">Cancel Booking</button>
                     ` : ''}
 
                     ${isBlocked ? `
-                        <button class="btn-slot-action" onclick="handleSlotAction(${slot.slot_id}, 'unblock')" style="background:#f1f5f9; border:none; padding:5px 10px; border-radius:5px; cursor:pointer; font-size:0.75rem;">Unblock</button>
+                        <button class="btn-slot-action unblock" onclick="handleSlotAction(${slot.slot_id}, 'unblock')">Unblock Slot</button>
                     ` : ''}
                 </div>
             </div>
@@ -331,7 +374,9 @@ function renderSlots(slots) {
 
 function handleSlotAction(id, action) {
     let endpoint = "../PHP/manage_slots.php";
-    let payload = { slot_id: id, action: action, admin_id: user.user_id };
+    const userData = checkAuth('admin');
+    if (!userData) return;
+    let payload = { slot_id: id, action: action, admin_id: userData.id };
 
     if (action === 'cancel') {
         if (!confirm("Are you sure you want to cancel this booking?")) return;
@@ -348,7 +393,7 @@ function handleSlotAction(id, action) {
     .then(res => {
         if (res.success) {
             loadSlots();
-            loadAdminDashboardData();
+            loadAdminDashboardData(userData);
         } else {
             alert(res.message);
         }
@@ -403,7 +448,8 @@ function manageAvailability(id, status) {
     .then(res => res.json())
     .then(res => {
         if (res.success) {
-            loadAdminDashboardData();
+            const userData = checkAuth('admin');
+            loadAdminDashboardData(userData);
         } else {
             alert("Error: " + res.message);
         }
@@ -414,6 +460,8 @@ function viewDoctorSchedule(id) {
     currentDoctorId = id;
     const drSelect = document.getElementById('slot-dr-select');
     if (drSelect) drSelect.value = id;
+    calendarDisplayDate = new Date(currentDate);
+    renderAdminCalendar();
     showSection('slots');
     loadSlots();
 }
@@ -459,4 +507,225 @@ function showSection(sectionName) {
     });
     const activeItem = document.getElementById('menu-' + sectionName);
     if (activeItem) activeItem.classList.add('active');
+}
+
+function openEditDoctorModal(doctorId) {
+    const doc = allDoctors.find(d => d.doctor_id == doctorId);
+    if (!doc) {
+        alert("Doctor not found.");
+        return;
+    }
+
+    document.getElementById('edit-doc-id').value = doc.doctor_id;
+    document.getElementById('edit-doc-user-id').value = doc.user_id;
+    document.getElementById('edit-doc-name').value = doc.full_name || '';
+    document.getElementById('edit-doc-email').value = doc.email || '';
+    document.getElementById('edit-doc-phone').value = doc.phone || '';
+    document.getElementById('edit-doc-password').value = ''; // empty by default
+    document.getElementById('edit-doc-specialization').value = doc.specialization || '';
+    document.getElementById('edit-doc-experience').value = doc.experience_years || 0;
+    document.getElementById('edit-doc-fee').value = doc.consultation_fee || 0;
+    document.getElementById('edit-doc-license').value = doc.qualification || '';
+    document.getElementById('edit-doc-status').value = doc.is_approved;
+    document.getElementById('edit-doc-location').value = doc.location || '';
+    document.getElementById('edit-doc-bio').value = doc.bio || '';
+
+    document.getElementById('edit-doctor-modal').style.display = 'block';
+}
+
+function handleEditDoctor(e) {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const data = Object.fromEntries(formData.entries());
+
+    fetch("../PHP/edit_doctor.php", {
+        method: "POST",
+        body: JSON.stringify(data)
+    })
+    .then(res => res.json())
+    .then(res => {
+        if (res.success) {
+            alert("Doctor information updated successfully!");
+            document.getElementById('edit-doctor-modal').style.display = 'none';
+            
+            // Re-fetch data
+            const userData = checkAuth('admin');
+            loadAdminDashboardData(userData);
+        } else {
+            alert(res.message);
+        }
+    })
+    .catch(err => {
+        console.error("Edit doctor error:", err);
+        alert("Failed to update doctor information.");
+    });
+}
+
+function deleteDoctor(userId) {
+    if (!confirm("Are you sure you want to delete this doctor? This will permanently delete their profile, appointments, and slots.")) return;
+
+    fetch("../PHP/delete_doctor.php", {
+        method: "POST",
+        body: JSON.stringify({ user_id: userId })
+    })
+    .then(res => res.json())
+    .then(res => {
+        if (res.success) {
+            alert(res.message);
+            const userData = checkAuth('admin');
+            loadAdminDashboardData(userData);
+        } else {
+            alert(res.message);
+        }
+    })
+    .catch(err => {
+        console.error("Delete doctor error:", err);
+        alert("Failed to delete doctor.");
+    });
+}
+
+function renderAdminCalendar() {
+    const grid = document.getElementById('cal-dates-grid');
+    const title = document.getElementById('cal-month-title');
+    if (!grid || !title) return;
+
+    grid.innerHTML = '';
+    
+    // Set title e.g. "May 2026"
+    const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    title.textContent = `${monthNames[calendarDisplayDate.getMonth()]} ${calendarDisplayDate.getFullYear()}`;
+
+    // Add day labels
+    const dayLabels = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
+    dayLabels.forEach(label => {
+        const div = document.createElement('div');
+        div.className = 'cal-day-label';
+        div.textContent = label;
+        grid.appendChild(div);
+    });
+
+    const year = calendarDisplayDate.getFullYear();
+    const month = calendarDisplayDate.getMonth();
+
+    // First day of current month
+    const firstDayIndex = new Date(year, month, 1).getDay(); // 0 is Sunday, 6 is Saturday
+    
+    // Number of days in current month
+    const totalDays = new Date(year, month + 1, 0).getDate();
+    
+    // Number of days in previous month
+    const prevTotalDays = new Date(year, month, 0).getDate();
+
+    // Today's date (local)
+    const today = new Date();
+    const todayStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+
+    // Selected date
+    const selectedStr = currentDate;
+
+    // Previous month's trailing days
+    for (let i = firstDayIndex - 1; i >= 0; i--) {
+        const day = prevTotalDays - i;
+        const cellDate = new Date(year, month - 1, day);
+        const cellDateStr = `${cellDate.getFullYear()}-${String(cellDate.getMonth() + 1).padStart(2, '0')}-${String(cellDate.getDate()).padStart(2, '0')}`;
+        
+        const div = document.createElement('div');
+        div.className = 'cal-date muted';
+        div.textContent = day;
+        div.onclick = () => {
+            currentDate = cellDateStr;
+            calendarDisplayDate = new Date(cellDate);
+            renderAdminCalendar();
+            loadSlots();
+        };
+        grid.appendChild(div);
+    }
+
+    // Current month's days
+    for (let day = 1; day <= totalDays; day++) {
+        const cellDate = new Date(year, month, day);
+        const cellDateStr = `${cellDate.getFullYear()}-${String(cellDate.getMonth() + 1).padStart(2, '0')}-${String(cellDate.getDate()).padStart(2, '0')}`;
+        
+        const div = document.createElement('div');
+        let className = 'cal-date';
+        
+        if (cellDateStr === selectedStr) {
+            className += ' active';
+        } else if (cellDateStr === todayStr) {
+            className += ' today';
+        }
+        
+        div.className = className;
+        div.textContent = day;
+        div.onclick = () => {
+            currentDate = cellDateStr;
+            renderAdminCalendar();
+            loadSlots();
+        };
+        grid.appendChild(div);
+    }
+
+    // Next month's leading days to fill up to 42 cells total (6 rows of 7 days)
+    const currentCellsCount = firstDayIndex + totalDays;
+    const remainingCells = 42 - currentCellsCount;
+    for (let day = 1; day <= remainingCells; day++) {
+        const cellDate = new Date(year, month + 1, day);
+        const cellDateStr = `${cellDate.getFullYear()}-${String(cellDate.getMonth() + 1).padStart(2, '0')}-${String(cellDate.getDate()).padStart(2, '0')}`;
+        
+        const div = document.createElement('div');
+        div.className = 'cal-date muted';
+        div.textContent = day;
+        div.onclick = () => {
+            currentDate = cellDateStr;
+            calendarDisplayDate = new Date(cellDate);
+            renderAdminCalendar();
+            loadSlots();
+        };
+        grid.appendChild(div);
+    }
+}
+
+function handleBulkAction(action) {
+    if (!currentDoctorId) {
+        alert("Please select a doctor first.");
+        return;
+    }
+
+    const userData = checkAuth('admin');
+    if (!userData) return;
+
+    let confirmationMessage = "";
+    if (action === 'block_all') {
+        confirmationMessage = "Are you sure you want to block all remaining available slots for this doctor on this date?";
+    } else if (action === 'unblock_all') {
+        confirmationMessage = "Are you sure you want to unblock all blocked slots for this doctor on this date?";
+    } else if (action === 'emergency_only') {
+        confirmationMessage = "WARNING: This will block all slots and cancel ALL booked appointments for this doctor on this date. Are you sure you want to proceed?";
+    }
+
+    if (!confirm(confirmationMessage)) return;
+
+    fetch("../PHP/bulk_manage_slots.php", {
+        method: "POST",
+        body: JSON.stringify({
+            doctor_id: currentDoctorId,
+            date: currentDate,
+            action: action,
+            admin_id: userData.id
+        })
+    })
+    .then(res => res.json())
+    .then(res => {
+        if (res.success) {
+            alert(res.message);
+            loadSlots();
+            loadAdminDashboardData(userData);
+        } else {
+            alert(res.message);
+        }
+    })
+    .catch(err => {
+        console.error("Bulk action error:", err);
+        alert("Failed to perform bulk action.");
+    });
 }

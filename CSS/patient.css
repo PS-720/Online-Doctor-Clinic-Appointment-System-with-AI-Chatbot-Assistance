@@ -420,11 +420,16 @@ button.menu-item-anchor {
 .input-element {
 	padding: 0.7rem 1.5rem;
 	margin-top: 5px;
+	font-family: inherit;
 	font-size: 0.9rem;
 	border: 1px solid rgb(214, 214, 214);
 	border-radius: 10px;
 	background-color: rgb(243, 243, 245);
 	transition: all 0.15s ease;
+}
+
+.input-element::placeholder {
+	font-family: inherit;
 }
 
 .input-element:focus {
@@ -771,4 +776,99 @@ button.menu-item-anchor {
 
 .content-section.active {
 	display: block;
+}
+
+/* ===== Doctor Search & Cards Styles ===== */
+.find-doctor-card {
+  background-color: white;
+  border-radius: 16px;
+  padding: 1.5rem;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 6px -1px rgba(15, 23, 42, 0.05);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 12px;
+  transition: all 0.25s ease;
+}
+
+.find-doctor-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 20px -8px rgba(15, 23, 42, 0.12);
+  border-color: #cbd5e1;
+}
+
+.find-doctor-card .card-content {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.find-doctor-card .card-photo {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: #eff6ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.find-doctor-card .card-photo img {
+  width: 32px;
+  height: 32px;
+}
+
+.find-doctor-card .card-text {
+  flex-grow: 1;
+}
+
+.find-doctor-card .card-text h3 {
+  margin: 0 0 4px;
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #1e293b;
+}
+
+.find-doctor-card .card-text p {
+  font-size: 0.85rem;
+  color: #64748b;
+  margin: 2px 0;
+  line-height: 1.4;
+  font-weight: 600;
+}
+
+.find-doctor-card .card-caption {
+  border-top: 1px solid #e2e8f0;
+  padding-top: 1rem;
+  margin-top: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.find-doctor-card .card-caption p {
+  font-size: 0.9rem;
+  color: #1e293b;
+  font-weight: 700;
+}
+
+.find-doctor-card .bookDoctor {
+  background-color: #155dfc;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.find-doctor-card .bookDoctor:hover {
+  background-color: #0b4bcc;
 }

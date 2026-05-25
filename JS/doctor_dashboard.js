@@ -1,3 +1,7 @@
+let doctorProfile = null;
+let doctorPatients = [];
+let activePatientId = null;
+
 // Initialization
 window.addEventListener("DOMContentLoaded", () => {
   // Check if user is logged in as doctor
@@ -48,30 +52,59 @@ window.addEventListener("DOMContentLoaded", () => {
   if (editForm) {
     editForm.addEventListener("submit", handleUpdateProfile);
   }
+
+  // Patients Roster Listeners
+  const searchInput = document.getElementById("search-patients-input");
+  if (searchInput) {
+    searchInput.addEventListener("input", (e) => {
+      const query = e.target.value.toLowerCase().trim();
+      const filtered = doctorPatients.filter((p) => {
+        return (
+          p.full_name.toLowerCase().includes(query) ||
+          p.email.toLowerCase().includes(query)
+        );
+      });
+      renderPatientsGrid(filtered);
+    });
+  }
+
+  const patientModal = document.getElementById("modal-patient-details");
+  const closePatientModalBtn = document.querySelector(".btn-close-patient-modal");
+  if (closePatientModalBtn && patientModal) {
+    closePatientModalBtn.addEventListener("click", () => {
+      patientModal.classList.remove("active");
+    });
+  }
+
+  if (patientModal) {
+    patientModal.addEventListener("click", (e) => {
+      if (e.target === patientModal) {
+        patientModal.classList.remove("active");
+      }
+    });
+  }
+
+  const saveConditionsBtn = document.getElementById("btn-save-conditions");
+  if (saveConditionsBtn) {
+    saveConditionsBtn.addEventListener("click", handleUpdateConditions);
+  }
 });
 
 function populateEditModal() {
-  const name = document.getElementById("prof-full-name")?.textContent.replace("Dr. ", "");
-  const spec = document.getElementById("prof-specialization")?.textContent;
-  const exp = parseInt(document.getElementById("prof-experience-2")?.textContent);
-  const email = document.getElementById("prof-email")?.textContent;
-  const phone = document.getElementById("prof-phone")?.textContent;
-  const qual = document.getElementById("prof-license")?.textContent;
-  const fee = parseInt(document.getElementById("prof-fee")?.textContent.replace("₹", ""));
-  const loc = document.getElementById("prof-location")?.textContent;
-  const bio = document.getElementById("prof-bio")?.textContent;
-  const edu = document.getElementById("prof-education")?.textContent;
+  if (!doctorProfile) return;
 
-  document.getElementById("edit-name").value = name || "";
-  document.getElementById("edit-email").value = email || "";
-  document.getElementById("edit-phone").value = phone || "";
-  document.getElementById("edit-specialization").value = spec || "";
-  document.getElementById("edit-experience").value = exp || 0;
-  document.getElementById("edit-qualification").value = qual || "";
-  document.getElementById("edit-fee").value = fee || 0;
-  document.getElementById("edit-location").value = loc || "";
-  document.getElementById("edit-bio").value = bio || "";
-  document.getElementById("edit-education").value = edu || "";
+  document.getElementById("edit-name").value = doctorProfile.full_name || "";
+  document.getElementById("edit-email").value = doctorProfile.email || "";
+  document.getElementById("edit-phone").value = doctorProfile.phone || "";
+  document.getElementById("edit-specialization").value = doctorProfile.specialization || "";
+  document.getElementById("edit-experience").value = doctorProfile.experience_years || 0;
+  document.getElementById("edit-qualification").value = doctorProfile.qualification || "";
+  document.getElementById("edit-fee").value = parseInt(doctorProfile.consultation_fee) || 0;
+  document.getElementById("edit-location").value = doctorProfile.location || "";
+  document.getElementById("edit-bio").value = doctorProfile.bio || "";
+  document.getElementById("edit-education").value = doctorProfile.education || "";
+  document.getElementById("edit-languages").value = doctorProfile.languages || "";
+  document.getElementById("edit-address").value = doctorProfile.address || "";
 }
 
 function handleUpdateProfile(e) {
@@ -91,6 +124,8 @@ function handleUpdateProfile(e) {
     location: document.getElementById("edit-location").value,
     bio: document.getElementById("edit-bio").value,
     education: document.getElementById("edit-education").value,
+    languages: document.getElementById("edit-languages").value,
+    address: document.getElementById("edit-address").value,
   };
 
   fetch("../PHP/update_profile.php", {
@@ -181,8 +216,10 @@ function loadDashboardData() {
         updateUpcomingAppointments(data.upcoming);
         updateAvailabilityList(data.availability);
         if (data.profile) {
+          doctorProfile = data.profile;
           updateDoctorProfile(data.profile);
         }
+        loadPatientsData();
       }
     })
     .catch((err) => console.error("Data fetch error:", err));
@@ -220,11 +257,14 @@ function updateDoctorProfile(profile) {
   const locEle = document.getElementById("prof-location");
   const bioEle = document.getElementById("prof-bio");
   const eduEle = document.getElementById("prof-education");
+  const langEle = document.getElementById("prof-languages");
+  const addrEle = document.getElementById("prof-address");
 
   if (locEle) locEle.textContent = profile.location || "N/A";
   if (bioEle) bioEle.textContent = profile.bio || "No biography provided.";
-  if (eduEle) eduEle.textContent = profile.qualification || "Qualification details not available."; 
-  // Note: I'll use qualification for education if specific field missing in schema or just show what we have.
+  if (eduEle) eduEle.textContent = profile.education || "Qualification details not available.";
+  if (langEle) langEle.textContent = profile.languages || "N/A";
+  if (addrEle) addrEle.textContent = profile.address || "No address provided.";
 }
 
 function updateDashboardStats(stats) {
@@ -420,6 +460,10 @@ function showSection(sectionName) {
   if (activeItem) {
     activeItem.classList.add("active");
   }
+
+  if (sectionName === "patients") {
+    loadPatientsData();
+  }
 }
 
 function formatTo12Hr(timeStr) {
@@ -430,4 +474,245 @@ function formatTo12Hr(timeStr) {
   hours = hours % 12;
   hours = hours ? hours : 12; // the hour '0' should be '12'
   return `${hours.toString().padStart(2, "0")}:${minutes} ${ampm}`;
+}
+
+/* ===== Patients Tab Logic ===== */
+function loadPatientsData() {
+  const userData = checkAuth("doctor");
+  if (!userData) return;
+
+  fetch("../PHP/fetch_patients.php", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ user_id: userData.id }),
+  })
+    .then((res) => res.json())
+    .then((res) => {
+      if (res.success) {
+        doctorPatients = res.patients || [];
+
+        // Update stats cards
+        const totalEl = document.getElementById("stat-total-patients");
+        const activeEl = document.getElementById("stat-active-patients");
+        const newEl = document.getElementById("stat-new-patients");
+
+        if (totalEl) totalEl.textContent = res.stats.total_patients || 0;
+        if (activeEl) activeEl.textContent = res.stats.active_patients || 0;
+        if (newEl) newEl.textContent = res.stats.new_patients || 0;
+
+        // Render roster cards
+        renderPatientsGrid(doctorPatients);
+      } else {
+        console.error("Failed to load patients:", res.message);
+      }
+    })
+    .catch((err) => console.error("Error loading patients:", err));
+}
+
+function renderPatientsGrid(patientsList) {
+  const grid = document.getElementById("patients-grid");
+  if (!grid) return;
+
+  if (patientsList.length === 0) {
+    grid.innerHTML = `
+      <div style="grid-column: 1 / -1; text-align: center; padding: 3rem; color: var(--text-secondary); background: white; border-radius: 16px; border: 1px solid var(--border-color); box-shadow: 0 4px 6px -1px rgba(15, 23, 42, 0.05);">
+        <p style="font-size: 1.1rem; font-weight: 600; color: var(--text-main);">No patients found.</p>
+        <p style="font-size: 0.9rem; margin-top: 4px; color: var(--text-secondary);">Try searching for another name or email address.</p>
+      </div>
+    `;
+    return;
+  }
+
+  grid.innerHTML = patientsList
+    .map((patient) => {
+      // Split comma separated conditions into badges
+      const conditions = patient.medical_conditions
+        ? patient.medical_conditions.split(",").map((c) => c.trim()).filter(Boolean)
+        : [];
+      const tagsHtml = conditions
+        .map((c) => `<span class="patient-condition-tag">${c}</span>`)
+        .join("");
+
+      return `
+        <div class="patient-card">
+          <div class="patient-card-body">
+            <div class="patient-card-avatar">
+              <img src="../Assets/Icons/blue-user-circle.svg" alt="Patient">
+            </div>
+            <div class="patient-card-info">
+              <h3>${patient.full_name}</h3>
+              <p class="patient-card-meta">${patient.age ? patient.age + " years" : "Age N/A"} &bull; ${patient.gender ? patient.gender.charAt(0).toUpperCase() + patient.gender.slice(1) : "N/A"}</p>
+              
+              <div class="patient-info-list">
+                <div class="patient-info-row">
+                  <img src="../Assets/Icons/gray-phone.svg" alt="Phone">
+                  <span>${patient.phone || "N/A"}</span>
+                </div>
+                <div class="patient-info-row email">
+                  <img src="../Assets/Icons/gray-mail.svg" alt="Email">
+                  <span>${patient.email}</span>
+                </div>
+                <div class="patient-info-row">
+                  <img src="../Assets/Icons/gray-calendar.svg" alt="Calendar">
+                  <span>Last visit: ${formatVisitDate(patient.last_visit)}</span>
+                </div>
+              </div>
+
+              ${tagsHtml ? `<div class="patient-conditions-container">${tagsHtml}</div>` : ""}
+            </div>
+          </div>
+          <div class="patient-card-footer">
+            <span>${patient.total_visits} total visits</span>
+            <a onclick="openPatientDetails(${patient.patient_id})">View Details &rarr;</a>
+          </div>
+        </div>
+      `;
+    })
+    .join("");
+}
+
+function openPatientDetails(patientId) {
+  const patient = doctorPatients.find((p) => p.patient_id === patientId);
+  if (!patient) return;
+
+  activePatientId = patientId;
+
+  // Set patient summary details
+  const nameEl = document.getElementById("det-patient-name");
+  const metaEl = document.getElementById("det-patient-meta");
+  const phoneEl = document.getElementById("det-patient-phone");
+  const emailEl = document.getElementById("det-patient-email");
+  const addrEl = document.getElementById("det-patient-address");
+
+  if (nameEl) nameEl.textContent = patient.full_name;
+  if (metaEl) {
+    const ageStr = patient.age ? patient.age + " years" : "Age N/A";
+    const genderStr = patient.gender ? patient.gender.charAt(0).toUpperCase() + patient.gender.slice(1) : "Gender N/A";
+    const bloodStr = patient.blood_group ? "Blood Group " + patient.blood_group : "Blood Group N/A";
+    metaEl.textContent = `${ageStr} • ${genderStr} • ${bloodStr}`;
+  }
+
+  // Set contact & home address details
+  if (phoneEl) {
+    phoneEl.innerHTML = `<img src="../Assets/Icons/gray-phone.svg" alt="Phone" style="width: 14px; opacity: 0.6; vertical-align: middle; margin-right: 8px;">${patient.phone || "N/A"}`;
+  }
+  if (emailEl) {
+    emailEl.innerHTML = `<img src="../Assets/Icons/gray-mail.svg" alt="Email" style="width: 14px; opacity: 0.6; vertical-align: middle; margin-right: 8px;">${patient.email}`;
+  }
+  if (addrEl) {
+    addrEl.textContent = patient.address || "No address details available.";
+  }
+
+  // Set conditions
+  const conditionsContainer = document.getElementById("det-conditions-tags");
+  if (conditionsContainer) {
+    conditionsContainer.innerHTML = "";
+    if (patient.medical_conditions) {
+      const list = patient.medical_conditions.split(",").map((c) => c.trim()).filter(Boolean);
+      list.forEach((c) => {
+        const span = document.createElement("span");
+        span.className = "patient-condition-tag";
+        span.textContent = c;
+        conditionsContainer.appendChild(span);
+      });
+    } else {
+      conditionsContainer.innerHTML = `<span style="font-size: 0.85rem; color: var(--text-secondary); font-style: italic;">No documented conditions.</span>`;
+    }
+  }
+  
+  const condInput = document.getElementById("input-update-conditions");
+  if (condInput) {
+    condInput.value = patient.medical_conditions || "";
+  }
+
+  // Set visits history list
+  const visitList = document.getElementById("det-visit-list");
+  if (visitList) {
+    visitList.innerHTML = "";
+    if (patient.visits && patient.visits.length > 0) {
+      patient.visits.forEach((v) => {
+        const row = document.createElement("div");
+        row.className = "visit-history-row";
+        
+        const badgeClass = v.status.toLowerCase();
+        const formattedTime = formatTo12Hr(v.start_time);
+        const formattedDate = formatVisitDate(v.appointment_date);
+
+        row.innerHTML = `
+          <div class="visit-time-info">
+            <span class="visit-date">${formattedDate}</span>
+            <span class="visit-time">${formattedTime}</span>
+          </div>
+          <div class="visit-notes">${v.notes || "No consultation notes recorded."}</div>
+          <span class="status-badge ${badgeClass}" style="font-size: 0.7rem; font-weight: 700; text-transform: uppercase; padding: 4px 10px; border-radius: 20px;">${v.status}</span>
+        `;
+        visitList.appendChild(row);
+      });
+    } else {
+      visitList.innerHTML = `<p style="text-align: center; color: var(--text-secondary); font-style: italic; font-size: 0.9rem; padding: 1rem;">No visits found.</p>`;
+    }
+  }
+
+  // Show Patient Details modal
+  const detailsModal = document.getElementById("modal-patient-details");
+  if (detailsModal) {
+    detailsModal.classList.add("active");
+  }
+}
+
+function handleUpdateConditions() {
+  if (!activePatientId) return;
+
+  const conditionsInput = document.getElementById("input-update-conditions").value.trim();
+
+  fetch("../PHP/update_patient_conditions.php", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      patient_id: activePatientId,
+      medical_conditions: conditionsInput,
+    }),
+  })
+    .then((res) => res.json())
+    .then((res) => {
+      if (res.success) {
+        alert("Patient conditions updated successfully!");
+        
+        // Refresh local cache and sidebar rosters
+        loadPatientsData();
+        
+        // Update tags in the open details modal immediately
+        const conditionsContainer = document.getElementById("det-conditions-tags");
+        if (conditionsContainer) {
+          conditionsContainer.innerHTML = "";
+          if (conditionsInput) {
+            const list = conditionsInput.split(",").map((c) => c.trim()).filter(Boolean);
+            list.forEach((c) => {
+              const span = document.createElement("span");
+              span.className = "patient-condition-tag";
+              span.textContent = c;
+              conditionsContainer.appendChild(span);
+            });
+          } else {
+            conditionsContainer.innerHTML = `<span style="font-size: 0.85rem; color: var(--text-secondary); font-style: italic;">No documented conditions.</span>`;
+          }
+        }
+      } else {
+        alert("Failed to update conditions: " + res.message);
+      }
+    })
+    .catch((err) => {
+      console.error("Error updating conditions:", err);
+      alert("An error occurred while updating conditions.");
+    });
+}
+
+function formatVisitDate(dateStr) {
+  if (!dateStr) return "N/A";
+  const parts = dateStr.split("-");
+  if (parts.length !== 3) return dateStr;
+  const year = parts[0];
+  const month = parseInt(parts[1], 10);
+  const day = parseInt(parts[2], 10);
+  return `${month}/${day}/${year}`;
 }

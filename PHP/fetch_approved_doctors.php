@@ -9,7 +9,7 @@ require_once 'db_connect.php';
 $query = "SELECT d.doctor_id, u.full_name, d.specialization 
           FROM doctors d
           JOIN users u ON d.user_id = u.user_id
-          WHERE u.role = 'doctor'"; // Can add status = 'active' if you have that column
+          WHERE u.role = 'doctor' AND d.is_approved = 1";
 
 $result = mysqli_query($conn, $query);
 
