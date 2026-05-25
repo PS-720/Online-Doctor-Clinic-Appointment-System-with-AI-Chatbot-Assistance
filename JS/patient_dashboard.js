@@ -14,6 +14,16 @@ window.addEventListener("DOMContentLoaded", () => {
   // Booking Flow Setup
   setupBookingFlow(userData);
 
+  // Search button click handler
+  const searchBtn = document.getElementById("btn-search-doctors");
+  if (searchBtn) {
+    searchBtn.addEventListener("click", () => {
+      const locality = document.getElementById("find-locality-input").value;
+      const specialization = document.getElementById("find-specialization-select").value;
+      searchDoctors(locality, specialization);
+    });
+  }
+
   // Logout handling
   const logoutBtn = document.getElementById("logout-button");
   if (logoutBtn) {
@@ -83,7 +93,7 @@ function updateDashboardUI(data) {
                             <img class="icons" src="../Assets/Icons/blue-heart-light-border.svg" alt="Heart" />
                         </div>
                         <div class="doc-name">
-                            <h4>Dr. ${appt.doctor_name}</h4>
+                            <h4>${formatDoctorName(appt.doctor_name)}</h4>
                             <p>${appt.specialization}</p>
                         </div>
                     </div>
@@ -119,7 +129,7 @@ function renderHistoryTable(history) {
     .map(
       (appt) => `
         <tr>
-            <td style="font-weight:700;">Dr. ${appt.doctor_name}</td>
+            <td style="font-weight:700;">${formatDoctorName(appt.doctor_name)}</td>
             <td>${appt.specialization}</td>
             <td>
                 <div class="app-day-time" style="align-items:start;">
@@ -166,7 +176,7 @@ function setupBookingFlow(userData) {
             res.doctors
               .map(
                 (d) =>
-                  `<option value="${d.doctor_id}">Dr. ${d.full_name} (${d.specialization})</option>`,
+                  `<option value="${d.doctor_id}">${formatDoctorName(d.full_name)} (${d.specialization})</option>`,
               )
               .join("");
         }
@@ -313,4 +323,115 @@ function showSection(sectionName) {
       if (img) img.src = `../Assets/Icons/blue-${iconName}.svg`;
     }
   }
+
+  // If Find Doctors tab is active, perform an initial search
+  if (sectionName === "find-doctors") {
+    const locInput = document.getElementById("find-locality-input");
+    const specSelect = document.getElementById("find-specialization-select");
+    if (locInput) locInput.value = "";
+    if (specSelect) specSelect.value = "";
+    searchDoctors("", "");
+  }
+}
+
+function searchDoctors(locality, specialization) {
+  const grid = document.getElementById("doctor-results-grid");
+  if (!grid) return;
+  grid.innerHTML = '<p style="text-align:center; grid-column: 1/-1; padding: 2rem; color: #64748b;">Loading doctors...</p>';
+
+  fetch("../PHP/search_doctors.php", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ locality: locality, specialization: specialization })
+  })
+    .then((res) => res.json())
+    .then((res) => {
+      if (res.success) {
+        renderDoctorSearchResults(res.doctors);
+      } else {
+        grid.innerHTML = `<p style="text-align:center; grid-column: 1/-1; padding: 2rem; color: #ef4444;">Error: ${res.message}</p>`;
+      }
+    })
+    .catch((err) => {
+      console.error("Error searching doctors:", err);
+      grid.innerHTML = '<p style="text-align:center; grid-column: 1/-1; padding: 2rem; color: #ef4444;">Error loading search results.</p>';
+    });
+}
+
+function renderDoctorSearchResults(doctors) {
+  const grid = document.getElementById("doctor-results-grid");
+  if (!grid) return;
+
+  if (!doctors || doctors.length === 0) {
+    grid.innerHTML = '<p style="text-align:center; grid-column: 1/-1; padding: 2rem; color: #64748b;">No doctors found matching your criteria in Uttarakhand.</p>';
+    return;
+  }
+
+  grid.innerHTML = doctors
+    .map((doc) => {
+      const exp = doc.experience_years ? `${doc.experience_years} years exp` : "New Doctor";
+      const fee = doc.consultation_fee ? `₹${parseFloat(doc.consultation_fee).toFixed(0)}` : "Free";
+      const loc = doc.location ? doc.location : "Uttarakhand";
+      const addr = doc.address ? doc.address : "Uttarakhand, India";
+      const qualification = doc.qualification || "MBBS";
+      let bio = doc.bio ? doc.bio.trim() : "";
+      if (!bio || bio === "0" || bio === "null") {
+        bio = "No bio available";
+      }
+
+      return `
+      <div class="find-doctor-card">
+        <div class="card-content">
+          <div class="card-photo">
+            <img src="../Assets/Icons/blue-user-circle.svg" alt="Doctor Profile" />
+          </div>
+          <div class="card-text">
+            <h3>${formatDoctorName(doc.full_name)}</h3>
+            <p style="color: #155dfc; font-weight: 700; margin: 0 0 4px;">${doc.specialization} (${qualification})</p>
+            <p style="margin: 2px 0;">${exp} • Fee: ${fee}</p>
+            <p style="display: flex; align-items: start; gap: 4px; margin-top: 6px;">
+              <img src="../Assets/Icons/gray-map-pin.svg" alt="Pin" style="width: 14px; margin-top: 2px;" />
+              <span>${loc}<br><span style="font-size:0.75rem; color: #94a3b8; font-weight: 500;">${addr}</span></span>
+            </p>
+          </div>
+        </div>
+        <div class="card-caption">
+          <p style="font-size: 0.8rem; color: #64748b; font-weight: 500; max-width: 60%; line-height: 1.2; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;" title="${bio.replace(/"/g, '&quot;')}">
+            ${bio}
+          </p>
+          <button class="bookDoctor" onclick="redirectDoctorBooking(${doc.doctor_id})">
+            <img src="../Assets/Icons/white-calendar.svg" alt="Calendar" style="width: 14px; filter: brightness(0) invert(1);">
+            Book
+          </button>
+        </div>
+      </div>
+    `;
+    })
+    .join("");
+}
+
+function redirectDoctorBooking(doctorId) {
+  // 1. Switch active section to 'book-appointment'
+  showSection("book-appointment");
+
+  // 2. Select the doctor in the dropdown
+  const drSelect = document.getElementById("select-doctor");
+  if (drSelect) {
+    drSelect.value = doctorId;
+    // Trigger the change event to fetch slots automatically
+    drSelect.dispatchEvent(new Event("change"));
+  }
+}
+
+function formatDoctorName(name) {
+  if (!name) return "";
+  let cleanName = name.trim();
+  if (cleanName.toLowerCase().startsWith("dr. ")) {
+    cleanName = cleanName.substring(4).trim();
+  } else if (cleanName.toLowerCase().startsWith("dr.")) {
+    cleanName = cleanName.substring(3).trim();
+  }
+  return "Dr. " + cleanName;
 }
