@@ -112,10 +112,20 @@ const Chatbot = {
 	showWelcomeMessage() {
 		const isInHtmlFolder = window.location.pathname.includes("/HTML/");
 		const basePath = isInHtmlFolder ? "../" : "./";
+		// Prompt for basic profile first (name → age → gender) to match backend flow
 		this.appendMessage(
-			`<img src="${basePath}Assets/Icons/blue-chatbot.svg" alt="AI" style="width: 18px; height: 18px; vertical-align: bottom; margin-right: 6px;"> Welcome to the SmartCare AI Health Assistant! Describe your symptoms in a sentence (e.g. *\"I have fever, headache and stomach pain\"*) and I'll help identify what might be going on.`,
+			`<img src="${basePath}Assets/Icons/blue-chatbot.svg" alt="AI" style="width: 18px; height: 18px; vertical-align: bottom; margin-right: 6px;"> 🤖 Welcome to HealthCare ChatBot\nHello! Please answer a few questions so I can understand your condition better.\n\n👉 What is your name? :`,
 			"bot",
 		);
+	},
+
+	// Helper: remove leading asterisks and capitalize first letter for session titles
+	formatSessionTitle(title) {
+		if (!title || typeof title !== "string") return title || "";
+		// remove leading '*' characters and any following spaces
+		const cleaned = title.replace(/^\*+\s*/, "").trim();
+		if (!cleaned) return "";
+		return cleaned.charAt(0).toUpperCase() + cleaned.slice(1);
 	},
 
 	// ── Inject Floating Chatbot HTML if not present ──
@@ -807,8 +817,7 @@ const Chatbot = {
 				);
 
 				const rawTitle = session.title || "Untitled Session";
-				const formattedTitle =
-					rawTitle.charAt(0).toUpperCase() + rawTitle.slice(1);
+				const formattedTitle = this.formatSessionTitle(rawTitle);
 
 				item.innerHTML = `
           <div class="history-item-info">
