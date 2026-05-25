@@ -16,16 +16,18 @@ if (!$user_id) {
 }
 
 // Extract data
-$full_name = $data['full_name'];
-$email = $data['email'];
-$phone = $data['phone'];
-$specialization = $data['specialization'];
-$experience_years = $data['experience_years'];
-$qualification = $data['qualification'];
-$consultation_fee = $data['consultation_fee'];
-$location = $data['location'];
-$education = $data['education'];
-$bio = $data['bio'];
+$full_name = $data['full_name'] ?? '';
+$email = $data['email'] ?? '';
+$phone = $data['phone'] ?? '';
+$specialization = $data['specialization'] ?? '';
+$experience_years = intval($data['experience_years'] ?? 0);
+$qualification = $data['qualification'] ?? '';
+$consultation_fee = floatval($data['consultation_fee'] ?? 0.0);
+$location = $data['location'] ?? '';
+$education = $data['education'] ?? '';
+$bio = $data['bio'] ?? '';
+$languages = $data['languages'] ?? '';
+$address = $data['address'] ?? '';
 
 // Start Transaction
 mysqli_begin_transaction($conn);
@@ -38,23 +40,20 @@ try {
     mysqli_stmt_execute($stmt1);
 
     // 2. Update Doctors Table (using user_id to find the record)
-    // First, let's get doctor_id just in case, but updating by user_id is fine if unique
     $update_doctor_query = "UPDATE doctors SET 
                             specialization = ?, 
                             experience_years = ?, 
                             qualification = ?, 
                             consultation_fee = ?, 
                             location = ?, 
-                            bio = ? 
+                            bio = ?,
+                            education = ?,
+                            languages = ?,
+                            address = ?
                             WHERE user_id = ?";
     $stmt2 = mysqli_prepare($conn, $update_doctor_query);
-    mysqli_stmt_bind_param($stmt2, "sisisis", $specialization, $experience_years, $qualification, $consultation_fee, $location, $bio, $user_id);
+    mysqli_stmt_bind_param($stmt2, "sisdsssssi", $specialization, $experience_years, $qualification, $consultation_fee, $location, $bio, $education, $languages, $address, $user_id);
     mysqli_stmt_execute($stmt2);
-    
-    // Note: 'education' is currently stored in a way that might need a specific column or just bio.
-    // If there's no education column, we can prepend it to bio or check schema.
-    // Based on previous views, MD/Harvard was likely in a p tag. 
-    // I'll assume qualification is being used for education/degrees for now, or just update doctors table fields available.
 
     mysqli_commit($conn);
     echo json_encode(["success" => true, "message" => "Profile updated successfully"]);

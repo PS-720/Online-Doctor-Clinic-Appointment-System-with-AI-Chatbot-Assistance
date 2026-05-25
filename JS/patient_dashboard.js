@@ -170,6 +170,29 @@ function setupBookingFlow(userData) {
               )
               .join("");
         }
+
+        // Check for pending booking from chatbot redirect
+        const pendingBookingStr = sessionStorage.getItem("smartcare_pending_booking");
+        if (pendingBookingStr) {
+          try {
+            const pendingBooking = JSON.parse(pendingBookingStr);
+            sessionStorage.removeItem("smartcare_pending_booking");
+            
+            // Switch section to booking
+            showSection('book-appointment');
+            
+            // Set doctor dropdown value
+            drSelect.value = pendingBooking.doctorId;
+            drSelect.dispatchEvent(new Event('change'));
+            
+            // Set symptoms
+            if (symptomsInput) {
+              symptomsInput.value = pendingBooking.symptoms;
+            }
+          } catch (e) {
+            console.error("Error handling pending booking:", e);
+          }
+        }
       }
     });
 

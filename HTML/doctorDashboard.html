@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Doctor Dashboard | SmartCare</title>
-    <link rel="stylesheet" href="../CSS/doctor.css">
+    <link rel="stylesheet" href="../CSS/doctor.css?v=1.3">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -329,6 +329,44 @@
                     </div>
                 </div>
             </div>
+            <!-- ===== SECTION: Patients ===== -->
+            <div id="section-patients" class="content-section">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 2rem;">
+                    <header class="header-section" style="margin-bottom: 0;">
+                        <h1>My Patients</h1>
+                        <p>View and manage your patient records</p>
+                    </header>
+                </div>
+
+                <!-- Search Card -->
+                <div style="background: white; border-radius: 16px; padding: 1.25rem; margin-bottom: 2rem; border: 1px solid var(--border-color); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);">
+                    <div style="position: relative; display: flex; align-items: center;">
+                        <img src="../Assets/Icons/gray-search.svg" alt="Search" style="position: absolute; left: 16px; width: 18px; opacity: 0.6;">
+                        <input type="text" id="search-patients-input" placeholder="Search patients by name or email..." style="width: 100%; padding: 12px 12px 12px 48px; border: 1.5px solid var(--border-color); border-radius: 12px; font-family: inherit; font-size: 0.95rem; transition: border-color 0.2s;">
+                    </div>
+                </div>
+
+                <!-- Stats Cards Row -->
+                <div class="patients-stats-grid">
+                    <div class="patient-stat-card">
+                        <p>Total Patients</p>
+                        <h3 id="stat-total-patients">0</h3>
+                    </div>
+                    <div class="patient-stat-card">
+                        <p>Active This Month</p>
+                        <h3 id="stat-active-patients" style="color: #22c55e;">0</h3>
+                    </div>
+                    <div class="patient-stat-card">
+                        <p>New This Month</p>
+                        <h3 id="stat-new-patients" style="color: var(--primary-blue);">0</h3>
+                    </div>
+                </div>
+
+                <!-- Patients Card Grid -->
+                <div id="patients-grid" class="patients-card-grid">
+                    <!-- Dynamic Patient Cards -->
+                </div>
+            </div>
 
             <!-- ===== SECTION: My Profile ===== -->
             <div id="section-profile" class="content-section">
@@ -437,14 +475,14 @@
                             <div class="info-field">
                                 <span class="field-label">Languages</span>
                                 <div class="field-content">
-                                    <span class="field-value">English, Spanish</span>
+                                    <span class="field-value" id="prof-languages">English, Spanish</span>
                                 </div>
                             </div>
                         </div>
 
                         <div class="prof-info-block" style="margin-top: 1.5rem;">
                             <h4>Address</h4>
-                            <p>123 Medical Plaza, San Francisco, CA 94102</p>
+                            <p id="prof-address">123 Medical Plaza, San Francisco, CA 94102</p>
                         </div>
                     </div>
                 </div>
@@ -452,6 +490,65 @@
 
         </main>
 
+
+        <!-- Patient Details Modal -->
+        <div id="modal-patient-details" class="modal">
+            <div class="modal-content profile-edit-modal" style="max-width: 700px; display: flex; flex-direction: column;">
+                <div class="modal-header">
+                    <h2>Patient Clinical Record</h2>
+                    <button class="btn-close-patient-modal" style="background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--text-secondary);">&times;</button>
+                </div>
+                <div class="modal-body" style="padding: 2rem; overflow-y: auto; max-height: 70vh;">
+                    <!-- Patient Summary Card -->
+                    <div style="display: flex; gap: 1.5rem; align-items: center; background: var(--primary-bg); padding: 1.5rem; border-radius: 16px; margin-bottom: 2rem; border: 1px solid var(--border-color);">
+                        <div style="width: 60px; height: 60px; background: #eff6ff; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                            <img src="../Assets/Icons/blue-user-circle.svg" alt="Patient" style="width: 36px;">
+                        </div>
+                        <div>
+                            <h3 id="det-patient-name" style="font-size: 1.3rem; font-weight: 800; color: var(--text-main); margin-bottom: 4px;">Patient Name</h3>
+                            <p id="det-patient-meta" style="color: var(--text-secondary); font-size: 0.9rem;">Age • Gender • Blood Group</p>
+                        </div>
+                    </div>
+
+                    <!-- Contact and Basic Info Grid -->
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
+                        <div>
+                            <h4 style="font-size: 0.85rem; color: var(--text-secondary); font-weight: 700; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;">Contact Info</h4>
+                            <p id="det-patient-phone" style="font-size: 0.95rem; font-weight: 600; margin-bottom: 8px; display: flex; align-items: center; gap: 8px;">
+                                <img src="../Assets/Icons/gray-phone.svg" alt="Phone" style="width: 14px;"> Phone
+                            </p>
+                            <p id="det-patient-email" style="font-size: 0.95rem; font-weight: 600; color: var(--primary-blue); display: flex; align-items: center; gap: 8px;">
+                                <img src="../Assets/Icons/gray-mail.svg" alt="Email" style="width: 14px;"> Email
+                            </p>
+                        </div>
+                        <div>
+                            <h4 style="font-size: 0.85rem; color: var(--text-secondary); font-weight: 700; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;">Home Address</h4>
+                            <p id="det-patient-address" style="font-size: 0.95rem; font-weight: 600; line-height: 1.5;">Address here</p>
+                        </div>
+                    </div>
+
+                    <!-- Conditions Section with Update Field -->
+                    <div style="margin-bottom: 2rem;">
+                        <h4 style="font-size: 0.85rem; color: var(--text-secondary); font-weight: 700; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;">Medical Conditions</h4>
+                        <div id="det-conditions-tags" style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px;">
+                            <!-- Dynamic Tags -->
+                        </div>
+                        <div style="display: flex; gap: 8px; align-items: center;">
+                            <input type="text" id="input-update-conditions" placeholder="Update conditions (comma-separated)..." style="flex: 1; padding: 10px 12px; border: 1.5px solid var(--border-color); border-radius: 10px; font-family: inherit; font-size: 0.9rem;">
+                            <button id="btn-save-conditions" class="btn-primary" style="padding: 10px 20px; border-radius: 10px; font-size: 0.9rem; font-weight: 700;">Update</button>
+                        </div>
+                    </div>
+
+                    <!-- Visit History List -->
+                    <div>
+                        <h4 style="font-size: 0.85rem; color: var(--text-secondary); font-weight: 700; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px;">Visit History</h4>
+                        <div id="det-visit-list" style="display: flex; flex-direction: column; gap: 12px;">
+                            <!-- Dynamic Visits -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <!-- Edit Profile Modal -->
         <div id="modal-edit-profile" class="modal">
@@ -494,10 +591,18 @@
                             <label>Clinic Location</label>
                             <input type="text" id="edit-location">
                         </div>
+                        <div class="form-group">
+                            <label>Languages</label>
+                            <input type="text" id="edit-languages">
+                        </div>
                     </div>
                     <div class="form-group full-width">
                         <label>Education / Degrees</label>
                         <textarea id="edit-education" rows="2"></textarea>
+                    </div>
+                    <div class="form-group full-width">
+                        <label>Clinic Address</label>
+                        <textarea id="edit-address" rows="2"></textarea>
                     </div>
                     <div class="form-group full-width">
                         <label>Professional Bio</label>
@@ -519,8 +624,6 @@
 
     <!-- Scripts -->
     <script src="../JS/auth.js"></script>
-    <script src="../JS/doctor_dashboard.js"></script>
-</body>
-</html>
+    <script src="../JS/doctor_dashboard.js?v=1.3"></script>
 </body>
 </html>
